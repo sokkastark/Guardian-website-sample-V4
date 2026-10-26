@@ -1,8 +1,14 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/common/ScrollToTop';
+
+function RedirectToSection({ sectionId }) {
+  const location = useLocation();
+  const search = location.search || '';
+  return <Navigate to={`/company${search}#${sectionId}`} replace />;
+}
 
 // Primary Landing & Category Pages
 import HomePage from './pages/HomePage';
@@ -13,7 +19,6 @@ import DataIntegrationOverviewPage from './pages/DataIntegrationOverviewPage';
 import CompanyOverviewPage from './pages/CompanyOverviewPage';
 import WhyGuardianPage from './pages/WhyGuardianPage';
 import ResourcesPage from './pages/ResourcesPage';
-import ContactPage from './pages/ContactPage';
 
 // Tier A Implemented Pages
 import Patient360Page from './pages/platform/Patient360Page';
@@ -36,7 +41,6 @@ import APIsMobilePage from './pages/data-integration/APIsMobilePage';
 import WebinarsPage from './pages/resources/WebinarsPage';
 import ProductToursPage from './pages/resources/ProductToursPage';
 import VideosPage from './pages/resources/VideosPage';
-import CareersPage from './pages/company/CareersPage';
 
 // Capability & Feature Pages
 import PopulationHealthPage from './pages/platform/PopulationHealthPage';
@@ -56,11 +60,6 @@ import PatientIntelligencePage from './pages/platform/PatientIntelligencePage';
 import ProvidersPage from './pages/who-we-serve/ProvidersPage';
 import PayersPage from './pages/who-we-serve/PayersPage';
 import ServicesPage from './pages/ServicesPage';
-
-// Company & Trust Pages
-import AboutPage from './pages/why-guardian/AboutPage';
-import LeadershipPage from './pages/why-guardian/LeadershipPage';
-import CertificationsTrustPage from './pages/why-guardian/CertificationsTrustPage';
 
 // Resources Pages
 import InsightsPage from './pages/resources/InsightsPage';
@@ -130,15 +129,17 @@ export default function App() {
             <Route path="/resources/product-tours" element={<ProductToursPage />} />
             <Route path="/resources/videos" element={<VideosPage />} />
 
-            {/* ── COMPANY CANONICAL ROUTES ── */}
-            <Route path="/company/about" element={<AboutPage />} />
-            <Route path="/company/leadership" element={<LeadershipPage />} />
-            <Route path="/company/security-trust" element={<CertificationsTrustPage />} />
-            <Route path="/company/careers" element={<CareersPage />} />
-            <Route path="/company/contact" element={<ContactPage />} />
+            {/* ── COMPANY CONSOLIDATED SECTION REDIRECTS ── */}
+            <Route path="/company/about" element={<RedirectToSection sectionId="about" />} />
+            <Route path="/company/approach" element={<RedirectToSection sectionId="history" />} />
+            <Route path="/company/history" element={<RedirectToSection sectionId="history" />} />
+            <Route path="/company/leadership" element={<RedirectToSection sectionId="leadership" />} />
+            <Route path="/company/security-trust" element={<RedirectToSection sectionId="security" />} />
+            <Route path="/company/careers" element={<RedirectToSection sectionId="careers" />} />
+            <Route path="/company/contact" element={<RedirectToSection sectionId="contact" />} />
 
             {/* ── LEGACY REDIRECTS (APPROVED MIGRATION MATRIX) ── */}
-            <Route path="/contact" element={<Navigate to="/company/contact" replace />} />
+            <Route path="/contact" element={<RedirectToSection sectionId="contact" />} />
             <Route path="/solutions/analytics-intelligence" element={<Navigate to="/platform/analytics" replace />} />
             <Route path="/solutions/population-health" element={<Navigate to="/platform/population-health" replace />} />
             <Route path="/solutions/care-management" element={<Navigate to="/platform/care-management" replace />} />
@@ -157,12 +158,12 @@ export default function App() {
             <Route path="/services/care-managers" element={<Navigate to="/solutions/care-management-teams" replace />} />
             <Route path="/services/care-navigators" element={<Navigate to="/solutions/care-management-teams" replace />} />
             <Route path="/why-guardian" element={<Navigate to="/company" replace />} />
-            <Route path="/why-guardian/about" element={<Navigate to="/company/about" replace />} />
-            <Route path="/why-guardian/our-story" element={<Navigate to="/company/about" replace />} />
-            <Route path="/why-guardian/healthcare-expertise" element={<Navigate to="/company/about" replace />} />
-            <Route path="/why-guardian/leadership" element={<Navigate to="/company/leadership" replace />} />
-            <Route path="/why-guardian/certifications-trust" element={<Navigate to="/company/security-trust" replace />} />
-            <Route path="/careers" element={<Navigate to="/company/careers" replace />} />
+            <Route path="/why-guardian/about" element={<RedirectToSection sectionId="about" />} />
+            <Route path="/why-guardian/our-story" element={<RedirectToSection sectionId="history" />} />
+            <Route path="/why-guardian/healthcare-expertise" element={<RedirectToSection sectionId="about" />} />
+            <Route path="/why-guardian/leadership" element={<RedirectToSection sectionId="leadership" />} />
+            <Route path="/why-guardian/certifications-trust" element={<RedirectToSection sectionId="security" />} />
+            <Route path="/careers" element={<RedirectToSection sectionId="careers" />} />
 
             {/* Fallback Catch-All Redirect */}
             <Route path="*" element={<Navigate to="/" replace />} />

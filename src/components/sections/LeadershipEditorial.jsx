@@ -73,17 +73,6 @@ export const leadershipMembers = [
     quote: 'Rigorous process discipline makes advanced healthcare software truly work.'
   },
   {
-    id: 'enrique-diaz-granados',
-    name: 'Enrique Diaz Granados',
-    role: 'VP of Business Development',
-    discipline: 'Managed Care & Partnerships',
-    image: '/images/team/Enrique Diaz Granados.png',
-    credentials: 'Former Humana, Wellcare & Aetna Executive',
-    experience: '30+ Years Managed Care',
-    shortBio: 'Managed care veteran leading strategic partnerships across Medicare Advantage plans, MSOs, and Accountable Care Organizations.',
-    quote: 'Trust between health plans and provider groups drives patient outcomes.'
-  },
-  {
     id: 'vikram-saini',
     name: 'Vikram Saini, MD',
     role: 'Director of Legal Affairs & Compliance',

@@ -216,27 +216,27 @@ export default function Footer() {
               </h3>
               <ul className="space-y-2 text-xs sm:text-[13px]">
                 <li>
-                  <Link to="/company/about" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/company#about" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     About Guardian
                   </Link>
                 </li>
                 <li>
-                  <Link to="/company/leadership" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/company#leadership" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Leadership
                   </Link>
                 </li>
                 <li>
-                  <Link to="/company/security-trust" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/company#security" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Security & Trust
                   </Link>
                 </li>
                 <li>
-                  <Link to="/company/careers" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/company#careers" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Careers
                   </Link>
                 </li>
                 <li>
-                  <Link to="/company/contact" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/company#contact" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Contact Us
                   </Link>
                 </li>
@@ -251,11 +251,11 @@ export default function Footer() {
               © Guardian Health Service, LLC. All rights reserved.
             </p>
             <div className="flex items-center gap-3">
-              <Link to="/company/security-trust" className="hover:text-[#7b3fc7] transition-colors">
+              <Link to="/company#security" className="hover:text-[#7b3fc7] transition-colors">
                 Security & Trust
               </Link>
               <span className="text-[#d6cde2]">|</span>
-              <Link to="/company/careers" className="hover:text-[#7b3fc7] transition-colors">
+              <Link to="/company#careers" className="hover:text-[#7b3fc7] transition-colors">
                 Careers
               </Link>
               <span className="text-[#d6cde2]">|</span>

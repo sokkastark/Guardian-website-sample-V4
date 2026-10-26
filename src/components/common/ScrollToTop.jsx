@@ -6,17 +6,41 @@ import { ArrowUp } from 'lucide-react';
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export default function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const [showFloater, setShowFloater] = useState(false);
 
-  // 1. Reset scroll position synchronously BEFORE browser paint on route change
-  useIsomorphicLayoutEffect(() => {
-    document.documentElement.style.scrollBehavior = 'auto';
-    document.body.style.scrollBehavior = 'auto';
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  }, [pathname]);
+  // 1. Handle route and hash changes with sticky-header offset
+  useEffect(() => {
+    if (hash) {
+      const targetId = hash.replace('#', '');
+      const scrollToElement = () => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          const headerOffset = 90;
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = Math.max(0, elementPosition - headerOffset);
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+          return true;
+        }
+        return false;
+      };
+
+      // Try immediately, or retry on next animation frame after component render
+      if (!scrollToElement()) {
+        const timer = setTimeout(scrollToElement, 100);
+        return () => clearTimeout(timer);
+      }
+    } else {
+      document.documentElement.style.scrollBehavior = 'auto';
+      document.body.style.scrollBehavior = 'auto';
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }, [pathname, hash]);
 
   // 2. Track scroll position for floating back-to-top button
   useEffect(() => {

@@ -76,23 +76,25 @@ export const navigationConfig = [
     label: 'Company',
     path: '/company',
     children: [
-      { label: 'About Guardian', path: '/company/about' },
-      { label: 'Leadership', path: '/company/leadership' },
-      { label: 'Security & Trust', path: '/company/security-trust' },
-      { label: 'Careers', path: '/company/careers' },
-      { label: 'Contact', path: '/company/contact' },
+      { label: 'About Guardian', path: '/company#about' },
+      { label: 'Leadership', path: '/company#leadership' },
+      { label: 'Security & Trust', path: '/company#security' },
+      { label: 'Careers', path: '/company#careers' },
+      { label: 'Contact', path: '/company#contact' },
     ]
   }
 ];
 
 export function isParentActive(currentPath, item) {
   if (!item || !item.path) return false;
-  if (currentPath === item.path) return true;
+  const baseCurrent = currentPath.split('#')[0];
+  if (baseCurrent === item.path) return true;
   if (item.children) {
     return item.children.some(child => {
-      if (child.path === currentPath) return true;
+      const childBase = child.path.split('#')[0];
+      if (childBase === baseCurrent) return true;
       if (child.subchildren) {
-        return child.subchildren.some(sub => sub.path === currentPath);
+        return child.subchildren.some(sub => sub.path.split('#')[0] === baseCurrent);
       }
       return false;
     });
@@ -101,5 +103,8 @@ export function isParentActive(currentPath, item) {
 }
 
 export function isChildActive(currentPath, childPath) {
-  return currentPath === childPath;
+  if (currentPath === childPath) return true;
+  // If currentPath doesn't have a hash but child is #about on /company, highlight overview
+  if (currentPath === '/company' && childPath === '/company#about') return true;
+  return false;
 }

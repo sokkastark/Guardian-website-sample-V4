@@ -78,7 +78,7 @@ export default function Header() {
                 key={item.label}
                 item={item}
                 isScrolled={isScrolled}
-                currentPath={location.pathname}
+                currentPath={location.pathname + location.hash}
               />
             ))}
           </nav>
@@ -86,9 +86,9 @@ export default function Header() {
           {/* Action CTAs: Request a Demo + Login ↗ */}
           <div className="hidden sm:flex items-center gap-3">
             <Link
-              to="/company/contact?intent=demo"
+              to="/company?intent=demo#contact"
               className={`px-4 py-2 text-xs lg:text-sm font-medium transition-colors rounded-full ${
-                location.pathname === '/company/contact'
+                location.pathname === '/company' && location.hash === '#contact'
                   ? 'text-[#7b3fc7] font-semibold bg-white/10'
                   : isScrolled
                   ? 'text-[#35304c] hover:text-[#7b3fc7]'
@@ -137,7 +137,7 @@ export default function Header() {
           >
             <div className="flex flex-col gap-1.5">
               {navigationConfig.map((item) => {
-                const parentActive = isParentActive(location.pathname, item);
+                const parentActive = isParentActive(location.pathname + location.hash, item);
                 const isExpanded = !!expandedMobile[item.label];
 
                 return (
@@ -184,12 +184,30 @@ export default function Header() {
                           className="pl-4 pr-2 py-1 flex flex-col gap-1 overflow-hidden"
                         >
                           {item.children.map((child) => {
-                            const childActive = isChildActive(location.pathname, child.path);
+                            const childActive = isChildActive(location.pathname + location.hash, child.path);
                             return (
                               <React.Fragment key={child.path + child.label}>
                                 <Link
                                   to={child.path}
-                                  onClick={closeMobileMenu}
+                                  onClick={() => {
+                                    closeMobileMenu();
+                                    if (child.path.includes('#')) {
+                                      const [targetPath, targetHash] = child.path.split('#');
+                                      if (window.location.pathname === targetPath && targetHash) {
+                                        setTimeout(() => {
+                                          const el = document.getElementById(targetHash);
+                                          if (el) {
+                                            const offset = 90;
+                                            const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+                                            window.scrollTo({
+                                              top: Math.max(0, elementPosition - offset),
+                                              behavior: 'smooth'
+                                            });
+                                          }
+                                        }, 60);
+                                      }
+                                    }
+                                  }}
                                   className={`py-1.5 px-3 rounded-lg text-sm transition-colors ${
                                     childActive
                                       ? 'bg-[#f2ecf9] text-[#7b3fc7] font-semibold'

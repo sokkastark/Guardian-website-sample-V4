@@ -51,7 +51,7 @@ const teamConstellation = [
   },
   {
     id: 'richard-cairl',
-    name: 'Richard Carl, PhD',
+    name: 'Richard Cairl, PhD',
     role: 'Quality & Analytics',
     tagline: 'Turning data into better outcomes.',
     icon: BarChart3,
@@ -65,9 +65,9 @@ const teamConstellation = [
   },
   {
     id: 'vikram-saini',
-    name: 'Vikram Suki, MBA',
-    role: 'Client Success',
-    tagline: 'Building lasting partnerships.',
+    name: 'Vikram Saini, MD',
+    role: 'Governance & Compliance',
+    tagline: 'Ensuring regulatory integrity and trust.',
     icon: Handshake,
     image: '/images/team/Vikram Saini.png',
     // Middle-Right
@@ -78,23 +78,9 @@ const teamConstellation = [
     spokeControl: { x: 720, y: 380 }
   },
   {
-    id: 'enrique-diaz-granados',
-    name: 'Enrique Rios-Granados',
-    role: 'Strategy',
-    tagline: 'Driving innovation for healthier communities.',
-    icon: Lightbulb,
-    image: '/images/team/Enrique Diaz Granados.png',
-    // Bottom-Right
-    cx: 820,
-    cy: 550,
-    textSide: 'right',
-    badgePos: 'bottom-left',
-    spokeControl: { x: 710, y: 490 }
-  },
-  {
     id: 'david-weavil',
     name: 'David Weavil',
-    role: 'Business Growth',
+    role: 'Strategic Advisory',
     tagline: 'Expanding access to what’s possible.',
     icon: TrendingUp,
     image: '/images/team/David Weavil.png',
@@ -107,9 +93,9 @@ const teamConstellation = [
   },
   {
     id: 'joseph-macau',
-    name: 'Joseph Mecca, CCMA',
-    role: 'Care Management',
-    tagline: 'Connecting people to better care.',
+    name: 'Joseph Macau, CGMA',
+    role: 'Finance & Governance',
+    tagline: 'Connecting clinical impact with fiscal sustainability.',
     icon: Users,
     image: '/images/team/Joseph Macau, CGMA.png',
     // Bottom-Left
@@ -121,9 +107,9 @@ const teamConstellation = [
   },
   {
     id: 'ganesh-ramachandran',
-    name: 'Ganesh R',
-    role: 'Operations',
-    tagline: 'Ensuring excellence in delivery.',
+    name: 'Ganesh Ramachandran',
+    role: 'Operations & Service Delivery',
+    tagline: 'Ensuring operational discipline in healthtech delivery.',
     icon: Settings,
     image: '/images/team/Ganesh Ramachandran.png',
     // Middle-Left

@@ -90,7 +90,25 @@ export default function NavDropdown({ item, isScrolled, currentPath }) {
                   <React.Fragment key={child.path + child.label}>
                     <Link
                       to={child.path}
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        setIsOpen(false);
+                        if (child.path.includes('#')) {
+                          const [targetPath, targetHash] = child.path.split('#');
+                          if (window.location.pathname === targetPath && targetHash) {
+                            setTimeout(() => {
+                              const el = document.getElementById(targetHash);
+                              if (el) {
+                                const offset = 90;
+                                const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+                                window.scrollTo({
+                                  top: Math.max(0, elementPosition - offset),
+                                  behavior: 'smooth'
+                                });
+                              }
+                            }, 50);
+                          }
+                        }
+                      }}
                       className={`flex items-center justify-between px-3 py-1.5 rounded-xl text-xs xl:text-sm font-medium transition-all ${
                         childActive
                           ? 'bg-[#f2ecf9] text-[#7b3fc7] font-semibold'
