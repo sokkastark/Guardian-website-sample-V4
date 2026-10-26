@@ -177,9 +177,8 @@ export const onsiteTeam = [
     name: 'Jairo R. Rodriguez',
     role: 'Senior Software Architect Engineer',
     domain: 'Software Architecture & Systems',
+    image: '/images/team/onsite/Jairo Rodriguez.png',
     initials: 'JR',
-    gradient: 'from-[#7b3fc7] to-[#3b82f6]',
-    icon: Cpu,
     bio: 'Designs software architecture and technical solutions to support Guardian’s application ecosystem. Helps maintain scalable systems and translate complex requirements into practical engineering designs.'
   },
   {
@@ -187,9 +186,8 @@ export const onsiteTeam = [
     name: 'Joshua Chumley',
     role: 'Data Analyst',
     domain: 'Analytics & Healthcare Insights',
+    image: '/images/team/onsite/Joshua Chumley.jpg',
     initials: 'JC',
-    gradient: 'from-[#3b82f6] to-[#06b6d4]',
-    icon: BarChart3,
     bio: 'Analyzes healthcare and operational data to uncover useful insights. Supports data-driven decisions through data interpretation, reporting, and analytical workflows.'
   },
   {
@@ -197,9 +195,8 @@ export const onsiteTeam = [
     name: 'Jose Santos',
     role: 'Senior Data Architect',
     domain: 'Data Architecture & Modeling',
+    image: null,
     initials: 'JS',
-    gradient: 'from-[#06b6d4] to-[#10b981]',
-    icon: Database,
     bio: 'Shapes data architecture to support reliable, consistent, and accessible information across systems. Helps establish the foundations for effective data integration and analytics.'
   },
   {
@@ -207,9 +204,8 @@ export const onsiteTeam = [
     name: 'Jessica Lopez',
     role: 'Director of Healthcare IT Operations',
     domain: 'IT Operations & Delivery',
+    image: '/images/team/onsite/Jessica Lopez.jpg',
     initials: 'JL',
-    gradient: 'from-[#ec4899] to-[#8b5cf6]',
-    icon: Activity,
     bio: 'Coordinates healthcare IT operations and technology delivery. Bridges operational requirements and technical teams to support effective implementation and ongoing service delivery.'
   },
   {
@@ -217,9 +213,8 @@ export const onsiteTeam = [
     name: 'Carmen Penna',
     role: 'Senior Business Analyst',
     domain: 'Business Analysis & Requirements',
+    image: '/images/team/onsite/Carmen Penna.jpg',
     initials: 'CP',
-    gradient: 'from-[#f59e0b] to-[#ea580c]',
-    icon: Compass,
     bio: 'Translates business and stakeholder requirements into clear functional specifications. Works across teams to align application capabilities with operational needs.'
   },
   {
@@ -227,9 +222,8 @@ export const onsiteTeam = [
     name: 'Sheila R. Haley',
     role: 'Senior Data Management Analyst / Test Specialist',
     domain: 'Data Quality & Verification',
+    image: '/images/team/onsite/Sheila Haley.jpg',
     initials: 'SH',
-    gradient: 'from-[#10b981] to-[#3b82f6]',
-    icon: FileCheck2,
     bio: 'Supports data quality, management, and application testing. Helps identify inconsistencies and verify that solutions meet expected functional and data requirements.'
   }
 ];
@@ -809,50 +803,63 @@ export default function UnifiedLeadershipCarousel() {
                   </p>
                 </div>
 
-                {/* 6 Onsite Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-6">
-                  {onsiteTeam.map((member) => {
-                    const RoleIcon = member.icon;
-                    return (
-                      <div
-                        key={member.id}
-                        className="group relative rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-500/40 p-5 transition-all duration-300 flex flex-col justify-between shadow-lg"
-                      >
-                        <div>
-                          {/* Monogram Avatar & Domain Tag */}
-                          <div className="flex items-start gap-4 mb-4">
-                            <div className="relative shrink-0">
-                              <div className={`w-14 h-14 rounded-2xl bg-gradient-to-tr ${member.gradient} p-0.5 shadow-md`}>
-                                <div className="w-full h-full rounded-2xl bg-[#130a2a] flex items-center justify-center font-bold text-base text-white tracking-wider">
-                                  {member.initials}
-                                </div>
-                              </div>
-                              <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#181036] border border-purple-400/50 flex items-center justify-center text-purple-200 group-hover:bg-[#7b3fc7] group-hover:text-white transition-colors shadow-xs">
-                                <RoleIcon className="w-3 h-3" />
-                              </div>
-                            </div>
-
-                            <div className="min-w-0">
-                              <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-purple-300 bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded-full mb-1 truncate max-w-full">
-                                {member.domain}
-                              </span>
-                              <h4 className="text-sm font-bold text-white group-hover:text-purple-200 transition-colors leading-tight">
-                                {member.name}
-                              </h4>
-                              <p className="text-xs font-semibold text-purple-300/90 leading-tight mt-0.5">
-                                {member.role}
-                              </p>
-                            </div>
-                          </div>
-
-                          {/* 2-Line Concise Bio */}
-                          <p className="text-xs text-purple-200/75 leading-relaxed font-normal">
-                            {member.bio}
-                          </p>
+                {/* 6 Onsite Capsule Cards (Dark Mode Pill Style) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 mb-8">
+                  {onsiteTeam.map((member) => (
+                    <div
+                      key={member.id}
+                      onClick={() => setFocusedMember({
+                        ...member,
+                        discipline: member.domain,
+                        experience: 'Onsite Team',
+                        credentials: member.domain
+                      })}
+                      className="group cursor-pointer rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-lg hover:shadow-[0_12px_32px_rgba(123,63,199,0.25)] hover:-translate-y-0.5 transition-all duration-300 p-2.5 sm:p-3.5 flex items-center justify-between gap-3 sm:gap-4"
+                    >
+                      {/* Left Circular Portrait */}
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full shrink-0 overflow-hidden p-0.5 bg-gradient-to-tr from-[#7b3fc7] via-[#a855f7] to-[#ff7a57] shadow-md group-hover:scale-105 transition-transform duration-300">
+                        <div className="w-full h-full rounded-full overflow-hidden bg-[#160d33] flex items-center justify-center">
+                          {member.image ? (
+                            <img
+                              src={member.image}
+                              alt={member.name}
+                              className="w-full h-full object-cover object-top rounded-full"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <span className="font-extrabold text-base sm:text-lg text-white tracking-wider">
+                              {member.initials}
+                            </span>
+                          )}
                         </div>
                       </div>
-                    );
-                  })}
+
+                      {/* Middle Content Body */}
+                      <div className="flex-1 min-w-0 pr-1">
+                        <div className="flex flex-wrap items-center gap-2 mb-0.5">
+                          <h4 className="text-sm sm:text-base font-extrabold text-white group-hover:text-purple-200 transition-colors truncate">
+                            {member.name}
+                          </h4>
+                          <span className="text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] bg-[#ff7a57]/15 border border-[#ff7a57]/30 px-2.5 py-0.5 rounded-full shrink-0">
+                            {member.domain}
+                          </span>
+                        </div>
+
+                        <p className="text-xs font-semibold text-purple-300 mb-1 truncate">
+                          {member.role}
+                        </p>
+
+                        <p className="text-[11px] sm:text-xs text-purple-200/75 line-clamp-2 leading-relaxed font-normal">
+                          {member.bio}
+                        </p>
+                      </div>
+
+                      {/* Far Right Arrow Circle */}
+                      <div className="hidden sm:flex w-8 h-8 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-[#7b3fc7] group-hover:border-purple-400 text-purple-300 group-hover:text-white items-center justify-center shrink-0 mr-2 transition-all duration-200 shadow-sm">
+                        <ChevronRight className="w-4 h-4" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 {/* ── BOTTOM-RIGHT OFFSHORE TEAM TRIGGER CALLOUT ── */}
@@ -1002,12 +1009,18 @@ export default function UnifiedLeadershipCarousel() {
 
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
                 {/* Large Portrait */}
-                <div className="w-36 h-48 sm:w-44 sm:h-56 rounded-2xl overflow-hidden bg-gradient-to-t from-[#0c081a] to-white/10 border border-white/20 shrink-0 shadow-xl flex items-end justify-center">
-                  <img
-                    src={focusedMember.image}
-                    alt={focusedMember.name}
-                    className="w-full h-full object-cover object-top"
-                  />
+                <div className="w-36 h-48 sm:w-44 sm:h-56 rounded-2xl overflow-hidden bg-gradient-to-t from-[#0c081a] to-white/10 border border-white/20 shrink-0 shadow-xl flex items-center justify-center">
+                  {focusedMember.image ? (
+                    <img
+                      src={focusedMember.image}
+                      alt={focusedMember.name}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-[#150c2e] font-extrabold text-4xl text-purple-200">
+                      {focusedMember.initials}
+                    </div>
+                  )}
                 </div>
 
                 {/* Profile Details */}
