@@ -25,7 +25,8 @@ import {
   Workflow, 
   FileCheck2,
   Cpu,
-  X
+  X,
+  ArrowUpRight
 } from 'lucide-react';
 
 /* ─────────────────────────────────────────────────────────────
@@ -236,20 +237,20 @@ export const offshoreTeam = [
     id: 'raghavendra-tg',
     name: 'Raghavendra TG',
     role: 'Engineering Manager',
-    domain: 'Engineering Leadership & Execution',
+    domain: 'Engineering Leadership',
+    image: '/images/team/offshore/Raghavendra TG.png',
     initials: 'RT',
-    gradient: 'from-[#8b5cf6] to-[#6366f1]',
-    icon: Workflow,
+    tagline: 'Engineering Leadership & Delivery',
     bio: 'Leads engineering execution across Guardian’s software development initiatives. Coordinates technical delivery and helps align engineering priorities with product and business objectives.'
   },
   {
     id: 'rajiv-jose',
     name: 'Rajiv Jose',
     role: 'Senior Technical Lead',
-    domain: 'Technical Governance & Quality',
+    domain: 'Technical Governance',
+    image: '/images/team/offshore/Rajiv.png',
     initials: 'RJ',
-    gradient: 'from-[#6366f1] to-[#3b82f6]',
-    icon: Terminal,
+    tagline: 'Quality & Architectural Oversight',
     bio: 'Guides technical implementation and supports engineering decisions across development projects. Helps maintain code quality, consistency, and reliable delivery.'
   },
   {
@@ -257,29 +258,29 @@ export const offshoreTeam = [
     name: 'Abinash Mishra',
     role: 'Senior Software Engineer',
     domain: 'Application Engineering',
+    image: '/images/team/offshore/Abinash Mishra.png',
     initials: 'AM',
-    gradient: 'from-[#3b82f6] to-[#0ea5e9]',
-    icon: Code2,
+    tagline: 'Platform & Feature Development',
     bio: 'Develops and enhances Guardian’s software applications and platform capabilities. Contributes to implementing features, resolving technical issues, and improving application reliability.'
   },
   {
     id: 'balaji-devendiran',
     name: 'Balaji Devendiran',
     role: 'Senior SQL Developer',
-    domain: 'Database & Query Optimization',
+    domain: 'Database & Data Operations',
+    image: '/images/team/offshore/Balaji D.png',
     initials: 'BD',
-    gradient: 'from-[#0ea5e9] to-[#10b981]',
-    icon: Database,
+    tagline: 'Query & Schema Optimization',
     bio: 'Develops and optimizes database queries, stored procedures, and data operations. Helps ensure efficient data access and reliable database performance.'
   },
   {
     id: 'yashwanth-kumar',
     name: 'Yashwanth Vittal Kumar',
     role: 'Software Developer',
-    domain: 'Feature & Component Development',
+    domain: 'Feature Engineering',
+    image: '/images/team/offshore/Yashwanth V.png',
     initials: 'YK',
-    gradient: 'from-[#10b981] to-[#14b8a6]',
-    icon: Code2,
+    tagline: 'Component & Systems Development',
     bio: 'Builds and maintains application features and software components. Contributes to implementing product requirements and improving existing functionality.'
   },
   {
@@ -287,9 +288,9 @@ export const offshoreTeam = [
     name: 'Suhil Mushtaq',
     role: 'Technical Lead',
     domain: 'Architecture & Development',
+    image: '/images/team/offshore/Suhail Mushtaq.png',
     initials: 'SM',
-    gradient: 'from-[#f59e0b] to-[#ea580c]',
-    icon: Layers,
+    tagline: 'Full-Stack Architecture & Standards',
     bio: 'Coordinates technical implementation and guides development activities within the team. Helps resolve complex technical challenges and maintain consistent engineering standards.'
   },
   {
@@ -297,39 +298,39 @@ export const offshoreTeam = [
     name: 'Nalamati Vara Lakshmi',
     role: 'Senior Tester Engineer',
     domain: 'Quality Assurance & Testing',
+    image: null,
     initials: 'NL',
-    gradient: 'from-[#ec4899] to-[#f43f5e]',
-    icon: CheckCircle2,
+    tagline: 'Quality Assurance & Automated Testing',
     bio: 'Tests application functionality and verifies that software behaves as expected. Identifies defects and supports the delivery of dependable software releases.'
   },
   {
     id: 'apoorva-sm',
     name: 'Apoorva SM',
     role: 'Engineering Operation Coordinator',
-    domain: 'Engineering Operations & Alignment',
+    domain: 'Engineering Operations',
+    image: null,
     initials: 'AS',
-    gradient: 'from-[#a855f7] to-[#ec4899]',
-    icon: Activity,
+    tagline: 'Operational Execution & Tracking',
     bio: 'Coordinates engineering activities and supports the smooth execution of development operations. Helps maintain alignment across tasks, teams, and delivery processes.'
   },
   {
     id: 'darshan-umesha',
     name: 'Darshan Umesha',
     role: 'Junior Software Developer',
-    domain: 'Application Development & Support',
+    domain: 'Application Development',
+    image: '/images/team/offshore/Darshan U.png',
     initials: 'DU',
-    gradient: 'from-[#06b6d4] to-[#3b82f6]',
-    icon: Terminal,
+    tagline: 'Application Support & Enhancements',
     bio: 'Contributes to application development, feature implementation, and software maintenance. Works with the engineering team to improve existing functionality and deliver product enhancements.'
   },
   {
     id: 'sokkanathan-k',
     name: 'Sokkanathan K',
     role: 'Senior Designer',
-    domain: 'UI/UX & Healthcare Design',
+    domain: 'UI/UX & Product Design',
+    image: '/images/team/offshore/Sokkanathan K.png',
     initials: 'SK',
-    gradient: 'from-[#ff7a57] to-[#ec4899]',
-    icon: PenTool,
+    tagline: 'Healthcare Experience & Interface Systems',
     bio: 'Designs user experiences and interfaces for Guardian’s healthcare applications. Collaborates with product and engineering teams to turn complex healthcare workflows into clear, usable experiences.'
   }
 ];
@@ -924,50 +925,82 @@ export default function UnifiedLeadershipCarousel() {
                   </button>
                 </div>
 
-                {/* 10 Offshore Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                  {offshoreTeam.map((member) => {
-                    const RoleIcon = member.icon;
-                    return (
-                      <div
-                        key={member.id}
-                        className="group relative rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 p-4 transition-all duration-300 flex flex-col justify-between shadow-md"
-                      >
-                        <div>
-                          {/* Monogram Avatar & Domain Tag */}
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="relative shrink-0">
-                              <div className={`w-12 h-12 rounded-xl bg-gradient-to-tr ${member.gradient} p-0.5 shadow-sm`}>
-                                <div className="w-full h-full rounded-xl bg-[#140b2a] flex items-center justify-center font-bold text-sm text-white">
-                                  {member.initials}
-                                </div>
+                {/* 10 Offshore Vertical Portrait Cards (Dark Mode) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+                  {offshoreTeam.map((member) => (
+                    <div
+                      key={member.id}
+                      onClick={() => setFocusedMember({
+                        ...member,
+                        discipline: member.domain,
+                        experience: 'Offshore Engineering',
+                        credentials: member.domain
+                      })}
+                      className="group cursor-pointer rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-lg hover:shadow-[0_16px_36px_rgba(123,63,199,0.25)] hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between"
+                    >
+                      <div>
+                        {/* Top Portrait Photo Container */}
+                        <div className="relative w-full aspect-[4/4.5] overflow-hidden bg-gradient-to-t from-[#1b1435] via-[#2a1d4a] to-[#3a2768] flex items-center justify-center">
+                          {member.image ? (
+                            <img
+                              src={member.image}
+                              alt={member.name}
+                              className="w-full h-full object-cover object-top filter contrast-105 group-hover:scale-105 transition-transform duration-500"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#241747] to-[#120a2a] p-4 text-center">
+                              <div className="w-16 h-16 rounded-full bg-purple-500/20 border border-purple-400/40 flex items-center justify-center font-extrabold text-2xl text-purple-200 shadow-md mb-2">
+                                {member.initials}
                               </div>
-                              <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#181036] border border-purple-400/50 flex items-center justify-center text-purple-200 group-hover:bg-[#7b3fc7] group-hover:text-white transition-colors">
-                                <RoleIcon className="w-2.5 h-2.5" />
-                              </div>
+                              <span className="text-[10px] text-purple-300 font-medium uppercase tracking-wider">{member.domain}</span>
                             </div>
+                          )}
 
-                            <div className="min-w-0">
-                              <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-purple-200 transition-colors leading-tight truncate">
-                                {member.name}
-                              </h4>
-                              <p className="text-[11px] font-semibold text-purple-300 leading-tight mt-0.5 truncate">
-                                {member.role}
-                              </p>
-                              <span className="inline-block text-[9px] font-medium text-purple-200/60 uppercase tracking-wider truncate max-w-full">
-                                {member.domain}
-                              </span>
-                            </div>
+                          {/* Gradient bottom shadow overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+                          {/* Top-Left Pill Badge */}
+                          <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/45 backdrop-blur-md text-white/90 border border-white/20 text-[9px] font-bold uppercase tracking-wider z-10">
+                            {member.id === 'raghavendra-tg' ? 'LEADERSHIP' : 'ENGINEERING'}
+                          </span>
+
+                          {/* Discipline Badge Overlaid at Bottom of Photo */}
+                          <div className="absolute bottom-2.5 left-3.5 right-3.5 z-10">
+                            <span className="text-[9.5px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] block truncate">
+                              {member.domain}
+                            </span>
                           </div>
+                        </div>
 
-                          {/* 2-Line Bio */}
-                          <p className="text-[11px] text-purple-200/75 leading-relaxed font-normal">
+                        {/* Card Content Body */}
+                        <div className="p-4 sm:p-5">
+                          <h4 className="text-sm sm:text-base font-extrabold text-white group-hover:text-purple-200 transition-colors leading-snug">
+                            {member.name}
+                          </h4>
+                          <p className="text-xs font-semibold text-purple-300 mt-1 leading-tight">
+                            {member.role}
+                          </p>
+
+                          <p className="text-[11px] sm:text-xs text-purple-200/75 mt-2 line-clamp-2 leading-relaxed font-normal">
                             {member.bio}
                           </p>
                         </div>
                       </div>
-                    );
-                  })}
+
+                      {/* Footer Callout */}
+                      <div className="px-4 sm:px-5 pb-4 pt-0">
+                        <div className="pt-2.5 border-t border-white/[0.08] flex items-center justify-between text-xs font-semibold text-purple-300">
+                          <span className="text-[10.5px] text-purple-200/60 font-normal truncate max-w-[130px]">
+                            {member.tagline}
+                          </span>
+                          <div className="w-6 h-6 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-[#7b3fc7] group-hover:text-white flex items-center justify-center transition-colors text-purple-300 shrink-0">
+                            <ArrowUpRight className="w-3 h-3" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </motion.div>
             )}
