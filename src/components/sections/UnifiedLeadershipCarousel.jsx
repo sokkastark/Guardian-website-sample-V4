@@ -530,16 +530,16 @@ export default function UnifiedLeadershipCarousel() {
 
         </div>
 
-        {/* ── CAROUSEL SLIDES CONTAINER (Unified consistent height across all 3 slides) ── */}
+        {/* ── CAROUSEL SLIDES CONTAINER (Unified consistent height across all 3 slides: 600px) ── */}
         <div 
-          className="relative w-full min-h-0 lg:h-[500px]"
+          className="relative w-full min-h-0 lg:h-[600px]"
           onMouseEnter={() => setIsCardHovered(true)}
           onMouseLeave={() => setIsCardHovered(false)}
         >
           <AnimatePresence mode="wait">
             
             {/* ══════════════════════════════════════════════════════════════
-                SLIDE 1: EXECUTIVE LEADERSHIP (RADIAL CONSTELLATION - 500px)
+                SLIDE 1: EXECUTIVE LEADERSHIP (RADIAL CONSTELLATION - 600px)
                 ══════════════════════════════════════════════════════════════ */}
             {activeSlide === 0 && (
               <motion.div
@@ -550,8 +550,8 @@ export default function UnifiedLeadershipCarousel() {
                 transition={{ duration: 0.35, ease: 'easeOut' }}
                 className="w-full h-full flex flex-col justify-center"
               >
-                {/* ── DESKTOP: RADIAL CONSTELLATION STAGE (Compact 1100 x 640 viewBox) ── */}
-                <div className="hidden lg:block relative w-full h-[480px] max-w-[1020px] mx-auto select-none">
+                {/* ── DESKTOP: RADIAL CONSTELLATION STAGE (Comfortable 550px stage) ── */}
+                <div className="hidden lg:block relative w-full h-[550px] max-w-[1060px] mx-auto select-none">
 
                   {/* SVG Connector Spokes radiating from Central Hub (550, 320) */}
                   <svg 
@@ -618,7 +618,7 @@ export default function UnifiedLeadershipCarousel() {
                   {/* ── CENTER HUB: Compact Guardian Glass Sphere ── */}
                   <div 
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto"
-                    style={{ width: '190px', height: '190px' }}
+                    style={{ width: '196px', height: '196px' }}
                   >
                     {/* Outer Halo Glow */}
                     <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-[#7b3fc7]/40 via-[#3b82f6]/30 to-[#a855f7]/40 blur-xl animate-pulse-subtle pointer-events-none" />
@@ -635,7 +635,7 @@ export default function UnifiedLeadershipCarousel() {
                           <img 
                             src="/logos/logo-white.png" 
                             alt="Guardian Health Service" 
-                            className="h-7 sm:h-8 w-auto max-w-[135px] object-contain filter drop-shadow-[0_2px_10px_rgba(255,255,255,0.35)]"
+                            className="h-7 sm:h-8 w-auto max-w-[140px] object-contain filter drop-shadow-[0_2px_10px_rgba(255,255,255,0.35)]"
                           />
                         </div>
 
@@ -767,7 +767,7 @@ export default function UnifiedLeadershipCarousel() {
             )}
 
             {/* ══════════════════════════════════════════════════════════════
-                SLIDE 2: ONSITE TEAM (500px UNIFIED HEIGHT)
+                SLIDE 2: ONSITE TEAM (600px UNIFIED HEIGHT)
                 ══════════════════════════════════════════════════════════════ */}
             {activeSlide === 1 && (
               <motion.div
@@ -779,7 +779,7 @@ export default function UnifiedLeadershipCarousel() {
                 className="w-full h-full flex flex-col justify-between"
               >
                 {/* Onsite Header Bar matching Offshore Bar */}
-                <div className="mb-2 flex items-center justify-between gap-3 border-b border-purple-500/20 pb-2">
+                <div className="mb-2.5 flex items-center justify-between gap-3 border-b border-purple-500/20 pb-2">
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-0.5 rounded-full bg-[#7b3fc7]/20 text-purple-300 text-[9.5px] font-bold uppercase tracking-wider border border-purple-400/30">
                       Client &amp; Operational Interface
@@ -799,7 +799,7 @@ export default function UnifiedLeadershipCarousel() {
                 </div>
 
                 {/* 6 Onsite Capsule Cards (Centered & perfectly spaced to fill height) */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 flex-1 content-center my-auto py-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5 flex-1 content-center my-auto py-2">
                   {onsiteTeam.map((member) => (
                     <div
                       key={member.id}
@@ -809,10 +809,10 @@ export default function UnifiedLeadershipCarousel() {
                         experience: 'Onsite Team',
                         credentials: member.domain
                       })}
-                      className="group cursor-pointer rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-xs hover:shadow-[0_8px_20px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 p-2 sm:p-2.5 flex items-center justify-between gap-3"
+                      className="group cursor-pointer rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-xs hover:shadow-[0_8px_24px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 p-2.5 sm:p-3 flex items-center justify-between gap-3.5"
                     >
                       {/* Left Circular Portrait */}
-                      <div className="relative w-13 h-13 sm:w-14 sm:h-14 rounded-full shrink-0 overflow-hidden p-0.5 bg-gradient-to-tr from-[#7b3fc7] via-[#a855f7] to-[#ff7a57] shadow-xs group-hover:scale-105 transition-transform duration-300">
+                      <div className="relative w-14 h-14 sm:w-15 sm:h-15 rounded-full shrink-0 overflow-hidden p-0.5 bg-gradient-to-tr from-[#7b3fc7] via-[#a855f7] to-[#ff7a57] shadow-xs group-hover:scale-105 transition-transform duration-300">
                         <div className="w-full h-full rounded-full overflow-hidden bg-[#160d33] flex items-center justify-center">
                           {member.image ? (
                             <img
@@ -822,7 +822,7 @@ export default function UnifiedLeadershipCarousel() {
                               loading="lazy"
                             />
                           ) : (
-                            <span className="font-extrabold text-xs sm:text-sm text-white tracking-wider">
+                            <span className="font-extrabold text-sm text-white tracking-wider">
                               {member.initials}
                             </span>
                           )}
@@ -835,12 +835,12 @@ export default function UnifiedLeadershipCarousel() {
                           <h4 className="text-xs sm:text-sm font-extrabold text-white group-hover:text-purple-200 transition-colors truncate">
                             {member.name}
                           </h4>
-                          <span className="text-[8px] sm:text-[9px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] bg-[#ff7a57]/15 border border-[#ff7a57]/30 px-1.5 py-0.2 rounded-full shrink-0">
+                          <span className="text-[8.5px] sm:text-[9.5px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] bg-[#ff7a57]/15 border border-[#ff7a57]/30 px-1.5 py-0.2 rounded-full shrink-0">
                             {member.domain}
                           </span>
                         </div>
 
-                        <p className="text-[10.5px] sm:text-[11px] font-semibold text-purple-300 mb-0.5 truncate">
+                        <p className="text-[11px] font-semibold text-purple-300 mb-0.5 truncate">
                           {member.role}
                         </p>
 
@@ -850,24 +850,24 @@ export default function UnifiedLeadershipCarousel() {
                       </div>
 
                       {/* Far Right Arrow Circle */}
-                      <div className="hidden sm:flex w-6 h-6 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-[#7b3fc7] group-hover:border-purple-400 text-purple-300 group-hover:text-white items-center justify-center shrink-0 mr-1 transition-all duration-200 shadow-xs">
-                        <ChevronRight className="w-3 h-3" />
+                      <div className="hidden sm:flex w-7 h-7 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-[#7b3fc7] group-hover:border-purple-400 text-purple-300 group-hover:text-white items-center justify-center shrink-0 mr-1 transition-all duration-200 shadow-xs">
+                        <ChevronRight className="w-3.5 h-3.5" />
                       </div>
                     </div>
                   ))}
                 </div>
 
                 {/* ── BOTTOM STRIP FOR OFFSHORE TEAM TRIGGER ── */}
-                <div className="rounded-2xl bg-gradient-to-r from-[#1d1238] via-[#241347] to-[#1d1238] border border-purple-400/30 p-2.5 sm:p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 shadow-lg">
-                  <div className="flex items-center gap-2.5 text-center sm:text-left">
-                    <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#ff7a57] to-[#ec4899] flex items-center justify-center text-white shrink-0 shadow-md">
-                      <Code2 className="w-3.5 h-3.5" />
+                <div className="rounded-2xl bg-gradient-to-r from-[#1d1238] via-[#241347] to-[#1d1238] border border-purple-400/30 p-3 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg">
+                  <div className="flex items-center gap-3 text-center sm:text-left">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#ff7a57] to-[#ec4899] flex items-center justify-center text-white shrink-0 shadow-md">
+                      <Code2 className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-white leading-tight">
+                      <h4 className="text-xs sm:text-sm font-bold text-white leading-tight">
                         Looking for the core engineering powerhouse?
                       </h4>
-                      <p className="text-[10.5px] text-purple-200/70 leading-tight">
+                      <p className="text-[10.5px] sm:text-[11px] text-purple-200/70 leading-tight">
                         Explore Guardian’s Offshore Engineering &amp; Development Team building and maintaining our platform.
                       </p>
                     </div>
@@ -875,17 +875,17 @@ export default function UnifiedLeadershipCarousel() {
 
                   <button
                     onClick={openOffshoreView}
-                    className="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#ff7a57] via-[#ea580c] to-[#ff7a57] text-white text-[11px] font-bold tracking-wide uppercase shadow-md hover:shadow-[0_0_18px_rgba(255,122,87,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                    className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#ff7a57] via-[#ea580c] to-[#ff7a57] text-white text-xs font-bold tracking-wide uppercase shadow-md hover:shadow-[0_0_20px_rgba(255,122,87,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
                   >
                     <span>Explore Offshore Team</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </motion.div>
             )}
 
             {/* ══════════════════════════════════════════════════════════════
-                SLIDE 3: OFFSHORE ENGINEERING (500px UNIFIED HEIGHT)
+                SLIDE 3: OFFSHORE ENGINEERING (600px UNIFIED HEIGHT)
                 ══════════════════════════════════════════════════════════════ */}
             {activeSlide === 2 && (
               <motion.div
@@ -897,7 +897,7 @@ export default function UnifiedLeadershipCarousel() {
                 className="w-full h-full flex flex-col justify-between"
               >
                 {/* Offshore Header Bar */}
-                <div className="mb-2 flex items-center justify-between gap-3 border-b border-purple-500/20 pb-2">
+                <div className="mb-2.5 flex items-center justify-between gap-3 border-b border-purple-500/20 pb-2">
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-0.5 rounded-full bg-[#ff7a57]/15 text-[#ff7a57] text-[9.5px] font-bold uppercase tracking-wider border border-[#ff7a57]/30">
                       Core Engineering
@@ -916,8 +916,8 @@ export default function UnifiedLeadershipCarousel() {
                   </button>
                 </div>
 
-                {/* 10 Offshore Portrait Cards (Centered to fill height) */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 flex-1 content-center my-auto py-1">
+                {/* 10 Offshore Portrait Cards (Comfortable uncropped 2-row layout) */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 flex-1 content-center my-auto py-1">
                   {offshoreTeam.map((member) => (
                     <div
                       key={member.id}
@@ -927,7 +927,7 @@ export default function UnifiedLeadershipCarousel() {
                         experience: 'Offshore Engineering',
                         credentials: member.domain
                       })}
-                      className="group cursor-pointer rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-sm hover:shadow-[0_10px_24px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden flex flex-col justify-between"
+                      className="group cursor-pointer rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-sm hover:shadow-[0_12px_28px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden flex flex-col justify-between"
                     >
                       <div>
                         {/* Top Portrait Photo Container */}
@@ -940,11 +940,11 @@ export default function UnifiedLeadershipCarousel() {
                               loading="lazy"
                             />
                           ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#241747] to-[#120a2a] p-1.5 text-center">
-                              <div className="w-10 h-10 rounded-full bg-purple-500/20 border border-purple-400/40 flex items-center justify-center font-extrabold text-base text-purple-200 shadow-md mb-0.5">
+                            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#241747] to-[#120a2a] p-2 text-center">
+                              <div className="w-11 h-11 rounded-full bg-purple-500/20 border border-purple-400/40 flex items-center justify-center font-extrabold text-lg text-purple-200 shadow-md mb-1">
                                 {member.initials}
                               </div>
-                              <span className="text-[8.5px] text-purple-300 font-medium uppercase tracking-wider">{member.domain}</span>
+                              <span className="text-[9px] text-purple-300 font-medium uppercase tracking-wider">{member.domain}</span>
                             </div>
                           )}
 
@@ -957,7 +957,7 @@ export default function UnifiedLeadershipCarousel() {
                           </span>
 
                           {/* Discipline Badge Overlaid at Bottom of Photo */}
-                          <div className="absolute bottom-1 left-2 right-2 z-10">
+                          <div className="absolute bottom-1.5 left-2.5 right-2.5 z-10">
                             <span className="text-[8.5px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] block truncate">
                               {member.domain}
                             </span>
@@ -965,27 +965,27 @@ export default function UnifiedLeadershipCarousel() {
                         </div>
 
                         {/* Card Content Body */}
-                        <div className="p-2.5">
-                          <h4 className="text-xs sm:text-[13px] font-extrabold text-white group-hover:text-purple-200 transition-colors leading-tight truncate">
+                        <div className="p-2.5 sm:p-3">
+                          <h4 className="text-xs sm:text-sm font-extrabold text-white group-hover:text-purple-200 transition-colors leading-tight truncate">
                             {member.name}
                           </h4>
-                          <p className="text-[10px] sm:text-[10.5px] font-semibold text-purple-300 mt-0.5 leading-tight truncate">
+                          <p className="text-[10.5px] sm:text-[11px] font-semibold text-purple-300 mt-0.5 leading-tight truncate">
                             {member.role}
                           </p>
 
-                          <p className="text-[9.5px] text-purple-200/75 mt-1 line-clamp-1 leading-tight font-normal">
+                          <p className="text-[9.5px] sm:text-[10px] text-purple-200/75 mt-1 line-clamp-1 leading-tight font-normal">
                             {member.bio}
                           </p>
                         </div>
                       </div>
 
                       {/* Footer Callout */}
-                      <div className="px-2.5 pb-2 pt-0">
-                        <div className="pt-1 border-t border-white/[0.08] flex items-center justify-between text-xs font-semibold text-purple-300">
-                          <span className="text-[9px] text-purple-200/60 font-normal truncate max-w-[105px]">
+                      <div className="px-3 pb-2.5 pt-0">
+                        <div className="pt-1.5 border-t border-white/[0.08] flex items-center justify-between text-xs font-semibold text-purple-300">
+                          <span className="text-[9.5px] text-purple-200/60 font-normal truncate max-w-[110px]">
                             {member.tagline}
                           </span>
-                          <div className="w-4.5 h-4.5 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-[#7b3fc7] group-hover:text-white flex items-center justify-center transition-colors text-purple-300 shrink-0">
+                          <div className="w-5 h-5 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-[#7b3fc7] group-hover:text-white flex items-center justify-center transition-colors text-purple-300 shrink-0">
                             <ArrowUpRight className="w-2.5 h-2.5" />
                           </div>
                         </div>
