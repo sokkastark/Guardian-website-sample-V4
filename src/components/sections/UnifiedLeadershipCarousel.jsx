@@ -530,16 +530,16 @@ export default function UnifiedLeadershipCarousel() {
 
         </div>
 
-        {/* ── CAROUSEL SLIDES CONTAINER (Viewport-optimized, hover pauses auto-rotation) ── */}
+        {/* ── CAROUSEL SLIDES CONTAINER (Unified consistent height across all 3 slides) ── */}
         <div 
-          className="relative"
+          className="relative w-full min-h-0 lg:h-[500px]"
           onMouseEnter={() => setIsCardHovered(true)}
           onMouseLeave={() => setIsCardHovered(false)}
         >
           <AnimatePresence mode="wait">
             
             {/* ══════════════════════════════════════════════════════════════
-                SLIDE 1: EXECUTIVE LEADERSHIP (RADIAL CONSTELLATION - 510px)
+                SLIDE 1: EXECUTIVE LEADERSHIP (RADIAL CONSTELLATION - 500px)
                 ══════════════════════════════════════════════════════════════ */}
             {activeSlide === 0 && (
               <motion.div
@@ -548,9 +548,10 @@ export default function UnifiedLeadershipCarousel() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="w-full h-full flex flex-col justify-center"
               >
                 {/* ── DESKTOP: RADIAL CONSTELLATION STAGE (Compact 1100 x 640 viewBox) ── */}
-                <div className="hidden lg:block relative w-full h-[490px] max-w-[1020px] mx-auto select-none">
+                <div className="hidden lg:block relative w-full h-[480px] max-w-[1020px] mx-auto select-none">
 
                   {/* SVG Connector Spokes radiating from Central Hub (550, 320) */}
                   <svg 
@@ -732,7 +733,7 @@ export default function UnifiedLeadershipCarousel() {
                 </div>
 
                 {/* ── MOBILE / TABLET ADAPTATION (block lg:hidden) ── */}
-                <div className="block lg:hidden my-4">
+                <div className="block lg:hidden my-2">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {executiveConstellation.map((sat) => {
                       const IconComponent = sat.icon;
@@ -766,7 +767,7 @@ export default function UnifiedLeadershipCarousel() {
             )}
 
             {/* ══════════════════════════════════════════════════════════════
-                SLIDE 2: ONSITE TEAM (COMPACT CAPSULE CARDS + COMPACT BANNER)
+                SLIDE 2: ONSITE TEAM (500px UNIFIED HEIGHT)
                 ══════════════════════════════════════════════════════════════ */}
             {activeSlide === 1 && (
               <motion.div
@@ -775,9 +776,30 @@ export default function UnifiedLeadershipCarousel() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="w-full h-full flex flex-col justify-between"
               >
-                {/* 6 Onsite Capsule Cards (Dark Mode Pill Style, compact layout) */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-2.5 mb-3">
+                {/* Onsite Header Bar matching Offshore Bar */}
+                <div className="mb-2 flex items-center justify-between gap-3 border-b border-purple-500/20 pb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded-full bg-[#7b3fc7]/20 text-purple-300 text-[9.5px] font-bold uppercase tracking-wider border border-purple-400/30">
+                      Client &amp; Operational Interface
+                    </span>
+                    <span className="text-xs text-purple-200/80">
+                      6 cross-functional leaders bridging healthcare stakeholders and technical execution.
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={openOffshoreView}
+                    className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-[#ff7a57]/20 to-[#ea580c]/20 hover:from-[#ff7a57]/30 hover:to-[#ea580c]/30 border border-[#ff7a57]/40 text-xs font-semibold text-[#ff7a57] hover:text-white transition-all cursor-pointer"
+                  >
+                    <span>View Offshore</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* 6 Onsite Capsule Cards (Centered & perfectly spaced to fill height) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 flex-1 content-center my-auto py-2">
                   {onsiteTeam.map((member) => (
                     <div
                       key={member.id}
@@ -787,10 +809,10 @@ export default function UnifiedLeadershipCarousel() {
                         experience: 'Onsite Team',
                         credentials: member.domain
                       })}
-                      className="group cursor-pointer rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-xs hover:shadow-[0_8px_20px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 p-1.5 sm:p-2 flex items-center justify-between gap-2.5 sm:gap-3"
+                      className="group cursor-pointer rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-xs hover:shadow-[0_8px_20px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 p-2 sm:p-2.5 flex items-center justify-between gap-3"
                     >
                       {/* Left Circular Portrait */}
-                      <div className="relative w-12 h-12 sm:w-13 sm:h-13 rounded-full shrink-0 overflow-hidden p-0.5 bg-gradient-to-tr from-[#7b3fc7] via-[#a855f7] to-[#ff7a57] shadow-xs group-hover:scale-105 transition-transform duration-300">
+                      <div className="relative w-13 h-13 sm:w-14 sm:h-14 rounded-full shrink-0 overflow-hidden p-0.5 bg-gradient-to-tr from-[#7b3fc7] via-[#a855f7] to-[#ff7a57] shadow-xs group-hover:scale-105 transition-transform duration-300">
                         <div className="w-full h-full rounded-full overflow-hidden bg-[#160d33] flex items-center justify-center">
                           {member.image ? (
                             <img
@@ -810,7 +832,7 @@ export default function UnifiedLeadershipCarousel() {
                       {/* Middle Content Body */}
                       <div className="flex-1 min-w-0 pr-1">
                         <div className="flex flex-wrap items-center gap-1.5 mb-0.5">
-                          <h4 className="text-xs sm:text-[13px] font-extrabold text-white group-hover:text-purple-200 transition-colors truncate">
+                          <h4 className="text-xs sm:text-sm font-extrabold text-white group-hover:text-purple-200 transition-colors truncate">
                             {member.name}
                           </h4>
                           <span className="text-[8px] sm:text-[9px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] bg-[#ff7a57]/15 border border-[#ff7a57]/30 px-1.5 py-0.2 rounded-full shrink-0">
@@ -835,7 +857,7 @@ export default function UnifiedLeadershipCarousel() {
                   ))}
                 </div>
 
-                {/* ── COMPACT BOTTOM STRIP FOR OFFSHORE TEAM TRIGGER ── */}
+                {/* ── BOTTOM STRIP FOR OFFSHORE TEAM TRIGGER ── */}
                 <div className="rounded-2xl bg-gradient-to-r from-[#1d1238] via-[#241347] to-[#1d1238] border border-purple-400/30 p-2.5 sm:p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 shadow-lg">
                   <div className="flex items-center gap-2.5 text-center sm:text-left">
                     <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#ff7a57] to-[#ec4899] flex items-center justify-center text-white shrink-0 shadow-md">
@@ -863,7 +885,7 @@ export default function UnifiedLeadershipCarousel() {
             )}
 
             {/* ══════════════════════════════════════════════════════════════
-                ON-DEMAND VIEW: OFFSHORE ENGINEERING (PORTRAIT CARDS - COMPACT)
+                SLIDE 3: OFFSHORE ENGINEERING (500px UNIFIED HEIGHT)
                 ══════════════════════════════════════════════════════════════ */}
             {activeSlide === 2 && (
               <motion.div
@@ -872,9 +894,10 @@ export default function UnifiedLeadershipCarousel() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="w-full h-full flex flex-col justify-between"
               >
                 {/* Offshore Header Bar */}
-                <div className="mb-2.5 flex items-center justify-between gap-3 border-b border-purple-500/20 pb-2">
+                <div className="mb-2 flex items-center justify-between gap-3 border-b border-purple-500/20 pb-2">
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-0.5 rounded-full bg-[#ff7a57]/15 text-[#ff7a57] text-[9.5px] font-bold uppercase tracking-wider border border-[#ff7a57]/30">
                       Core Engineering
@@ -893,8 +916,8 @@ export default function UnifiedLeadershipCarousel() {
                   </button>
                 </div>
 
-                {/* 10 Offshore Portrait Cards (5 cols x 2 rows, compact height) */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
+                {/* 10 Offshore Portrait Cards (Centered to fill height) */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 flex-1 content-center my-auto py-1">
                   {offshoreTeam.map((member) => (
                     <div
                       key={member.id}
