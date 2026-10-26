@@ -406,8 +406,8 @@ export default function UnifiedLeadershipCarousel() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
         
-        {/* ── SECTION HEADER ── */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+        {/* ── SECTION HEADER (Left-aligned to match other sections) ── */}
+        <div className="max-w-3xl mb-10 sm:mb-14 text-left">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1e1338] border border-purple-500/30 text-purple-200 text-xs font-semibold tracking-wider uppercase mb-4 backdrop-blur-md shadow-xs">
             <Users className="w-3.5 h-3.5 text-purple-300" />
             <span>LEADERSHIP &amp; TEAM</span>
