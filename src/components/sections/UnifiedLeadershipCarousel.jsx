@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Users, 
@@ -9,7 +9,6 @@ import {
   ChevronRight, 
   Pause, 
   Play, 
-  Sparkles,
   Code2, 
   Database, 
   Layers, 
@@ -24,14 +23,12 @@ import {
   BarChart3, 
   Globe, 
   Workflow, 
-  X,
   FileCheck2,
   Cpu
 } from 'lucide-react';
 
 /* ─────────────────────────────────────────────────────────────
    1. EXECUTIVE LEADERSHIP TEAM (Slide 1)
-   Confirmed verified profiles and portraits
    ───────────────────────────────────────────────────────────── */
 export const executiveLeadership = [
   {
@@ -108,7 +105,6 @@ export const executiveLeadership = [
 
 /* ─────────────────────────────────────────────────────────────
    2. ONSITE TEAM (Slide 2)
-   Connecting technology with operations & business needs
    ───────────────────────────────────────────────────────────── */
 export const onsiteTeam = [
   {
@@ -175,7 +171,6 @@ export const onsiteTeam = [
 
 /* ─────────────────────────────────────────────────────────────
    3. OFFSHORE ENGINEERING & DEVELOPMENT TEAM (On-Demand View)
-   The core team building & maintaining Guardian applications
    ───────────────────────────────────────────────────────────── */
 export const offshoreTeam = [
   {
@@ -284,46 +279,31 @@ export default function UnifiedLeadershipCarousel() {
   // Current active slide: 0 = Executive Leadership, 1 = Onsite Team, 2 = Offshore Team (On Demand)
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [timerProgress, setTimerProgress] = useState(0);
 
-  const ROTATION_SECONDS = 15;
-  const timerRef = useRef(null);
-  const progressIntervalRef = useRef(null);
-
-  // Auto-rotation logic
+  // Reliable Auto-rotation interval: 12 seconds per slide
   useEffect(() => {
-    // If on offshore view (slide 2), or user paused, or user hovered: freeze rotation
-    if (activeSlide === 2 || isPaused || isHovered) {
-      clearInterval(progressIntervalRef.current);
-      return;
-    }
+    if (isPaused) return;
 
-    setTimerProgress(0);
-    const stepTime = 100; // update progress every 100ms
-    const totalSteps = (ROTATION_SECONDS * 1000) / stepTime;
+    const intervalTime = activeSlide === 2 ? 15000 : 12000;
 
-    progressIntervalRef.current = setInterval(() => {
-      setTimerProgress((prev) => {
-        if (prev >= 100) {
-          // Advance slide between 0 and 1
-          setActiveSlide((curr) => (curr === 0 ? 1 : 0));
-          return 0;
-        }
-        return prev + (100 / totalSteps);
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => {
+        if (prev === 0) return 1;
+        if (prev === 1) return 0;
+        // If currently on offshore (2), auto-return to Executive (0)
+        return 0;
       });
-    }, stepTime);
+    }, intervalTime);
 
-    return () => clearInterval(progressIntervalRef.current);
-  }, [activeSlide, isPaused, isHovered]);
+    return () => clearInterval(timer);
+  }, [activeSlide, isPaused]);
 
   const handleNext = () => {
     if (activeSlide === 2) {
-      setActiveSlide(1);
+      setActiveSlide(0);
     } else {
       setActiveSlide((prev) => (prev === 0 ? 1 : 0));
     }
-    setTimerProgress(0);
   };
 
   const handlePrev = () => {
@@ -332,17 +312,14 @@ export default function UnifiedLeadershipCarousel() {
     } else {
       setActiveSlide((prev) => (prev === 1 ? 0 : 1));
     }
-    setTimerProgress(0);
   };
 
   const openOffshoreView = () => {
     setActiveSlide(2);
-    setTimerProgress(0);
   };
 
   const returnFromOffshore = () => {
     setActiveSlide(1);
-    setTimerProgress(0);
   };
 
   return (
@@ -350,8 +327,6 @@ export default function UnifiedLeadershipCarousel() {
       id="leadership" 
       className="relative py-20 sm:py-28 bg-[#090514] text-white overflow-hidden scroll-mt-20"
       aria-label="Leadership & Team Organization"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* ── AMBIENT BACKGROUND GLOWS ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -385,11 +360,11 @@ export default function UnifiedLeadershipCarousel() {
         {/* ── CAROUSEL CONTROLS BAR ── */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-2 sm:p-2.5 rounded-2xl bg-[#140c2c]/80 border border-white/10 backdrop-blur-xl mb-8 shadow-xl">
           
-          {/* Slide Indicator Tabs */}
-          <div className="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+          {/* Slide Indicator Tabs (Team counts removed) */}
+          <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
             {/* Tab 0: Executive */}
             <button
-              onClick={() => { setActiveSlide(0); setTimerProgress(0); }}
+              onClick={() => setActiveSlide(0)}
               className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
                 activeSlide === 0
                   ? 'bg-gradient-to-r from-[#7b3fc7] to-[#6366f1] text-white shadow-md'
@@ -398,20 +373,22 @@ export default function UnifiedLeadershipCarousel() {
             >
               <Award className="w-3.5 h-3.5" />
               <span>Executive Leadership</span>
-              <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-bold">7</span>
               
-              {/* Active Tab Progress Indicator */}
-              {activeSlide === 0 && !isPaused && !isHovered && (
-                <div 
-                  className="absolute bottom-0 left-2 right-2 h-0.5 bg-white/60 rounded-full transition-all duration-100" 
-                  style={{ width: `${timerProgress}%` }}
+              {/* Smooth Animated Timer Bar */}
+              {activeSlide === 0 && !isPaused && (
+                <motion.div 
+                  key="bar-0"
+                  initial={{ width: '0%' }}
+                  animate={{ width: '100%' }}
+                  transition={{ duration: 12, ease: 'linear' }}
+                  className="absolute bottom-0 left-2 right-2 h-0.5 bg-white/70 rounded-full" 
                 />
               )}
             </button>
 
             {/* Tab 1: Onsite Team */}
             <button
-              onClick={() => { setActiveSlide(1); setTimerProgress(0); }}
+              onClick={() => setActiveSlide(1)}
               className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
                 activeSlide === 1
                   ? 'bg-gradient-to-r from-[#7b3fc7] to-[#6366f1] text-white shadow-md'
@@ -420,13 +397,15 @@ export default function UnifiedLeadershipCarousel() {
             >
               <Globe className="w-3.5 h-3.5" />
               <span>Onsite Team</span>
-              <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-bold">6</span>
 
-              {/* Active Tab Progress Indicator */}
-              {activeSlide === 1 && !isPaused && !isHovered && (
-                <div 
-                  className="absolute bottom-0 left-2 right-2 h-0.5 bg-white/60 rounded-full transition-all duration-100" 
-                  style={{ width: `${timerProgress}%` }}
+              {/* Smooth Animated Timer Bar */}
+              {activeSlide === 1 && !isPaused && (
+                <motion.div 
+                  key="bar-1"
+                  initial={{ width: '0%' }}
+                  animate={{ width: '100%' }}
+                  transition={{ duration: 12, ease: 'linear' }}
+                  className="absolute bottom-0 left-2 right-2 h-0.5 bg-white/70 rounded-full" 
                 />
               )}
             </button>
@@ -436,55 +415,52 @@ export default function UnifiedLeadershipCarousel() {
               <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#ff7a57] to-[#ec4899] text-white text-xs sm:text-sm font-semibold shadow-md animate-in fade-in duration-300">
                 <Code2 className="w-3.5 h-3.5" />
                 <span>Offshore Engineering &amp; Development</span>
-                <span className="px-1.5 py-0.2 rounded-full bg-white/25 text-[10px] font-bold">10</span>
+
+                {/* Smooth Animated Timer Bar for Offshore */}
+                {!isPaused && (
+                  <motion.div 
+                    key="bar-2"
+                    initial={{ width: '0%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 15, ease: 'linear' }}
+                    className="absolute bottom-0 left-2 right-2 h-0.5 bg-white/70 rounded-full" 
+                  />
+                )}
               </div>
             )}
           </div>
 
           {/* Steppers & Controls */}
           <div className="flex items-center gap-2 self-end sm:self-center">
-            {/* Offshore Return Shortcut if active */}
-            {activeSlide === 2 ? (
-              <button
-                onClick={returnFromOffshore}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-semibold text-white transition-all shadow-sm"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Return to Onsite</span>
-              </button>
-            ) : (
-              <>
-                {/* Play/Pause Toggle */}
-                <button
-                  onClick={() => setIsPaused((prev) => !prev)}
-                  className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/10 border border-white/10 text-purple-200 hover:text-white transition-all"
-                  title={isPaused ? 'Resume auto-rotation' : 'Pause auto-rotation'}
-                  aria-label={isPaused ? 'Resume auto-rotation' : 'Pause auto-rotation'}
-                >
-                  {isPaused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
-                </button>
+            {/* Play/Pause Toggle */}
+            <button
+              onClick={() => setIsPaused((prev) => !prev)}
+              className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/10 border border-white/10 text-purple-200 hover:text-white transition-all cursor-pointer"
+              title={isPaused ? 'Resume auto-rotation' : 'Pause auto-rotation'}
+              aria-label={isPaused ? 'Resume auto-rotation' : 'Pause auto-rotation'}
+            >
+              {isPaused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
+            </button>
 
-                {/* Previous Slide */}
-                <button
-                  onClick={handlePrev}
-                  className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/10 border border-white/10 text-purple-200 hover:text-white transition-all"
-                  title="Previous slide"
-                  aria-label="Previous slide"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
+            {/* Previous Slide */}
+            <button
+              onClick={handlePrev}
+              className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/10 border border-white/10 text-purple-200 hover:text-white transition-all cursor-pointer"
+              title="Previous slide"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
 
-                {/* Next Slide */}
-                <button
-                  onClick={handleNext}
-                  className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/10 border border-white/10 text-purple-200 hover:text-white transition-all"
-                  title="Next slide"
-                  aria-label="Next slide"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </>
-            )}
+            {/* Next Slide */}
+            <button
+              onClick={handleNext}
+              className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/10 border border-white/10 text-purple-200 hover:text-white transition-all cursor-pointer"
+              title="Next slide"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
 
         </div>
@@ -504,19 +480,14 @@ export default function UnifiedLeadershipCarousel() {
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
               >
-                {/* Slide Subheader */}
-                <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white">
-                      Executive Leadership
-                    </h3>
-                    <p className="text-xs sm:text-sm text-purple-200/70 mt-0.5">
-                      The leaders guiding Guardian’s vision, strategy, and clinical-operational alignment.
-                    </p>
-                  </div>
-                  <div className="text-xs text-purple-300/80 font-medium bg-[#1e1338] px-3 py-1 rounded-full border border-purple-500/20 self-start sm:self-auto">
-                    Slide 1 of 2 • Auto-rotates every 15s
-                  </div>
+                {/* Slide Subheader (Badge removed) */}
+                <div className="mb-6 border-b border-white/10 pb-4">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white">
+                    Executive Leadership
+                  </h3>
+                  <p className="text-xs sm:text-sm text-purple-200/70 mt-0.5">
+                    The leaders guiding Guardian’s vision, strategy, and clinical-operational alignment.
+                  </p>
                 </div>
 
                 {/* 7 Executive Cards */}
@@ -587,19 +558,14 @@ export default function UnifiedLeadershipCarousel() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
               >
-                {/* Slide Subheader */}
-                <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white">
-                      Onsite Team
-                    </h3>
-                    <p className="text-xs sm:text-sm text-purple-200/70 mt-0.5 max-w-3xl">
-                      The team connecting Guardian’s technology with healthcare operations and business needs. Working closely with stakeholders, they guide technical direction, analyze requirements, and help ensure solutions meet real-world expectations.
-                    </p>
-                  </div>
-                  <div className="text-xs text-purple-300/80 font-medium bg-[#1e1338] px-3 py-1 rounded-full border border-purple-500/20 self-start sm:self-auto shrink-0">
-                    Slide 2 of 2 • Auto-rotates every 15s
-                  </div>
+                {/* Slide Subheader (Badge removed) */}
+                <div className="mb-6 border-b border-white/10 pb-4">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white">
+                    Onsite Team
+                  </h3>
+                  <p className="text-xs sm:text-sm text-purple-200/70 mt-0.5 max-w-3xl">
+                    The team connecting Guardian’s technology with healthcare operations and business needs. Working closely with stakeholders, they guide technical direction, analyze requirements, and help ensure solutions meet real-world expectations.
+                  </p>
                 </div>
 
                 {/* 6 Onsite Cards */}
@@ -686,7 +652,7 @@ export default function UnifiedLeadershipCarousel() {
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
               >
-                {/* Offshore Header with Back Button */}
+                {/* Offshore Header with Clean Return Button */}
                 <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-purple-500/20 pb-4 bg-purple-950/20 p-4 rounded-2xl border">
                   <div>
                     <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#ff7a57]/15 text-[#ff7a57] text-[10px] font-bold tracking-wider uppercase mb-1.5 border border-[#ff7a57]/30">
@@ -703,7 +669,7 @@ export default function UnifiedLeadershipCarousel() {
 
                   <button
                     onClick={returnFromOffshore}
-                    className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs sm:text-sm font-semibold text-white transition-all shadow-md self-start sm:self-center"
+                    className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs sm:text-sm font-semibold text-white transition-all shadow-md self-start sm:self-center cursor-pointer"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Return to Onsite Team</span>
@@ -711,7 +677,7 @@ export default function UnifiedLeadershipCarousel() {
                 </div>
 
                 {/* 10 Offshore Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
                   {offshoreTeam.map((member) => {
                     const RoleIcon = member.icon;
                     return (
@@ -755,59 +721,10 @@ export default function UnifiedLeadershipCarousel() {
                     );
                   })}
                 </div>
-
-                {/* Bottom Return Button */}
-                <div className="text-center pt-2">
-                  <button
-                    onClick={returnFromOffshore}
-                    className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 text-xs font-semibold text-purple-200 hover:text-white transition-all"
-                  >
-                    <ArrowLeft className="w-3.5 h-3.5" />
-                    <span>Back to Executive &amp; Onsite Carousel</span>
-                  </button>
-                </div>
               </motion.div>
             )}
 
           </AnimatePresence>
-        </div>
-
-        {/* ── CONNECTING NARRATIVE BANNER: "One Team. Connected Expertise." ── */}
-        <div className="rounded-3xl border border-white/10 bg-[#120a28]/90 backdrop-blur-xl p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-2xl mt-12 sm:mt-16">
-          
-          {/* Left: Headline */}
-          <div className="text-center lg:text-left shrink-0 max-w-xs">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-purple-300 mb-1 block">
-              COLLABORATIVE DELIVERY MODEL
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight tracking-tight">
-              One Team.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c084fc] via-[#a855f7] to-[#ff7a57]">
-                Connected Expertise.
-              </span>
-            </h3>
-          </div>
-
-          {/* Center: Connecting Message */}
-          <div className="text-xs sm:text-sm text-purple-200/85 leading-relaxed text-center lg:text-left max-w-2xl border-t lg:border-t-0 lg:border-l border-white/10 pt-4 lg:pt-0 lg:pl-8">
-            <p className="mb-2">
-              The onsite team connects healthcare needs, business priorities, and technical direction. The offshore engineering team turns those requirements into working software, developing and maintaining the applications and technology that power Guardian.
-            </p>
-            <p className="text-purple-300 font-medium">
-              Together, they bring clinical understanding, engineering expertise, and product design into one coordinated development process.
-            </p>
-          </div>
-
-          {/* Right: Closing Credential Badge */}
-          <div className="shrink-0 border-t lg:border-t-0 lg:border-l border-white/10 pt-4 lg:pt-0 lg:pl-8 text-center lg:text-left w-full lg:w-auto">
-            <p className="text-xs sm:text-sm text-purple-200/90 leading-relaxed font-semibold">
-              Real people.<br />
-              Real expertise.<br />
-              A healthier tomorrow.
-            </p>
-            <div className="w-8 h-0.5 bg-gradient-to-r from-[#7b3fc7] to-[#ff7a57] mt-2 rounded-full mx-auto lg:mx-0" />
-          </div>
-
         </div>
 
       </div>
