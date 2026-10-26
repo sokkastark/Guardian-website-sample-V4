@@ -360,12 +360,12 @@ export default function UnifiedLeadershipCarousel() {
         {/* ── CAROUSEL CONTROLS BAR ── */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-2 sm:p-2.5 rounded-2xl bg-[#140c2c]/80 border border-white/10 backdrop-blur-xl mb-8 shadow-xl">
           
-          {/* Slide Indicator Tabs (Team counts removed) */}
-          <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+          {/* Slide Indicator Tabs (No scrollbar) */}
+          <div className="flex items-center gap-2 flex-wrap">
             {/* Tab 0: Executive */}
             <button
               onClick={() => setActiveSlide(0)}
-              className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
+              className={`relative overflow-hidden px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer ${
                 activeSlide === 0
                   ? 'bg-gradient-to-r from-[#7b3fc7] to-[#6366f1] text-white shadow-md'
                   : 'text-purple-200/70 hover:text-white hover:bg-white/[0.04]'
@@ -381,7 +381,7 @@ export default function UnifiedLeadershipCarousel() {
                   initial={{ width: '0%' }}
                   animate={{ width: '100%' }}
                   transition={{ duration: 12, ease: 'linear' }}
-                  className="absolute bottom-0 left-2 right-2 h-0.5 bg-white/70 rounded-full" 
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/70" 
                 />
               )}
             </button>
@@ -389,7 +389,7 @@ export default function UnifiedLeadershipCarousel() {
             {/* Tab 1: Onsite Team */}
             <button
               onClick={() => setActiveSlide(1)}
-              className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
+              className={`relative overflow-hidden px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer ${
                 activeSlide === 1
                   ? 'bg-gradient-to-r from-[#7b3fc7] to-[#6366f1] text-white shadow-md'
                   : 'text-purple-200/70 hover:text-white hover:bg-white/[0.04]'
@@ -405,14 +405,14 @@ export default function UnifiedLeadershipCarousel() {
                   initial={{ width: '0%' }}
                   animate={{ width: '100%' }}
                   transition={{ duration: 12, ease: 'linear' }}
-                  className="absolute bottom-0 left-2 right-2 h-0.5 bg-white/70 rounded-full" 
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/70" 
                 />
               )}
             </button>
 
             {/* Tab 2 (Shown when Offshore active) */}
             {activeSlide === 2 && (
-              <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#ff7a57] to-[#ec4899] text-white text-xs sm:text-sm font-semibold shadow-md animate-in fade-in duration-300">
+              <div className="relative overflow-hidden flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#ff7a57] to-[#ec4899] text-white text-xs sm:text-sm font-semibold shadow-md animate-in fade-in duration-300">
                 <Code2 className="w-3.5 h-3.5" />
                 <span>Offshore Engineering &amp; Development</span>
 
@@ -423,7 +423,7 @@ export default function UnifiedLeadershipCarousel() {
                     initial={{ width: '0%' }}
                     animate={{ width: '100%' }}
                     transition={{ duration: 15, ease: 'linear' }}
-                    className="absolute bottom-0 left-2 right-2 h-0.5 bg-white/70 rounded-full" 
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/70" 
                   />
                 )}
               </div>
