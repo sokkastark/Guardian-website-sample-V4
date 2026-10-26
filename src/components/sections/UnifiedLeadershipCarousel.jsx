@@ -24,82 +24,147 @@ import {
   Globe, 
   Workflow, 
   FileCheck2,
-  Cpu
+  Cpu,
+  X
 } from 'lucide-react';
 
 /* ─────────────────────────────────────────────────────────────
-   1. EXECUTIVE LEADERSHIP TEAM (Slide 1)
+   1. EXECUTIVE LEADERSHIP CONSTELLATION (Slide 1)
+   Precision coordinates in an 1100 x 760 coordinate system
    ───────────────────────────────────────────────────────────── */
-export const executiveLeadership = [
+export const executiveConstellation = [
   {
     id: 'sandeep-bajaj',
     name: 'Dr. Sandeep Bajaj, MD',
-    role: 'Founder & Chief Executive Officer',
+    role: 'Clinical Leadership',
     discipline: 'Clinical Vision & Governance',
+    tagline: 'Bringing clinical insight to real-world solutions.',
+    icon: Stethoscope,
     image: '/images/team/Sandeep Bajaj, MD.png',
     credentials: 'Board-Certified Interventional Cardiologist & Internist',
+    experience: '35+ Years Healthcare Practice',
     bio: 'Board-certified cardiologist and healthcare operator leading Guardian’s mission to connect clinical insight with frontline action. Guides clinical governance and long-term strategic direction.',
-    icon: Stethoscope
+    quote: 'Healthcare technology is only valuable when it serves the clinicians and patients living with its results.',
+    // Top-Center
+    cx: 550,
+    cy: 135,
+    textSide: 'right',
+    badgePos: 'bottom-right',
+    spokeControl: { x: 550, y: 230 }
   },
   {
     id: 'satya-thottappillil',
     name: 'Satya Thottappillil',
-    role: 'Chief Technology Officer',
+    role: 'Technology',
     discipline: 'Platform & Technology',
+    tagline: 'Building the infrastructure for connected care.',
+    icon: Monitor,
     image: '/images/team/Satya Thottappillil.png',
     credentials: 'Enterprise Healthtech Systems Architect',
+    experience: '20+ Years Distributed Systems',
     bio: 'Specializes in distributed managed care systems and secure cloud pipelines. Directs technology architecture to make complex healthcare data intuitive at point-of-care.',
-    icon: Monitor
-  },
-  {
-    id: 'joseph-macau',
-    name: 'Joseph Macau, CGMA',
-    role: 'Chief Financial Officer',
-    discipline: 'Finance & Fiscal Governance',
-    image: '/images/team/Joseph Macau, CGMA.png',
-    credentials: 'Chartered Global Management Accountant',
-    bio: 'Oversees financial architecture, risk modeling, and capital allocation. Secures sustainable economics across risk-bearing healthcare partnerships.',
-    icon: BarChart3
+    quote: 'Architecture should make complex health data instantly intuitive at the bedside.',
+    // Top-Left
+    cx: 280,
+    cy: 210,
+    textSide: 'left',
+    badgePos: 'bottom-right',
+    spokeControl: { x: 390, y: 270 }
   },
   {
     id: 'richard-cairl',
     name: 'Richard Cairl, PhD',
-    role: 'VP of Clinical Operations',
+    role: 'Quality & Analytics',
     discipline: 'Clinical Systems & Medicare Advantage',
+    tagline: 'Turning data into better outcomes.',
+    icon: BarChart3,
     image: '/images/team/Richard Cairl.png',
     credentials: 'PhD Healthcare Systems Researcher',
+    experience: '30+ Years Clinical Operations',
     bio: 'Focuses on scaling Medicare Advantage quality performance and structured care interventions. Bridges empirical data with patient-centered community outcomes.',
-    icon: Activity
-  },
-  {
-    id: 'ganesh-ramachandran',
-    name: 'Ganesh Ramachandran',
-    role: 'VP of Operations',
-    discipline: 'Operations & Service Delivery',
-    image: '/images/team/Ganesh Ramachandran.png',
-    credentials: 'Cross-Functional Healthtech Operator',
-    bio: 'Directs service delivery, operational discipline, and client success across provider networks. Ensures high-reliability execution across healthcare client deployments.',
-    icon: Workflow
+    quote: 'Sustainable healthcare relies on structured, empathetic community workflows.',
+    // Top-Right
+    cx: 820,
+    cy: 210,
+    textSide: 'right',
+    badgePos: 'bottom-left',
+    spokeControl: { x: 710, y: 270 }
   },
   {
     id: 'vikram-saini',
     name: 'Vikram Saini, MD',
-    role: 'Director of Legal Affairs & Compliance',
+    role: 'Governance & Compliance',
     discipline: 'Governance & Compliance',
+    tagline: 'Ensuring regulatory integrity and trust.',
+    icon: ShieldCheck,
     image: '/images/team/Vikram Saini.png',
     credentials: 'Physician & Healthcare Legal Counsel',
+    experience: 'Regulatory Risk & Governance',
     bio: 'Guides healthcare regulatory compliance, HIPAA privacy, and risk contracts. Unites clinical understanding with rigorous legal governance.',
-    icon: ShieldCheck
+    quote: 'Uncompromising compliance protects both patient trust and organizational health.',
+    // Middle-Right
+    cx: 870,
+    cy: 380,
+    textSide: 'right',
+    badgePos: 'bottom-left',
+    spokeControl: { x: 720, y: 380 }
   },
   {
     id: 'david-weavil',
     name: 'David Weavil',
-    role: 'Advisor for Growth',
+    role: 'Strategic Advisory',
     discipline: 'Growth & Strategic Advisory',
+    tagline: 'Expanding access to what’s possible.',
+    icon: Compass,
     image: '/images/team/David Weavil.png',
     credentials: 'Diagnostics Industry Leader & Advisor',
+    experience: '30+ Years Diagnostics Leadership',
     bio: 'Senior healthcare advisor guiding commercial market expansion and strategic partnerships. Helps bridge diagnostic innovation with clinical practice.',
-    icon: Compass
+    quote: 'True innovation bridges the gap between laboratory insight and clinic reality.',
+    // Bottom-Center
+    cx: 550,
+    cy: 625,
+    textSide: 'right',
+    badgePos: 'bottom-right',
+    spokeControl: { x: 550, y: 530 }
+  },
+  {
+    id: 'joseph-macau',
+    name: 'Joseph Macau, CGMA',
+    role: 'Finance & Governance',
+    discipline: 'Finance & Fiscal Governance',
+    tagline: 'Connecting clinical impact with fiscal sustainability.',
+    icon: Users,
+    image: '/images/team/Joseph Macau, CGMA.png',
+    credentials: 'Chartered Global Management Accountant',
+    experience: '25+ Years Healthcare Economics',
+    bio: 'Oversees financial architecture, risk modeling, and capital allocation. Secures sustainable economics across risk-bearing healthcare partnerships.',
+    quote: 'Aligning clinical performance with fiscal viability secures lasting care models.',
+    // Bottom-Left
+    cx: 280,
+    cy: 550,
+    textSide: 'left',
+    badgePos: 'bottom-right',
+    spokeControl: { x: 390, y: 490 }
+  },
+  {
+    id: 'ganesh-ramachandran',
+    name: 'Ganesh Ramachandran',
+    role: 'Operations & Service Delivery',
+    discipline: 'Operations & Service Delivery',
+    tagline: 'Ensuring operational discipline in healthtech delivery.',
+    icon: Workflow,
+    image: '/images/team/Ganesh Ramachandran.png',
+    credentials: 'Cross-Functional Healthtech Operator',
+    experience: '25+ Years Healthtech Interface',
+    bio: 'Directs service delivery, operational discipline, and client success across provider networks. Ensures high-reliability execution across healthcare client deployments.',
+    quote: 'Rigorous process discipline makes advanced healthcare software truly work.',
+    // Middle-Left
+    cx: 230,
+    cy: 380,
+    textSide: 'left',
+    badgePos: 'bottom-right',
+    spokeControl: { x: 380, y: 380 }
   }
 ];
 
@@ -276,10 +341,12 @@ export const offshoreTeam = [
 ];
 
 export default function UnifiedLeadershipCarousel() {
-  // Current active slide: 0 = Executive Leadership, 1 = Onsite Team, 2 = Offshore Team (On Demand)
+  // Current active slide: 0 = Executive Leadership (Radial Constellation), 1 = Onsite Team, 2 = Offshore Team (On Demand)
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isCardHovered, setIsCardHovered] = useState(false);
+  const [hoveredConstellationId, setHoveredConstellationId] = useState(null);
+  const [focusedMember, setFocusedMember] = useState(null);
 
   // Auto-rotation interval: 12 seconds per slide (pauses when hovering on cards or paused via button)
   useEffect(() => {
@@ -363,7 +430,7 @@ export default function UnifiedLeadershipCarousel() {
           
           {/* Slide Indicator Tabs (No scrollbar) */}
           <div className="flex items-center gap-2 flex-wrap">
-            {/* Tab 0: Executive */}
+            {/* Tab 0: Executive (Radial Constellation) */}
             <button
               onClick={() => setActiveSlide(0)}
               className={`relative overflow-hidden px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer ${
@@ -466,7 +533,7 @@ export default function UnifiedLeadershipCarousel() {
 
         </div>
 
-        {/* ── CAROUSEL SLIDES CONTAINER (Hovering on cards pauses auto-rotation) ── */}
+        {/* ── CAROUSEL SLIDES CONTAINER (Hovering on cards/constellation pauses auto-rotation) ── */}
         <div 
           className="relative min-h-[580px]"
           onMouseEnter={() => setIsCardHovered(true)}
@@ -475,80 +542,249 @@ export default function UnifiedLeadershipCarousel() {
           <AnimatePresence mode="wait">
             
             {/* ══════════════════════════════════════════════════════════════
-                SLIDE 1: EXECUTIVE LEADERSHIP (7 PROFILES)
+                SLIDE 1: EXECUTIVE LEADERSHIP (RADIAL CONSTELLATION)
                 ══════════════════════════════════════════════════════════════ */}
             {activeSlide === 0 && (
               <motion.div
-                key="slide-executive"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
+                key="slide-executive-constellation"
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
               >
-                {/* Slide Subheader (Badge removed) */}
-                <div className="mb-6 border-b border-white/10 pb-4">
+                {/* Slide Subheader */}
+                <div className="mb-6 border-b border-white/10 pb-4 text-center sm:text-left">
                   <h3 className="text-xl sm:text-2xl font-bold text-white">
                     Executive Leadership
                   </h3>
                   <p className="text-xs sm:text-sm text-purple-200/70 mt-0.5">
-                    The leaders guiding Guardian’s vision, strategy, and clinical-operational alignment.
+                    Click any leader to view full clinical and operational credentials.
                   </p>
                 </div>
 
-                {/* 7 Executive Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                  {executiveLeadership.map((member) => {
-                    const RoleIcon = member.icon;
+                {/* ── DESKTOP: RADIAL CONSTELLATION STAGE (1100 x 760) ── */}
+                <div className="hidden lg:block relative w-full h-[760px] max-w-[1100px] mx-auto select-none">
+
+                  {/* SVG Connector Spokes radiating from Central Hub to Satellites */}
+                  <svg 
+                    className="absolute inset-0 w-full h-full pointer-events-none z-0" 
+                    viewBox="0 0 1100 760"
+                    fill="none"
+                  >
+                    <defs>
+                      <linearGradient id="spokeGrad" x1="550" y1="380" x2="100%" y2="100%" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stopColor="#a855f7" stopOpacity="0.8" />
+                        <stop offset="60%" stopColor="#6366f1" stopOpacity="0.4" />
+                        <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.2" />
+                      </linearGradient>
+                      <linearGradient id="activeSpokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+                        <stop offset="40%" stopColor="#c084fc" stopOpacity="0.9" />
+                        <stop offset="100%" stopColor="#ff7a57" stopOpacity="0.8" />
+                      </linearGradient>
+                      <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feMerge>
+                          <feMergeNode in="blur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                    </defs>
+
+                    {executiveConstellation.map((sat) => {
+                      const isHovered = hoveredConstellationId === sat.id;
+                      const d = `M 550 380 Q ${sat.spokeControl.x} ${sat.spokeControl.y} ${sat.cx} ${sat.cy}`;
+                      
+                      return (
+                        <g key={`spoke-${sat.id}`}>
+                          {/* Subtle Background Glow Line */}
+                          <path
+                            d={d}
+                            stroke={isHovered ? '#a855f7' : '#7b3fc7'}
+                            strokeWidth={isHovered ? '4' : '2'}
+                            strokeOpacity={isHovered ? '0.7' : '0.2'}
+                            filter="url(#neonGlow)"
+                            fill="none"
+                          />
+                          {/* Crisp Foreground Core Line with Dashes */}
+                          <path
+                            d={d}
+                            stroke={isHovered ? 'url(#activeSpokeGrad)' : 'url(#spokeGrad)'}
+                            strokeWidth={isHovered ? '2.5' : '1.5'}
+                            strokeDasharray={isHovered ? 'none' : '4 3'}
+                            fill="none"
+                          />
+                          {/* Satellite Connection Anchor Node */}
+                          <circle
+                            cx={sat.cx}
+                            cy={sat.cy}
+                            r={isHovered ? '5' : '3.5'}
+                            fill={isHovered ? '#ff7a57' : '#a855f7'}
+                            filter="url(#neonGlow)"
+                          />
+                        </g>
+                      );
+                    })}
+                  </svg>
+
+                  {/* ── CENTER HUB: Large Glowing Guardian Glass Sphere ── */}
+                  <div 
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto"
+                    style={{ width: '256px', height: '256px' }}
+                  >
+                    {/* Outer Halo Glow */}
+                    <div className="absolute -inset-6 rounded-full bg-gradient-to-tr from-[#7b3fc7]/40 via-[#3b82f6]/30 to-[#a855f7]/40 blur-2xl animate-pulse-subtle pointer-events-none" />
+
+                    {/* Glowing Border Rings */}
+                    <div className="w-full h-full rounded-full p-2 bg-gradient-to-tr from-purple-500/50 via-blue-500/30 to-purple-400/50 border-2 border-purple-400/60 shadow-[0_0_60px_rgba(123,63,199,0.5)]">
+                      {/* Inner Core */}
+                      <div className="w-full h-full rounded-full bg-gradient-to-b from-[#211545] via-[#140c2e] to-[#0c071d] flex flex-col items-center justify-center text-center p-5 relative overflow-hidden border border-white/20 backdrop-blur-xl">
+                        {/* Top Glass Reflection */}
+                        <div className="absolute -top-12 left-4 right-4 h-24 bg-gradient-to-b from-white/20 to-transparent rounded-full pointer-events-none" />
+
+                        {/* Guardian Logo */}
+                        <div className="mb-2.5 flex items-center justify-center px-4">
+                          <img 
+                            src="/logos/logo-white.png" 
+                            alt="Guardian Health Service" 
+                            className="h-9 sm:h-10 w-auto max-w-[170px] object-contain filter drop-shadow-[0_2px_12px_rgba(255,255,255,0.35)]"
+                          />
+                        </div>
+
+                        {/* Subtitle */}
+                        <p className="text-xs text-purple-200/90 font-medium leading-tight">
+                          Healthcare Intelligence
+                        </p>
+                        <p className="text-[11px] text-purple-200/60 font-normal leading-tight mt-1">
+                          for a Healthier Tomorrow
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ── SATELLITE NODES: Fixed Avatar Anchor with Outward Text Flow ── */}
+                  {executiveConstellation.map((sat) => {
+                    const isHovered = hoveredConstellationId === sat.id;
+                    const IconComponent = sat.icon;
+
                     return (
                       <div
-                        key={member.id}
-                        className="group relative rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-500/40 p-5 transition-all duration-300 flex flex-col justify-between shadow-lg"
+                        key={sat.id}
+                        onMouseEnter={() => {
+                          setHoveredConstellationId(sat.id);
+                          setIsCardHovered(true);
+                        }}
+                        onMouseLeave={() => {
+                          setHoveredConstellationId(null);
+                          setIsCardHovered(false);
+                        }}
+                        onClick={() => setFocusedMember(sat)}
+                        className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-30"
+                        style={{
+                          left: `${(sat.cx / 1100) * 100}%`,
+                          top: `${(sat.cy / 760) * 100}%`,
+                          width: '80px',
+                          height: '80px',
+                        }}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`View profile for ${sat.name}, ${sat.role}`}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setFocusedMember(sat);
+                          }
+                        }}
                       >
-                        <div>
-                          {/* Avatar & Discipline Tag */}
-                          <div className="flex items-start gap-4 mb-4">
-                            <div className="relative shrink-0">
-                              <div className="w-16 h-16 rounded-2xl overflow-hidden bg-[#180f33] border-2 border-purple-400/30 group-hover:border-purple-400 transition-colors shadow-md">
-                                <img
-                                  src={member.image}
-                                  alt={member.name}
-                                  className="w-full h-full object-cover object-top filter contrast-105 group-hover:scale-105 transition-transform duration-300"
-                                  loading="lazy"
-                                />
-                              </div>
-                              <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#181036] border border-purple-400/50 flex items-center justify-center text-purple-200 group-hover:bg-[#7b3fc7] group-hover:text-white transition-colors shadow-xs">
-                                <RoleIcon className="w-3 h-3" />
-                              </div>
-                            </div>
-
-                            <div className="min-w-0">
-                              <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-purple-300 bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded-full mb-1">
-                                {member.discipline}
-                              </span>
-                              <h4 className="text-sm font-bold text-white group-hover:text-purple-200 transition-colors leading-tight">
-                                {member.name}
-                              </h4>
-                              <p className="text-xs font-semibold text-purple-300/90 leading-tight mt-0.5">
-                                {member.role}
-                              </p>
+                        {/* Avatar Circle at (cx, cy) */}
+                        <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
+                          <div className={`w-20 h-20 rounded-full p-0.5 transition-all duration-300 ${
+                            isHovered 
+                              ? 'bg-gradient-to-tr from-[#ff7a57] via-[#a855f7] to-[#38bdf8] shadow-[0_0_30px_rgba(168,85,247,0.7)]' 
+                              : 'bg-purple-500/40 shadow-[0_0_20px_rgba(123,63,199,0.35)]'
+                          }`}>
+                            <div className="w-full h-full rounded-full overflow-hidden bg-[#160d33]">
+                              <img
+                                src={sat.image}
+                                alt={sat.name}
+                                className="w-full h-full object-cover object-top filter drop-shadow-md transition-transform duration-300 group-hover:scale-105"
+                                loading="lazy"
+                              />
                             </div>
                           </div>
 
-                          {/* Credentials */}
-                          <div className="text-[11px] text-purple-200/60 font-medium mb-3 pb-3 border-b border-white/[0.06] flex items-center gap-1.5">
-                            <Award className="w-3 h-3 text-[#ff7a57] shrink-0" />
-                            <span className="truncate">{member.credentials}</span>
+                          {/* Domain Badge */}
+                          <div className={`absolute ${
+                            sat.badgePos === 'bottom-left' ? 'bottom-0 left-0 -translate-x-1 translate-y-1' : 'bottom-0 right-0 translate-x-1 translate-y-1'
+                          } w-7 h-7 rounded-full bg-[#181133] border border-purple-400/60 shadow-lg flex items-center justify-center text-purple-200 group-hover:bg-[#7b3fc7] group-hover:text-white transition-all duration-200 z-10`}>
+                            <IconComponent className="w-3.5 h-3.5" />
                           </div>
+                        </div>
 
-                          {/* 2-Line Concise Bio */}
-                          <p className="text-xs text-purple-200/75 leading-relaxed font-normal">
-                            {member.bio}
+                        {/* Text Information Block Anchored Outward from Avatar */}
+                        <div 
+                          className={`absolute top-1/2 -translate-y-1/2 w-48 pointer-events-none transition-all duration-200 ${
+                            sat.textSide === 'left' 
+                              ? 'right-[calc(100%+14px)] text-right' 
+                              : 'left-[calc(100%+14px)] text-left'
+                          }`}
+                        >
+                          <h4 className="text-sm font-bold text-white leading-tight group-hover:text-purple-200 transition-colors drop-shadow-sm whitespace-nowrap">
+                            {sat.name}
+                          </h4>
+                          <p className="text-xs font-semibold text-purple-300 leading-tight mt-0.5 whitespace-nowrap">
+                            {sat.role}
+                          </p>
+                          <p className="text-[11px] text-purple-200/70 font-normal leading-snug mt-1">
+                            {sat.tagline}
                           </p>
                         </div>
                       </div>
                     );
                   })}
                 </div>
+
+                {/* ── MOBILE / TABLET ADAPTATION (block lg:hidden) ── */}
+                <div className="block lg:hidden my-8">
+                  {/* Center Badge */}
+                  <div className="w-56 h-56 mx-auto rounded-full bg-gradient-to-b from-[#211545] to-[#0c071d] border-2 border-purple-400/50 p-6 flex flex-col items-center justify-center text-center shadow-2xl mb-8">
+                    <div className="mb-2.5 flex items-center justify-center px-3">
+                      <img src="/logos/logo-white.png" alt="Guardian" className="h-8 w-auto max-w-[150px] object-contain filter drop-shadow-[0_2px_10px_rgba(255,255,255,0.3)]" />
+                    </div>
+                    <p className="text-xs text-purple-200/90 font-medium">Healthcare Intelligence</p>
+                    <p className="text-[11px] text-purple-200/60 mt-0.5">for a Healthier Tomorrow</p>
+                  </div>
+
+                  {/* 7 Team Member Cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {executiveConstellation.map((sat) => {
+                      const IconComponent = sat.icon;
+                      return (
+                        <button
+                          key={`mobile-${sat.id}`}
+                          onClick={() => setFocusedMember(sat)}
+                          className="w-full text-left rounded-2xl bg-white/[0.04] border border-white/10 p-4 hover:bg-white/[0.08] transition-all flex items-center gap-3.5"
+                        >
+                          <div className="relative shrink-0">
+                            <div className="w-16 h-16 rounded-full overflow-hidden bg-[#160d33] border-2 border-purple-400/40">
+                              <img src={sat.image} alt={sat.name} className="w-full h-full object-cover object-top" loading="lazy" />
+                            </div>
+                            <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#181133] border border-purple-400/60 flex items-center justify-center text-purple-200">
+                              <IconComponent className="w-3 h-3" />
+                            </div>
+                          </div>
+
+                          <div className="min-w-0">
+                            <div className="text-sm font-bold text-white truncate">{sat.name}</div>
+                            <div className="text-xs font-semibold text-purple-300 truncate">{sat.role}</div>
+                            <div className="text-[11px] text-purple-200/70 line-clamp-2 mt-0.5">{sat.tagline}</div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
               </motion.div>
             )}
 
@@ -563,7 +799,7 @@ export default function UnifiedLeadershipCarousel() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
               >
-                {/* Slide Subheader (Badge removed) */}
+                {/* Slide Subheader */}
                 <div className="mb-6 border-b border-white/10 pb-4">
                   <h3 className="text-xl sm:text-2xl font-bold text-white">
                     Onsite Team
@@ -733,6 +969,84 @@ export default function UnifiedLeadershipCarousel() {
         </div>
 
       </div>
+
+      {/* ── FOCUS STATE SPOTLIGHT MODAL (When clicking any leader in constellation) ── */}
+      <AnimatePresence>
+        {focusedMember && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setFocusedMember(null)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            />
+
+            {/* Spotlight Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 20 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="relative w-full max-w-2xl bg-gradient-to-br from-[#1b1435] to-[#100b24] border border-white/20 rounded-3xl p-6 sm:p-10 shadow-2xl z-10 text-white"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setFocusedMember(null)}
+                aria-label="Close profile"
+                className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+                {/* Large Portrait */}
+                <div className="w-36 h-48 sm:w-44 sm:h-56 rounded-2xl overflow-hidden bg-gradient-to-t from-[#0c081a] to-white/10 border border-white/20 shrink-0 shadow-xl flex items-end justify-center">
+                  <img
+                    src={focusedMember.image}
+                    alt={focusedMember.name}
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+
+                {/* Profile Details */}
+                <div className="space-y-4 text-left">
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[#ff7a57]">
+                      {focusedMember.discipline}
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">
+                      {focusedMember.name}
+                    </h3>
+                    <p className="text-sm font-medium text-purple-200 mt-0.5">
+                      {focusedMember.role}
+                    </p>
+                    <p className="text-xs text-white/60 font-mono mt-1">
+                      {focusedMember.credentials} • {focusedMember.experience}
+                    </p>
+                  </div>
+
+                  {/* Bio */}
+                  <p className="text-sm text-purple-100/90 leading-relaxed font-normal">
+                    {focusedMember.bio}
+                  </p>
+
+                  {/* Quote */}
+                  {focusedMember.quote && (
+                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+                      <p className="text-xs sm:text-sm italic text-purple-100/85 font-serif leading-relaxed">
+                        “{focusedMember.quote}”
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
     </section>
   );
 }
