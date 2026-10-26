@@ -279,10 +279,11 @@ export default function UnifiedLeadershipCarousel() {
   // Current active slide: 0 = Executive Leadership, 1 = Onsite Team, 2 = Offshore Team (On Demand)
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isCardHovered, setIsCardHovered] = useState(false);
 
-  // Reliable Auto-rotation interval: 12 seconds per slide
+  // Auto-rotation interval: 12 seconds per slide (pauses when hovering on cards or paused via button)
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || isCardHovered) return;
 
     const intervalTime = activeSlide === 2 ? 15000 : 12000;
 
@@ -296,7 +297,7 @@ export default function UnifiedLeadershipCarousel() {
     }, intervalTime);
 
     return () => clearInterval(timer);
-  }, [activeSlide, isPaused]);
+  }, [activeSlide, isPaused, isCardHovered]);
 
   const handleNext = () => {
     if (activeSlide === 2) {
@@ -375,7 +376,7 @@ export default function UnifiedLeadershipCarousel() {
               <span>Executive Leadership</span>
               
               {/* Smooth Animated Timer Bar */}
-              {activeSlide === 0 && !isPaused && (
+              {activeSlide === 0 && !isPaused && !isCardHovered && (
                 <motion.div 
                   key="bar-0"
                   initial={{ width: '0%' }}
@@ -399,7 +400,7 @@ export default function UnifiedLeadershipCarousel() {
               <span>Onsite Team</span>
 
               {/* Smooth Animated Timer Bar */}
-              {activeSlide === 1 && !isPaused && (
+              {activeSlide === 1 && !isPaused && !isCardHovered && (
                 <motion.div 
                   key="bar-1"
                   initial={{ width: '0%' }}
@@ -417,7 +418,7 @@ export default function UnifiedLeadershipCarousel() {
                 <span>Offshore Engineering &amp; Development</span>
 
                 {/* Smooth Animated Timer Bar for Offshore */}
-                {!isPaused && (
+                {!isPaused && !isCardHovered && (
                   <motion.div 
                     key="bar-2"
                     initial={{ width: '0%' }}
@@ -465,8 +466,12 @@ export default function UnifiedLeadershipCarousel() {
 
         </div>
 
-        {/* ── CAROUSEL SLIDES CONTAINER ── */}
-        <div className="relative min-h-[580px]">
+        {/* ── CAROUSEL SLIDES CONTAINER (Hovering on cards pauses auto-rotation) ── */}
+        <div 
+          className="relative min-h-[580px]"
+          onMouseEnter={() => setIsCardHovered(true)}
+          onMouseLeave={() => setIsCardHovered(false)}
+        >
           <AnimatePresence mode="wait">
             
             {/* ══════════════════════════════════════════════════════════════
