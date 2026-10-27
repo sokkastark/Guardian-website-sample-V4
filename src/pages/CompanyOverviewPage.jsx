@@ -13,7 +13,6 @@ import {
   Mail, 
   MapPin, 
   Send, 
-  HeartPulse, 
   Code2, 
   BarChart3 
 } from 'lucide-react';
@@ -103,12 +102,6 @@ export default function CompanyOverviewPage() {
       highlights: ['Distributed Healthtech Systems', 'FHIR R4 / HL7 Data Engineering', 'Secure Cloud Architecture']
     },
     {
-      icon: HeartPulse,
-      title: 'Clinical Care Management',
-      desc: 'Connecting registered nurses, care navigators, and clinical coordinators to support value-based care programs, TCM workflows, and patient engagement.',
-      highlights: ['Multi-Disciplinary Care Coordination', 'Patient Outreach & Engagement', 'Evidence-Based Care Plans']
-    },
-    {
       icon: BarChart3,
       title: 'Risk Adjustment & Operations',
       desc: 'Supporting risk coding accuracy, quality performance monitoring, managed care analytics, and healthcare partner client success.',
@@ -120,7 +113,7 @@ export default function CompanyOverviewPage() {
     {
       step: '01',
       title: 'Explore Disciplines',
-      desc: 'Review Guardian’s primary organizational areas across technology, clinical care, and value-based operations.'
+      desc: 'Review Guardian’s primary organizational areas across healthcare technology, data systems, and value-based operations.'
     },
     {
       step: '02',
@@ -135,7 +128,7 @@ export default function CompanyOverviewPage() {
     {
       step: '04',
       title: 'Join Guardian',
-      desc: 'Collaborate with cross-functional clinical and engineering teams building the future of value-based care.'
+      desc: 'Collaborate with cross-functional healthcare technology and operations teams building the future of value-based care.'
     }
   ];
 
@@ -345,8 +338,8 @@ export default function CompanyOverviewPage() {
             </p>
           </div>
 
-          {/* 3 Core Disciplines */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-7 mb-16">
+          {/* 2 Core Disciplines */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-7 mb-16">
             {careerDisciplines.map((d, idx) => {
               const Icon = d.icon;
               return (
