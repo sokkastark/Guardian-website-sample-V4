@@ -437,13 +437,13 @@ export default function CompanyOverviewPage() {
       <section id="contact" className="scroll-mt-24 py-20 sm:py-28 bg-[#f8f6fc] border-b border-[#e1e1e5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="max-w-3xl mb-12">
+          <div className="max-w-4xl mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
               <Mail className="w-3.5 h-3.5 text-[#ff7a57]" />
               <span>START A CONVERSATION</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-3 leading-tight">
-              Connect with Guardian or <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">schedule a platform demo.</span>
+              Connect with Guardian or <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57] inline-block whitespace-nowrap">schedule a platform demo.</span>
             </h2>
             <p className="text-base text-[#524b6b] leading-relaxed">
               Whether you are looking to connect clinical data, evaluate population health workflows, or request a tailored platform walkthrough, our team is ready to assist.
