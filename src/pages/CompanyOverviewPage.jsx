@@ -317,12 +317,12 @@ export default function CompanyOverviewPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="max-w-3xl mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10b981]/10 text-[#059669] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#10b981]/20 shadow-2xs">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#ff7a57]" />
               <span>ENTERPRISE TRUST INFRASTRUCTURE</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-3 leading-tight">
-              Security, privacy &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#059669] via-[#0d9488] to-[#0284c7]">healthcare compliance.</span>
+              Security, privacy &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">healthcare compliance.</span>
             </h2>
             <p className="text-base text-[#524b6b] leading-relaxed">
               Healthcare data requires uncompromising protection. Explore Guardian’s zero-trust architectural safeguards, cryptographic controls, and healthcare framework alignments across 4 interactive modules:
