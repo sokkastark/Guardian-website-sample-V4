@@ -9,15 +9,13 @@ import {
   CheckCircle2, 
   Award, 
   Sparkles, 
-  Layers, 
   Clock, 
   Mail, 
   MapPin, 
   Send, 
   HeartPulse, 
   Code2, 
-  BarChart3, 
-  Building 
+  BarChart3 
 } from 'lucide-react';
 
 import InfographicMilestoneTimeline from '../components/common/InfographicMilestoneTimeline';
@@ -141,29 +139,6 @@ export default function CompanyOverviewPage() {
     }
   ];
 
-  // Section 5: Routing Teams
-  const routingTeams = [
-    {
-      title: 'Platform & Technology',
-      desc: 'Questions about Guardian’s healthcare data platform, interoperability, data integration, data enrichment, and patient intelligence.',
-      icon: Layers
-    },
-    {
-      title: 'Solutions & Programs',
-      desc: 'Explore capabilities for population health, care management, risk adjustment, quality performance, and analytics.',
-      icon: Sparkles
-    },
-    {
-      title: 'Healthcare Services',
-      desc: 'Learn about Guardian’s operational support, including Account Executives, Risk Coders, Care Managers, and Care Navigators.',
-      icon: HeartPulse
-    },
-    {
-      title: 'General & Partnerships',
-      desc: 'For company information, partnerships, enterprise collaboration, or other business-related inquiries.',
-      icon: Building
-    }
-  ];
 
   return (
     <div className="bg-white text-[#35304c] min-h-screen">
@@ -517,15 +492,7 @@ export default function CompanyOverviewPage() {
                 </div>
               </div>
 
-              {/* Department Routing Quick Reference */}
-              <div className="grid grid-cols-2 gap-3">
-                {routingTeams.map((t, idx) => (
-                  <div key={idx} className="p-3.5 rounded-2xl bg-white border border-[#e1e1e5] shadow-2xs">
-                    <h5 className="text-xs font-bold text-[#1c1636] mb-1">{t.title}</h5>
-                    <p className="text-[11px] text-[#524b6b] leading-snug line-clamp-2">{t.desc}</p>
-                  </div>
-                ))}
-              </div>
+
             </div>
 
             {/* Right Column: Working Contact & Demo Form */}
