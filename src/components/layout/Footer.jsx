@@ -10,6 +10,23 @@ export default function Footer() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleCompanyClick = (e, sectionId) => {
+    if (location.pathname === '/company') {
+      e.preventDefault();
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const headerOffset = 90;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = Math.max(0, elementPosition - headerOffset);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        window.history.pushState(null, '', `/company#${sectionId}`);
+      }
+    }
+  };
+
   // ─────────────────────────────────────────────────────────────
   // LIGHT FOOTER CONCEPT (FOR HOME PAGE)
   // ─────────────────────────────────────────────────────────────
@@ -216,27 +233,27 @@ export default function Footer() {
               </h3>
               <ul className="space-y-2 text-xs sm:text-[13px]">
                 <li>
-                  <Link to="/company#about" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/company#about" onClick={(e) => handleCompanyClick(e, 'about')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     About Guardian
                   </Link>
                 </li>
                 <li>
-                  <Link to="/company#leadership" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/company#leadership" onClick={(e) => handleCompanyClick(e, 'leadership')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Leadership
                   </Link>
                 </li>
                 <li>
-                  <Link to="/company#security" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/company#security" onClick={(e) => handleCompanyClick(e, 'security')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Security & Trust
                   </Link>
                 </li>
                 <li>
-                  <Link to="/company#careers" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/company#careers" onClick={(e) => handleCompanyClick(e, 'careers')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Careers
                   </Link>
                 </li>
                 <li>
-                  <Link to="/company#contact" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/company#contact" onClick={(e) => handleCompanyClick(e, 'contact')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Contact Us
                   </Link>
                 </li>
@@ -498,27 +515,27 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 text-xs sm:text-[13px]">
               <li>
-                <Link to="/company/about" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/company#about" onClick={(e) => handleCompanyClick(e, 'about')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   About Guardian
                 </Link>
               </li>
               <li>
-                <Link to="/company/leadership" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/company#leadership" onClick={(e) => handleCompanyClick(e, 'leadership')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Leadership
                 </Link>
               </li>
               <li>
-                <Link to="/company/security-trust" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/company#security" onClick={(e) => handleCompanyClick(e, 'security')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Security & Trust
                 </Link>
               </li>
               <li>
-                <Link to="/company/careers" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/company#careers" onClick={(e) => handleCompanyClick(e, 'careers')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link to="/company/contact" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/company#contact" onClick={(e) => handleCompanyClick(e, 'contact')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Contact Us
                 </Link>
               </li>
