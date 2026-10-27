@@ -530,16 +530,16 @@ export default function UnifiedLeadershipCarousel() {
 
         </div>
 
-        {/* ── CAROUSEL SLIDES CONTAINER (Unified consistent height across all 3 slides: 600px) ── */}
+        {/* ── CAROUSEL SLIDES CONTAINER (Unified consistent height across all 3 slides: 670px) ── */}
         <div 
-          className="relative w-full min-h-0 lg:h-[600px]"
+          className="relative w-full min-h-0 lg:h-[670px]"
           onMouseEnter={() => setIsCardHovered(true)}
           onMouseLeave={() => setIsCardHovered(false)}
         >
           <AnimatePresence mode="wait">
             
             {/* ══════════════════════════════════════════════════════════════
-                SLIDE 1: EXECUTIVE LEADERSHIP (RADIAL CONSTELLATION - 600px)
+                SLIDE 1: EXECUTIVE LEADERSHIP (RADIAL CONSTELLATION - 670px)
                 ══════════════════════════════════════════════════════════════ */}
             {activeSlide === 0 && (
               <motion.div
@@ -550,8 +550,8 @@ export default function UnifiedLeadershipCarousel() {
                 transition={{ duration: 0.35, ease: 'easeOut' }}
                 className="w-full h-full flex flex-col justify-center"
               >
-                {/* ── DESKTOP: RADIAL CONSTELLATION STAGE (Comfortable 550px stage) ── */}
-                <div className="hidden lg:block relative w-full h-[550px] max-w-[1060px] mx-auto select-none">
+                {/* ── DESKTOP: RADIAL CONSTELLATION STAGE (Spacious 610px stage) ── */}
+                <div className="hidden lg:block relative w-full h-[610px] max-w-[1080px] mx-auto select-none">
 
                   {/* SVG Connector Spokes radiating from Central Hub (550, 320) */}
                   <svg 
@@ -767,7 +767,7 @@ export default function UnifiedLeadershipCarousel() {
             )}
 
             {/* ══════════════════════════════════════════════════════════════
-                SLIDE 2: ONSITE TEAM (600px UNIFIED HEIGHT)
+                SLIDE 2: ONSITE TEAM (670px UNIFIED HEIGHT)
                 ══════════════════════════════════════════════════════════════ */}
             {activeSlide === 1 && (
               <motion.div
@@ -799,7 +799,7 @@ export default function UnifiedLeadershipCarousel() {
                 </div>
 
                 {/* 6 Onsite Capsule Cards (Centered & perfectly spaced to fill height) */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5 flex-1 content-center my-auto py-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 content-center my-auto py-2">
                   {onsiteTeam.map((member) => (
                     <div
                       key={member.id}
@@ -885,7 +885,7 @@ export default function UnifiedLeadershipCarousel() {
             )}
 
             {/* ══════════════════════════════════════════════════════════════
-                SLIDE 3: OFFSHORE ENGINEERING (600px UNIFIED HEIGHT)
+                SLIDE 3: OFFSHORE ENGINEERING (670px UNIFIED HEIGHT)
                 ══════════════════════════════════════════════════════════════ */}
             {activeSlide === 2 && (
               <motion.div
@@ -916,8 +916,8 @@ export default function UnifiedLeadershipCarousel() {
                   </button>
                 </div>
 
-                {/* 10 Offshore Portrait Cards (Comfortable uncropped 2-row layout) */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 flex-1 content-center my-auto py-1">
+                {/* 10 Offshore Portrait Cards (Spacious uncropped 2-row layout) */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 flex-1 content-center my-auto py-1">
                   {offshoreTeam.map((member) => (
                     <div
                       key={member.id}
