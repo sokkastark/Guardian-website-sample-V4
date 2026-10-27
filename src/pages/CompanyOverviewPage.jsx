@@ -341,7 +341,7 @@ export default function CompanyOverviewPage() {
               Building the future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#ea580c] to-[#ff7a57]">technology-enabled care.</span>
             </h2>
             <p className="text-base text-[#524b6b] leading-relaxed">
-              Guardian brings together software engineers, registered nurses, risk coders, and healthcare leaders working together to turn complex health data into actionable patient care.
+              Guardian brings together software engineers, risk coders, and healthcare leaders working together to turn complex health data into actionable patient care.
             </p>
           </div>
 
