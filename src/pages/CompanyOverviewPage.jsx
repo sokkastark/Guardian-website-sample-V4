@@ -450,65 +450,73 @@ export default function CompanyOverviewPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
             
-            {/* Left Column: Office & What Happens Next */}
-            <div className="lg:col-span-5 space-y-7">
-              <div className="p-7 rounded-3xl bg-white border border-[#e1e1e5] shadow-sm">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#f2ecf9] text-[#7b3fc7] flex items-center justify-center">
-                    <MapPin className="w-5 h-5" />
+            {/* Left Column: Office & What Happens Next (Full Height Alignment) */}
+            <div className="lg:col-span-5 flex flex-col gap-6 sm:gap-7 h-full">
+              <div className="p-7 rounded-3xl bg-white border border-[#e1e1e5] shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#f2ecf9] text-[#7b3fc7] flex items-center justify-center shrink-0">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-[#1c1636]">Guardian Healthcare Headquarters</h3>
+                      <span className="text-xs text-[#8e8a9f]">Corporate Offices</span>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base font-bold text-[#1c1636]">Guardian Healthcare Headquarters</h3>
-                    <span className="text-xs text-[#8e8a9f]">Corporate Offices</span>
-                  </div>
+                  <p className="text-sm text-[#524b6b] leading-relaxed mb-4">
+                    Winter Park, Florida, United States
+                  </p>
                 </div>
-                <p className="text-sm text-[#524b6b] leading-relaxed mb-4">
-                  Winter Park, Florida, United States
-                </p>
                 <div className="pt-3 border-t border-[#f0ecf6] flex items-center gap-2 text-xs text-[#7b3fc7] font-semibold">
                   <Mail className="w-4 h-4" />
                   <a href="mailto:info@itsguardian.com" className="hover:underline">info@itsguardian.com</a>
                 </div>
               </div>
 
-              {/* What Happens Next Process */}
-              <div className="p-7 rounded-3xl bg-white border border-[#e1e1e5] shadow-sm">
-                <h4 className="text-sm font-bold text-[#1c1636] uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#7b3fc7]" />
-                  <span>What Happens Next</span>
-                </h4>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <span className="font-mono text-xs font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2 py-0.5 rounded">01</span>
-                    <div>
-                      <h5 className="text-xs font-bold text-[#1c1636]">Tell us about your organization</h5>
-                      <p className="text-xs text-[#524b6b] leading-relaxed">Share your healthcare priorities, active patient panels, or challenges.</p>
+              {/* What Happens Next Process (Stretched to match form height) */}
+              <div className="p-7 rounded-3xl bg-white border border-[#e1e1e5] shadow-sm flex-1 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-sm font-bold text-[#1c1636] uppercase tracking-wider mb-5 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#7b3fc7]" />
+                    <span>What Happens Next</span>
+                  </h4>
+                  <div className="space-y-5">
+                    <div className="flex items-start gap-3">
+                      <span className="font-mono text-xs font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2 py-0.5 rounded shrink-0 mt-0.5">01</span>
+                      <div>
+                        <h5 className="text-xs font-bold text-[#1c1636]">Tell us about your organization</h5>
+                        <p className="text-xs text-[#524b6b] leading-relaxed mt-0.5">Share your healthcare priorities, active patient panels, or challenges.</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="font-mono text-xs font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2 py-0.5 rounded">02</span>
-                    <div>
-                      <h5 className="text-xs font-bold text-[#1c1636]">Route to the right specialist</h5>
-                      <p className="text-xs text-[#524b6b] leading-relaxed">Your request is directed to clinical, integration, or solution leads.</p>
+                    <div className="flex items-start gap-3">
+                      <span className="font-mono text-xs font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2 py-0.5 rounded shrink-0 mt-0.5">02</span>
+                      <div>
+                        <h5 className="text-xs font-bold text-[#1c1636]">Route to the right specialist</h5>
+                        <p className="text-xs text-[#524b6b] leading-relaxed mt-0.5">Your request is directed to clinical, integration, or solution leads.</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="font-mono text-xs font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2 py-0.5 rounded">03</span>
-                    <div>
-                      <h5 className="text-xs font-bold text-[#1c1636]">Consultation &amp; Demo</h5>
-                      <p className="text-xs text-[#524b6b] leading-relaxed">Review tailored platform workflows, risk models, and integration scopes.</p>
+                    <div className="flex items-start gap-3">
+                      <span className="font-mono text-xs font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2 py-0.5 rounded shrink-0 mt-0.5">03</span>
+                      <div>
+                        <h5 className="text-xs font-bold text-[#1c1636]">Consultation &amp; Demo</h5>
+                        <p className="text-xs text-[#524b6b] leading-relaxed mt-0.5">Review tailored platform workflows, risk models, and integration scopes.</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
+                <div className="pt-4 mt-6 border-t border-[#f0ecf6] flex items-center gap-2 text-xs text-[#524b6b]">
+                  <Clock className="w-3.5 h-3.5 text-[#7b3fc7] shrink-0" />
+                  <span>Prompt response within 1 business day</span>
+                </div>
+              </div>
 
             </div>
 
             {/* Right Column: Working Contact & Demo Form */}
-            <div className="lg:col-span-7 bg-white rounded-3xl border border-[#e1e1e5] p-8 sm:p-10 shadow-sm">
+            <div className="lg:col-span-7 bg-white rounded-3xl border border-[#e1e1e5] p-8 sm:p-10 shadow-sm flex flex-col justify-between h-full">
               {formSubmitted ? (
                 <div className="py-12 text-center">
                   <div className="w-16 h-16 rounded-full bg-[#10b981]/10 text-[#10b981] flex items-center justify-center mx-auto mb-6">
