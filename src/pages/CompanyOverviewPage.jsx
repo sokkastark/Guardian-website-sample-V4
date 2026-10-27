@@ -20,6 +20,7 @@ import {
 import InfographicMilestoneTimeline from '../components/common/InfographicMilestoneTimeline';
 import UnifiedLeadershipCarousel from '../components/sections/UnifiedLeadershipCarousel';
 import SecurityTrustCarousel from '../components/sections/SecurityTrustCarousel';
+import { RibbonStepGrid } from '../components/common/RibbonStepCard';
 
 function CountUpNumber({ target, prefix = '', suffix = '', duration = 3500 }) {
   const [count, setCount] = useState(0);
@@ -111,24 +112,40 @@ export default function CompanyOverviewPage() {
 
   const candidateSteps = [
     {
-      step: '01',
+      num: '01',
+      label: 'EXPLORE',
       title: 'Explore Disciplines',
-      desc: 'Review Guardian’s primary organizational areas across healthcare technology, data systems, and value-based operations.'
+      desc: 'Review Guardian’s primary organizational areas across healthcare technology, data systems, and value-based operations.',
+      ribbonBg: 'bg-[#10b981]',
+      foldColor: '#047857',
+      numberColor: 'text-[#047857]'
     },
     {
-      step: '02',
+      num: '02',
+      label: 'CONNECT',
       title: 'Submit Inquiry',
-      desc: 'Reach out to our team with your background, experience, and area of interest in technology-enabled healthcare.'
+      desc: 'Reach out to our team with your background, experience, and area of interest in technology-enabled healthcare.',
+      ribbonBg: 'bg-[#84cc16]',
+      foldColor: '#4d7c0f',
+      numberColor: 'text-[#4d7c0f]'
     },
     {
-      step: '03',
+      num: '03',
+      label: 'INTERVIEW',
       title: 'Team Interview',
-      desc: 'Discuss your experience, technical skills, and alignment with Guardian’s healthcare action mission.'
+      desc: 'Discuss your experience, technical skills, and alignment with Guardian’s healthcare action mission.',
+      ribbonBg: 'bg-[#eab308]',
+      foldColor: '#a16207',
+      numberColor: 'text-[#a16207]'
     },
     {
-      step: '04',
+      num: '04',
+      label: 'JOIN',
       title: 'Join Guardian',
-      desc: 'Collaborate with cross-functional healthcare technology and operations teams building the future of value-based care.'
+      desc: 'Collaborate with cross-functional healthcare technology and operations teams building the future of value-based care.',
+      ribbonBg: 'bg-[#f97316]',
+      foldColor: '#c2410c',
+      numberColor: 'text-[#c2410c]'
     }
   ];
 
@@ -387,17 +404,11 @@ export default function CompanyOverviewPage() {
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {candidateSteps.map((s) => (
-                <div key={s.step} className="p-5 rounded-2xl bg-white border border-[#e1e1e5]/80 shadow-2xs">
-                  <span className="font-mono text-xs font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2.5 py-1 rounded-md mb-3 inline-block">
-                    {s.step}
-                  </span>
-                  <h4 className="text-sm font-bold text-[#1c1636] mb-1.5">{s.title}</h4>
-                  <p className="text-xs text-[#554e6d] leading-relaxed font-normal">{s.desc}</p>
-                </div>
-              ))}
-            </div>
+            <RibbonStepGrid 
+              steps={candidateSteps} 
+              columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" 
+              gap="gap-5 xl:gap-6"
+            />
 
             <div className="mt-8 pt-6 border-t border-[#e9e4f0] flex flex-wrap items-center justify-between gap-4">
               <p className="text-xs sm:text-sm text-[#554e6d] font-normal">
