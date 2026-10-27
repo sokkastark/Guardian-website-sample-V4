@@ -778,7 +778,7 @@ export default function UnifiedLeadershipCarousel() {
                 transition={{ duration: 0.35, ease: 'easeOut' }}
                 className="w-full h-full flex flex-col justify-between"
               >
-                {/* Onsite Header Bar matching Offshore Bar */}
+                {/* Onsite Header Bar */}
                 <div className="mb-2.5 flex items-center justify-between gap-3 border-b border-purple-500/20 pb-2">
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-0.5 rounded-full bg-[#7b3fc7]/20 text-purple-300 text-[9.5px] font-bold uppercase tracking-wider border border-purple-400/30">
@@ -788,14 +788,6 @@ export default function UnifiedLeadershipCarousel() {
                       6 cross-functional leaders bridging healthcare stakeholders and technical execution.
                     </span>
                   </div>
-
-                  <button
-                    onClick={openOffshoreView}
-                    className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-[#ff7a57]/20 to-[#ea580c]/20 hover:from-[#ff7a57]/30 hover:to-[#ea580c]/30 border border-[#ff7a57]/40 text-xs font-semibold text-[#ff7a57] hover:text-white transition-all cursor-pointer"
-                  >
-                    <span>View Offshore</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
                 </div>
 
                 {/* 6 Onsite Capsule Cards (Centered & perfectly spaced to fill height) */}
