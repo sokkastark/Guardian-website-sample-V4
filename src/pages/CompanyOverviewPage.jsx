@@ -478,37 +478,37 @@ export default function CompanyOverviewPage() {
               {/* What Happens Next Process (Stretched to match form height) */}
               <div className="p-7 rounded-3xl bg-white border border-[#e1e1e5] shadow-sm flex-1 flex flex-col justify-between">
                 <div>
-                  <h4 className="text-sm font-bold text-[#1c1636] uppercase tracking-wider mb-5 flex items-center gap-2">
+                  <h4 className="text-sm sm:text-base font-bold text-[#1c1636] uppercase tracking-wider mb-6 flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-[#7b3fc7]" />
                     <span>What Happens Next</span>
                   </h4>
-                  <div className="space-y-5">
-                    <div className="flex items-start gap-3">
-                      <span className="font-mono text-xs font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2 py-0.5 rounded shrink-0 mt-0.5">01</span>
+                  <div className="space-y-6 sm:space-y-7">
+                    <div className="flex items-start gap-3.5">
+                      <span className="font-mono text-xs sm:text-sm font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2.5 py-1 rounded-lg shrink-0 mt-0.5 shadow-2xs">01</span>
                       <div>
-                        <h5 className="text-xs font-bold text-[#1c1636]">Tell us about your organization</h5>
-                        <p className="text-xs text-[#524b6b] leading-relaxed mt-0.5">Share your healthcare priorities, active patient panels, or challenges.</p>
+                        <h5 className="text-sm sm:text-base font-bold text-[#1c1636]">Tell us about your organization</h5>
+                        <p className="text-xs sm:text-sm text-[#524b6b] leading-relaxed mt-1">Share your healthcare priorities, active patient panels, or challenges.</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <span className="font-mono text-xs font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2 py-0.5 rounded shrink-0 mt-0.5">02</span>
+                    <div className="flex items-start gap-3.5">
+                      <span className="font-mono text-xs sm:text-sm font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2.5 py-1 rounded-lg shrink-0 mt-0.5 shadow-2xs">02</span>
                       <div>
-                        <h5 className="text-xs font-bold text-[#1c1636]">Route to the right specialist</h5>
-                        <p className="text-xs text-[#524b6b] leading-relaxed mt-0.5">Your request is directed to clinical, integration, or solution leads.</p>
+                        <h5 className="text-sm sm:text-base font-bold text-[#1c1636]">Route to the right specialist</h5>
+                        <p className="text-xs sm:text-sm text-[#524b6b] leading-relaxed mt-1">Your request is directed to clinical, integration, or solution leads.</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <span className="font-mono text-xs font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2 py-0.5 rounded shrink-0 mt-0.5">03</span>
+                    <div className="flex items-start gap-3.5">
+                      <span className="font-mono text-xs sm:text-sm font-bold text-[#7b3fc7] bg-[#f2ecf9] px-2.5 py-1 rounded-lg shrink-0 mt-0.5 shadow-2xs">03</span>
                       <div>
-                        <h5 className="text-xs font-bold text-[#1c1636]">Consultation &amp; Demo</h5>
-                        <p className="text-xs text-[#524b6b] leading-relaxed mt-0.5">Review tailored platform workflows, risk models, and integration scopes.</p>
+                        <h5 className="text-sm sm:text-base font-bold text-[#1c1636]">Consultation &amp; Demo</h5>
+                        <p className="text-xs sm:text-sm text-[#524b6b] leading-relaxed mt-1">Review tailored platform workflows, risk models, and integration scopes.</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-4 mt-6 border-t border-[#f0ecf6] flex items-center gap-2 text-xs text-[#524b6b]">
-                  <Clock className="w-3.5 h-3.5 text-[#7b3fc7] shrink-0" />
+                <div className="pt-4 mt-6 border-t border-[#f0ecf6] flex items-center gap-2 text-xs sm:text-sm text-[#524b6b]">
+                  <Clock className="w-4 h-4 text-[#7b3fc7] shrink-0" />
                   <span>Prompt response within 1 business day</span>
                 </div>
               </div>
