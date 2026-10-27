@@ -21,7 +21,6 @@ import {
 } from 'lucide-react';
 
 import InfographicMilestoneTimeline from '../components/common/InfographicMilestoneTimeline';
-import EnterpriseComplianceBar from '../components/common/EnterpriseComplianceBar';
 import UnifiedLeadershipCarousel from '../components/sections/UnifiedLeadershipCarousel';
 import SecurityTrustCarousel from '../components/sections/SecurityTrustCarousel';
 
@@ -347,11 +346,6 @@ export default function CompanyOverviewPage() {
 
           {/* Interactive 4-Slide Horizontal Carousel */}
           <SecurityTrustCarousel />
-
-          {/* Enterprise Compliance Bar */}
-          <div className="mt-14 pt-10 border-t border-[#e9e4f0]">
-            <EnterpriseComplianceBar />
-          </div>
 
         </div>
       </section>
