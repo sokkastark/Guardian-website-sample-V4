@@ -325,13 +325,13 @@ export default function CompanyOverviewPage() {
       <section id="careers" className="scroll-mt-24 py-20 sm:py-28 bg-white border-b border-[#e9e4f0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="max-w-3xl mb-14">
+          <div className="max-w-4xl mb-14">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff7a57]/10 text-[#ea580c] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#ff7a57]/20 shadow-2xs">
               <Users className="w-3.5 h-3.5 text-[#ff7a57]" />
               <span>CAREERS &amp; CULTURE</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-3 leading-tight">
-              Building the future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#ea580c] to-[#ff7a57]">technology-enabled care.</span>
+              Building the future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#ea580c] to-[#ff7a57] inline-block whitespace-nowrap">technology-enabled care.</span>
             </h2>
             <p className="text-base text-[#524b6b] leading-relaxed">
               Guardian brings together software engineers, risk coders, and healthcare leaders working together to turn complex health data into actionable patient care.
