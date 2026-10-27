@@ -1,212 +1,158 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   Sparkles, 
-  Activity, 
   FileText, 
   Users, 
   ShieldCheck, 
   ArrowRight,
   HeartPulse,
-  LineChart,
-  CheckCircle2,
-  Lock,
-  TrendingUp,
-  Workflow,
-  Target,
-  Database,
-  ChevronRight,
-  Layers,
-  Building2,
-  UserCheck,
-  Zap,
-  Check
+  CheckCircle2, 
+  Lock, 
+  TrendingUp, 
+  Workflow, 
+  Target, 
+  Database, 
+  Layers, 
+  Building2, 
+  UserCheck, 
+  Zap, 
+  MapPin, 
+  Award, 
+  BarChart3, 
+  DollarSign, 
+  Share2, 
+  FileCheck, 
+  Bell 
 } from 'lucide-react';
 import { RibbonStepGrid } from '../components/common/RibbonStepCard';
 
 export default function SolutionsPage() {
-  const [activeCapabilityTab, setActiveCapabilityTab] = useState('pop-health');
+  const [activeProofTab, setActiveProofTab] = useState('executive');
+  const location = useLocation();
 
+  // Smooth hash scrolling for direct links and dropdown navigation
+  useEffect(() => {
+    if (location.hash) {
+      const rawHash = location.hash.replace('#', '');
+      const aliasMap = {
+        'aco-value-based-care': 'aco-vbc',
+        'aco': 'aco-vbc',
+        'health-plans': 'health-plans',
+        'payers': 'health-plans',
+        'cin-provider-organizations': 'cin-providers',
+        'cin': 'cin-providers',
+        'providers': 'cin-providers',
+        'care-management-teams': 'care-teams',
+        'care-management': 'care-teams',
+        'care-teams': 'care-teams'
+      };
+      const targetId = aliasMap[rawHash] || rawHash;
+
+      const timer = setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          const headerOffset = 90;
+          const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = Math.max(0, elementPosition - headerOffset);
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 50);
+
+      return () => clearTimeout(timer);
+    }
+  }, [location.hash]);
+
+  // Shared 5-Step Value Continuum Pathway (Guardian brand palette: purple, indigo, violet, warm orange, coral - ZERO green)
   const progressionSteps = [
     { 
       num: '01', 
       label: 'CONNECT', 
       title: 'EHR & Claims Ingestion',
-      desc: 'Bring information together across EHRs, claims, HIE feeds, and pharmacy systems.',
-      ribbonBg: 'bg-[#10b981]',
-      foldColor: '#047857',
-      numberColor: 'text-[#047857]'
+      desc: 'Bring data together across multi-EHRs, claims feeds, HIE connections, and pharmacy feeds.',
+      ribbonBg: 'bg-[#7b3fc7]',
+      foldColor: '#5b21b6',
+      numberColor: 'text-[#5b21b6]'
     },
     { 
       num: '02', 
       label: 'UNDERSTAND', 
       title: 'Longitudinal Context',
-      desc: 'Synthesize raw data into longitudinal patient charts, risk stratification, and cohort analytics.',
-      ribbonBg: 'bg-[#84cc16]',
-      foldColor: '#4d7c0f',
-      numberColor: 'text-[#4d7c0f]'
+      desc: 'Synthesize raw feeds into longitudinal patient charts, risk stratification, and cohort registries.',
+      ribbonBg: 'bg-[#4f46e5]',
+      foldColor: '#3730a3',
+      numberColor: 'text-[#3730a3]'
     },
     { 
       num: '03', 
       label: 'PRIORITIZE', 
       title: 'Risk & Gap Identification',
-      desc: 'Surface high-risk patients, HEDIS care gaps, and MRA suspecting opportunities needing action.',
-      ribbonBg: 'bg-[#eab308]',
-      foldColor: '#a16207',
-      numberColor: 'text-[#a16207]'
+      desc: 'Surface rising-risk beneficiaries, HEDIS care gaps, and prospective CMS-HCC suspecting opportunities.',
+      ribbonBg: 'bg-[#9333ea]',
+      foldColor: '#6b21a8',
+      numberColor: 'text-[#6b21a8]'
     },
     { 
       num: '04', 
       label: 'ACT', 
       title: 'Coordinated Workflows',
-      desc: 'Equip multidisciplinary care teams with automated task routing, care plans, and point-of-care alerts.',
-      ribbonBg: 'bg-[#f97316]',
-      foldColor: '#c2410c',
-      numberColor: 'text-[#c2410c]'
+      desc: 'Equip multidisciplinary teams with automated task queues, care plans, and point-of-care alerts.',
+      ribbonBg: 'bg-[#ea580c]',
+      foldColor: '#9a3412',
+      numberColor: 'text-[#9a3412]'
     },
     { 
       num: '05', 
       label: 'MEASURE', 
       title: 'Clinical & Financial Impact',
-      desc: 'Track quality score improvements, PMPY cost reductions, and shared savings growth.',
-      ribbonBg: 'bg-[#ec4899]',
-      foldColor: '#be185d',
-      numberColor: 'text-[#be185d]'
+      desc: 'Track quality measure improvements, PMPM expenditure trends, and shared savings benchmarks.',
+      ribbonBg: 'bg-[#ff7a57]',
+      foldColor: '#c2410c',
+      numberColor: 'text-[#c2410c]'
     }
   ];
 
-  const solutionAreas = [
+  // Interactive Live Proof Application Interfaces
+  const uiShowcase = [
     {
-      id: 'aco-vbc',
-      title: 'ACO & Value-Based Care',
-      path: '/solutions/aco-value-based-care',
-      tagline: 'SHARED SAVINGS & RISK MANAGEMENT',
-      headline: 'Maximize shared savings and risk performance across value-based contracts.',
-      description: 'Equip Accountable Care Organizations with population health analytics, RAF score tracking, ADT event notifications, and transition-of-care workflows to reduce PMPY costs and excel in risk-bearing arrangements.',
-      icon: TrendingUp,
-      gradient: 'from-[#7b3fc7] via-[#9333ea] to-[#a855f7]',
-      borderHover: 'hover:border-[#7b3fc7]/50',
-      shadowGlow: 'hover:shadow-[0_20px_40px_rgba(123,63,199,0.22)]',
-      accentColor: 'text-[#7b3fc7]',
-      badgeBg: 'bg-[#7b3fc7]/10 text-[#7b3fc7]',
-      capabilities: [
-        'CMS-HCC RAF Scoring (V24 & V28)',
-        '30-Day Readmission Risk Scoring',
-        'ED High-Utilizer Real-Time Alerts',
-        'PMPY Cost & Shared Savings Analytics'
-      ]
+      id: 'executive',
+      title: 'Executive Population Suite',
+      subtitle: 'Value-Based Contract & Attribution Cockpit',
+      desc: 'Executive cockpit synthesizing attributed beneficiary panels, PMPM expenditure trends, CMS CCLF feeds, and risk performance across multiple value-based contracts.',
+      image: '/images/appliction images/Main Platform Dashboard.png',
+      badge: 'ACO & Executive View',
+      highlights: ['Beneficiary Attribution', 'PMPM Cost Trajectory', 'Cross-Payer Scorecards']
     },
     {
-      id: 'health-plans',
-      title: 'Health Plans',
-      path: '/solutions/health-plans',
-      tagline: 'QUALITY RATINGS & RISK ADJUSTMENT',
-      headline: 'Drive HEDIS Star ratings and compliant risk adjustment at scale.',
-      description: 'Bring payer claims, lab feeds, and EHR records together to automate quality gap identification, streamline Star Rating management, and optimize MRA coding precision for Medicare Advantage and Commercial plans.',
-      icon: ShieldCheck,
-      gradient: 'from-[#059669] via-[#10b981] to-[#0d9488]',
-      borderHover: 'hover:border-[#059669]/50',
-      shadowGlow: 'hover:shadow-[0_20px_40px_rgba(16,185,129,0.22)]',
-      accentColor: 'text-[#059669]',
-      badgeBg: 'bg-[#059669]/10 text-[#059669]',
-      capabilities: [
-        'HEDIS Care Gap Closure Workflows',
-        'HCC Suspecting & Recapture Engine',
-        'Payer Claims & CCLF Feed Ingestion',
-        'Star Ratings & Quality Scorecards'
-      ]
-    },
-    {
-      id: 'cin-providers',
-      title: 'CIN & Provider Organizations',
-      path: '/solutions/cin-provider-organizations',
-      tagline: 'CLINICAL INTEGRATION & NETWORK ALIGNMENT',
-      headline: 'Enable clinical integration and reduce network leakage.',
-      description: 'Connect independent practices and health systems within Clinically Integrated Networks (CINs) to deliver point-of-care gap alerts, track specialist referral leakage, and provide a single Patient 360 chart.',
-      icon: Users,
-      gradient: 'from-[#4f46e5] via-[#6366f1] to-[#7c3aed]',
-      borderHover: 'hover:border-[#4f46e5]/50',
-      shadowGlow: 'hover:shadow-[0_20px_40px_rgba(79,70,229,0.22)]',
-      accentColor: 'text-[#4f46e5]',
-      badgeBg: 'bg-[#4f46e5]/10 text-[#4f46e5]',
-      capabilities: [
-        'Longitudinal Patient Master Chart (PMC)',
-        'In-Network vs Out-of-Network Leakage',
-        'Point-of-Care Gaps Notification',
-        'Multi-EHR Interoperability & FHIR'
-      ]
-    },
-    {
-      id: 'care-teams',
-      title: 'Care Management Teams',
-      path: '/solutions/care-management-teams',
-      tagline: 'WORKFLOW & PATIENT ENGAGEMENT',
-      headline: 'Supercharge care team productivity and patient outreach.',
-      description: 'Provide care managers, navigators, and clinical coordinators with 150+ standardized assessments, automated task dispatch, multidisciplinary workspaces, and mobile patient engagement tools.',
-      icon: HeartPulse,
-      gradient: 'from-[#ff7a57] via-[#f97316] to-[#ea580c]',
-      borderHover: 'hover:border-[#ff7a57]/50',
-      shadowGlow: 'hover:shadow-[0_20px_40px_rgba(255,122,87,0.22)]',
-      accentColor: 'text-[#ea580c]',
-      badgeBg: 'bg-[#ff7a57]/10 text-[#ea580c]',
-      capabilities: [
-        '150+ Standardized Assessment Library',
-        'Individualized Care Plan Generator',
-        'Automated Task & Follow-up Routing',
-        'Mobile SMS & Telehealth Engagement'
-      ]
-    }
-  ];
-
-  const capabilityModules = [
-    {
-      id: 'pop-health',
-      title: 'Population Health',
-      path: '/platform/population-health',
-      desc: 'Turn population data into clear risk stratification, cohort registries, and cost trend insights.',
+      id: 'pophealth',
+      title: 'Cohort Risk & Utilization',
+      subtitle: 'Risk Stratification & Registry Builder',
+      desc: 'Multi-variable population health stratification surfacing high-utilizer patient panels, acute admission trends, and condition registries across primary care sites.',
       image: '/images/appliction images/ui-pop-health-analytics.png',
-      highlights: ['Cohort Analytics Builder', 'Risk Stratification Models', 'Utilization Trend Tracking']
+      badge: 'Health Plan Analytics',
+      highlights: ['30-Day Readmission Risk', 'ED High-Utilizer Tagging', 'Chronic Disease Registries']
     },
     {
-      id: 'care-mgmt',
-      title: 'Care Management',
-      path: '/platform/care-management',
-      desc: 'Coordinate patient care with individualized care plans, 150+ assessments, and task routing.',
+      id: 'caremgmt',
+      title: 'Care Management Cockpit',
+      subtitle: 'Multidisciplinary Worklists & Protocols',
+      desc: 'Dedicated care coordination interface with 150+ standardized assessment instruments, personalized care plan builder, and real-time ADT event notifications.',
       image: '/images/appliction images/ui-care-management.png',
-      highlights: ['Individual Care Plans', '150+ Assessment Scales', 'Multidisciplinary Workspace']
+      badge: 'Care Team Workspace',
+      highlights: ['150+ Assessment Scales', 'Personal Care Plan Builder', 'ADT Trigger Routing']
     },
     {
-      id: 'risk-adj',
-      title: 'Risk Adjustment',
-      path: '/platform/risk-adjustment',
-      desc: 'Identify undocumented chronic conditions and streamline chart review for CMS-HCC models.',
-      image: '/images/appliction images/ui-risk-stratification.png',
-      highlights: ['Dual CMS-HCC V24 & V28 Engine', 'Recapture Chart Audit Workflow', 'RAF Score Calculator']
-    },
-    {
-      id: 'quality-perf',
-      title: 'Quality & Care Gaps',
-      path: '/platform/quality-care-gaps',
-      desc: 'Monitor HEDIS and MIPS performance, close gaps proactively, and alert providers at point-of-care.',
-      image: '/images/appliction images/ui-quality-manager.png',
-      highlights: ['HEDIS Gap Closure Engine', 'MIPS Performance Tracker', 'Point-of-Care Notifications']
-    },
-    {
-      id: 'patient-intel',
-      title: 'Patient Intelligence / PMC',
-      path: '/platform/patient-intelligence/patient-360',
-      desc: 'Synthesize EHR, claims, and lab data into a single longitudinal Patient Master Chart.',
-      image: '/images/appliction images/ui-patient-360.png',
-      highlights: ['Patient Master Chart (PMC)', 'Master Patient Index (MPI)', 'Clinical Timeline Export']
-    },
-    {
-      id: 'engagement',
-      title: 'Patient Engagement',
-      path: '/platform/patient-engagement',
-      desc: 'Connect patients and care teams with automated SMS outreach, reminders, and telehealth visits.',
-      image: '/images/appliction images/ui-telemedicine.png',
-      highlights: ['Automated SMS & Email Outreach', 'Telehealth Video Visits', 'Intake & Reminders']
+      id: 'referrals',
+      title: 'Specialist Referral Dispatch',
+      subtitle: 'Provider Geo-Mapping & Closed-Loop Tracking',
+      desc: 'Clinically Integrated Network (CIN) specialist search directory, in-network geo-mapping, Direct Secure Messaging (DSM) integration, and closed-loop consult status tracking.',
+      image: '/images/appliction images/ui-referral-manager.png',
+      badge: 'CIN Provider Directory',
+      highlights: ['Network Geo-Mapping', 'DSM Electronic Dispatch', 'Closed-Loop Loop Closure']
     }
   ];
 
@@ -223,14 +169,14 @@ export default function SolutionsPage() {
           <img 
             src="/images/who-we-serve-doctor.jpg" 
             alt="Healthcare professionals using Guardian platform solutions" 
-            className="w-full h-full object-cover object-center filter brightness-[0.6] contrast-110"
+            className="w-full h-full object-cover object-center filter brightness-[0.55] contrast-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0d1527]/90 via-[#0d1527]/75 to-[#0d1527]/60" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0d1527]/80 via-transparent to-[#0d1527]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0d1527]/92 via-[#0d1527]/80 to-[#0d1527]/65" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0d1527]/85 via-transparent to-[#0d1527]" />
           
-          {/* Ambient Lighting Accents */}
-          <div className="absolute top-1/4 right-1/4 w-[600px] h-[450px] bg-[#7b3fc7]/30 blur-[140px] rounded-full" />
-          <div className="absolute bottom-10 left-10 w-[500px] h-[350px] bg-[#ff7a57]/25 blur-[120px] rounded-full" />
+          {/* Ambient Lighting Accents (Brand Palette: Purple, Indigo, Coral - Zero Green) */}
+          <div className="absolute top-1/4 right-1/4 w-[600px] h-[450px] bg-[#7b3fc7]/25 blur-[140px] rounded-full" />
+          <div className="absolute bottom-10 left-10 w-[500px] h-[350px] bg-[#4f46e5]/20 blur-[130px] rounded-full" />
           <div className="absolute inset-0 ambient-grid opacity-20" />
         </div>
 
@@ -254,12 +200,12 @@ export default function SolutionsPage() {
               </h1>
 
               <p className="text-base sm:text-lg text-purple-100/90 leading-relaxed max-w-2xl mb-8 font-normal">
-                Guardian brings connected healthcare data, clinical intelligence, technology, and operational services together to empower health plans, ACOs, CINs, and care management teams to move from insight to synchronized action.
+                Guardian brings connected healthcare data, clinical intelligence, specialized technology, and operational services together to empower health plans, ACOs, CINs, and care management teams to move from fragmented insight to synchronized action.
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
                 <Link
-                  to="/company/contact?intent=demo"
+                  to="/company?intent=demo#contact"
                   className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-white bg-[#7b3fc7] hover:bg-[#9565d2] shadow-[0_4px_25px_rgba(123,63,199,0.45)] transition-all duration-300 hover:scale-[1.02] active:scale-95 whitespace-nowrap shrink-0 group"
                 >
                   <span>Request a Demo</span>
@@ -267,7 +213,7 @@ export default function SolutionsPage() {
                 </Link>
 
                 <a
-                  href="#solutions-overview"
+                  href="#continuum"
                   className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-white bg-white/10 hover:bg-white/20 border border-white/25 backdrop-blur-md transition-all duration-300 whitespace-nowrap shrink-0"
                 >
                   <span>Explore Solution Areas</span>
@@ -280,17 +226,17 @@ export default function SolutionsPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
-              className="lg:col-span-5 hidden lg:block transform lg:scale-108 transition-transform duration-300"
+              className="lg:col-span-5 hidden lg:block transform lg:scale-105 transition-transform duration-300"
             >
               <div className="relative group">
-                <div className="absolute -inset-2 bg-gradient-to-tr from-[#7b3fc7]/40 to-[#ff7a57]/30 rounded-3xl blur-2xl opacity-90 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute -inset-2 bg-gradient-to-tr from-[#7b3fc7]/40 via-[#4f46e5]/30 to-[#ff7a57]/20 rounded-3xl blur-2xl opacity-90 group-hover:opacity-100 transition-opacity pointer-events-none" />
                 <div className="relative rounded-2xl bg-[#1a1233]/95 border border-white/30 backdrop-blur-xl p-3 shadow-2xl overflow-hidden">
                   <div className="flex items-center justify-between px-3 py-1.5 bg-[#120b24] rounded-lg border-b border-white/15 mb-2">
                     <div className="flex items-center gap-1.5">
                       <span className="w-2.5 h-2.5 rounded-full bg-red-500/90 inline-block" />
                       <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/90 inline-block" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-green-500/90 inline-block" />
-                      <span className="text-[10px] text-purple-200 font-mono ml-2">solutions.itsguardian.com</span>
+                      <span className="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block" />
+                      <span className="text-[10px] text-purple-200 font-mono ml-2">guardian.solutions</span>
                     </div>
                     <span className="text-[9px] font-mono px-2.5 py-0.5 rounded bg-[#7b3fc7] text-white border border-purple-300/50 font-bold">
                       Enterprise Suite
@@ -301,12 +247,12 @@ export default function SolutionsPage() {
                     <img 
                       src="/images/appliction images/Main Platform Dashboard.png" 
                       alt="Guardian Population Health & Solutions Dashboard" 
-                      className="w-full h-auto object-contain filter brightness-[1.06] contrast-[1.03]"
+                      className="w-full h-auto object-contain filter brightness-[1.04] contrast-[1.02]"
                     />
                   </div>
 
-                  <p className="text-xs text-purple-200/70 text-center mt-2 leading-relaxed italic">
-                    *Illustrative sample demonstration data. Metrics and records are for demonstration purposes only.
+                  <p className="text-[11px] text-purple-200/75 text-center mt-2 leading-relaxed italic">
+                    *Illustrative sample demonstration data. Module records and metrics are for demonstration purposes only.
                   </p>
 
                   <div className="mt-2.5 flex items-center justify-between text-[11px] text-purple-200 font-mono px-1 font-medium">
@@ -324,12 +270,12 @@ export default function SolutionsPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 2: THE REALITY & SOLUTION PATHWAY (EDITORIAL INFOGRAPHIC)
+          SECTION 2: THE HEALTHCARE REALITY & VALUE CONTINUUM (#continuum)
           ───────────────────────────────────────────────────────────── */}
-      <section className="py-20 sm:py-28 bg-[#faf8fd] border-b border-[#e9e4f0] relative overflow-hidden">
+      <section id="continuum" className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="max-w-3xl mb-14">
+          <div className="max-w-3xl mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
               <Layers className="w-3.5 h-3.5 text-[#ff7a57]" />
               <span>THE HEALTHCARE REALITY</span>
@@ -337,154 +283,440 @@ export default function SolutionsPage() {
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
               Healthcare has no shortage of data. The challenge is <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">turning it into action.</span>
             </h2>
-            <p className="text-base sm:text-lg text-[#524b6b] leading-relaxed">
-              Healthcare teams are expected to manage risk, close care gaps, improve quality, coordinate care, engage patients, and track financial performance—often across disconnected EHRs and manual spreadsheets. Guardian solutions bridge that gap with a connected 5-step pathway:
+            <p className="text-base text-[#524b6b] leading-relaxed">
+              Healthcare teams manage risk, close care gaps, improve quality, coordinate care, and track financial performance—often across disconnected EHRs and manual spreadsheets. Guardian solutions bridge that gap with a connected 5-step pathway:
             </p>
           </div>
 
-          {/* Infographic Connected 3D Folded Ribbon Pathway */}
+          {/* Infographic Connected 3D Folded Ribbon Pathway (Guardian Brand Palette) */}
           <div className="relative pt-2">
             <RibbonStepGrid steps={progressionSteps} />
           </div>
 
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 3: FOUR CORE SOLUTION AREAS (CORPORATE STAKEHOLDER HUBS)
-          ───────────────────────────────────────────────────────────── */}
-      <section id="solutions-overview" className="py-20 sm:py-28 bg-white border-b border-[#e9e4f0]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-30px' }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="max-w-3xl mb-14"
-          >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
-              <Building2 className="w-3.5 h-3.5 text-[#ff7a57]" />
-              <span>WHO WE SERVE</span>
+          {/* Quick-Jump Section Anchor Pills */}
+          <div className="mt-10 pt-8 border-t border-[#e9e4f0] flex flex-wrap items-center justify-between gap-3 text-xs">
+            <span className="font-mono font-bold uppercase tracking-wider text-[#716b89]">Explore Stakeholder Solutions:</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <a href="#aco-vbc" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#7b3fc7] hover:text-[#7b3fc7] transition-colors">
+                01. ACO & Value-Based Care
+              </a>
+              <a href="#health-plans" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#4f46e5] hover:text-[#4f46e5] transition-colors">
+                02. Health Plans & Payers
+              </a>
+              <a href="#cin-providers" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#9333ea] hover:text-[#9333ea] transition-colors">
+                03. CIN & Provider Orgs
+              </a>
+              <a href="#care-teams" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#ea580c] hover:text-[#ea580c] transition-colors">
+                04. Care Management Teams
+              </a>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-3 leading-tight">
-              Purpose-built solutions for <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">every value-based healthcare stakeholder.</span>
-            </h2>
-            <p className="text-base text-[#524b6b] leading-relaxed">
-              Guardian’s solution portfolio is organized around the operational models, clinical workflows, and performance contracts of modern healthcare organizations:
-            </p>
-          </motion.div>
-
-          {/* 4 Corporate Stakeholder Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
-            {solutionAreas.map((sol, idx) => {
-              const SolIcon = sol.icon;
-              return (
-                <motion.div 
-                  key={sol.id} 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-30px' }}
-                  transition={{ duration: 0.5, ease: 'easeOut', delay: idx * 0.06 }}
-                  className="p-8 rounded-3xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden"
-                >
-                  {/* Top Solid Gradient Edge Stripe */}
-                  <div className={`absolute top-0 inset-x-0 h-2 bg-gradient-to-r ${sol.gradient}`} />
-
-                  <div>
-                    {/* Header: Badge & Icon */}
-                    <div className="flex items-center justify-between mb-5 pt-1">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${sol.gradient} text-white flex items-center justify-center shadow-md shrink-0 group-hover:scale-105 transition-transform`}>
-                          <SolIcon className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <span className={`text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-md ${sol.badgeBg} block mb-0.5`}>
-                            {sol.tagline}
-                          </span>
-                          <h3 className="text-2xl font-extrabold text-[#1c1636]">
-                            {sol.title}
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-
-                    <p className={`text-sm font-bold ${sol.accentColor} mb-3 leading-snug`}>
-                      {sol.headline}
-                    </p>
-                    <p className="text-xs sm:text-sm text-[#524b6b] leading-relaxed mb-6 font-normal">
-                      {sol.description}
-                    </p>
-
-                    {/* Capabilities Matrix Box */}
-                    <div className="p-4.5 rounded-2xl bg-white border border-[#e9e4f0] mb-6">
-                      <h4 className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#8e8a9f] mb-3">
-                        Key Capabilities & Workflows:
-                      </h4>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        {sol.capabilities.map((cap, i) => (
-                          <div key={i} className="flex items-start gap-1.5 text-xs text-[#1c1636]">
-                            <CheckCircle2 className={`w-3.5 h-3.5 ${sol.accentColor} shrink-0 mt-0.5`} />
-                            <span className="font-medium text-[11.5px] leading-tight text-[#35304c]">{cap}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bottom Link Button */}
-                  <div className="pt-4 border-t border-[#e9e4f0] flex items-center justify-between">
-                    <Link
-                      to={sol.path}
-                      className={`inline-flex items-center gap-2 text-xs font-extrabold ${sol.accentColor} hover:opacity-80 transition-all group-hover:translate-x-1`}
-                    >
-                      <span>Explore {sol.title} Solutions</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-
-                </motion.div>
-              );
-            })}
           </div>
 
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 4: CAPABILITY PORTFOLIO WITH PRODUCT UI PROOF
+          SECTION 3: 01 / ACO & VALUE-BASED CARE (#aco-vbc)
           ───────────────────────────────────────────────────────────── */}
-      <section className="py-20 sm:py-28 bg-[#faf8fd] border-b border-[#e9e4f0]">
+      <section id="aco-vbc" className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            {/* Header Column */}
+            <div className="lg:col-span-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#7b3fc7]/10 text-[#7b3fc7] font-mono text-xs font-bold uppercase tracking-wider mb-3">
+                <TrendingUp className="w-3.5 h-3.5" />
+                <span>01 / ACO & VALUE-BASED CARE</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                Maximize shared savings and risk performance across <span className="text-[#7b3fc7]">value-based contracts.</span>
+              </h2>
+              <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                Accountable Care Organizations face the dual pressure of controlling total cost of care while achieving stringent quality scores. Guardian consolidates CMS CCLF and BCDA feeds with clinical EHR records to give ACO leadership complete visibility into attributed panels, baseline expenditure trends, and medical loss ratios.
+              </p>
+              
+              <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6">
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
+                  <DollarSign className="w-4 h-4 text-[#7b3fc7]" />
+                  <span>Contract Financial Analytics</span>
+                </h4>
+                <p className="text-xs text-[#524b6b] leading-relaxed">
+                  Monitors Per Member Per Month (PMPM) and Per Member Per Year (PMPY) expenditure trends against benchmark targets to track financial performance across risk-bearing arrangements.
+                </p>
+              </div>
+
+              <Link
+                to="/platform/population-health"
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#7b3fc7] hover:text-[#5b21b6] transition-colors group"
+              >
+                <span>Explore Population Health in Platform</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* 4 Capability Cards Grid */}
+            <div className="lg:col-span-7">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
+                    <Users className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">CCLF & BCDA Attribution Analytics</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Automated ingestion of CMS CCLF files and BCDA FHIR APIs for accurate beneficiary roster matching and primary care attribution across network practices.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
+                    <DollarSign className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">PMPM / PMPY Cost Tracking</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Continuous expenditure tracking across inpatient, outpatient, and pharmacy claims categories to identify cost drivers and shared savings opportunities.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
+                    <Target className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">MSSP Quality Measure Management</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Continuous monitoring of Medicare Shared Savings Program (MSSP) quality metrics, screening gaps, and point-of-care clinician alerts during encounters.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
+                    <Bell className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">High-Cost Utilization & ADT Alerts</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Real-time hospital admission, discharge, and transfer alerts paired with 30-day post-discharge transition tracking to curb preventable readmissions.
+                  </p>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 4: 02 / HEALTH PLANS & PAYERS (#health-plans)
+          ───────────────────────────────────────────────────────────── */}
+      <section id="health-plans" className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            {/* Header Column */}
+            <div className="lg:col-span-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#4f46e5]/10 text-[#4f46e5] font-mono text-xs font-bold uppercase tracking-wider mb-3">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>02 / HEALTH PLANS & PAYERS</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                Drive HEDIS Star ratings and compliant risk adjustment <span className="text-[#4f46e5]">at scale.</span>
+              </h2>
+              <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                Medicare Advantage and commercial health plans must coordinate quality closure with accurate, audit-ready clinical documentation. Guardian links plan claims feeds with clinical EHR notes to automate care gap surveillance, monitor Star Ratings, and support compliant CMS-HCC risk adjustment under V24 and V28 models.
+              </p>
+              
+              <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] mb-6 shadow-2xs">
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
+                  <Award className="w-4 h-4 text-[#4f46e5]" />
+                  <span>Dual-Engine Suspecting & Quality</span>
+                </h4>
+                <p className="text-xs text-[#524b6b] leading-relaxed">
+                  Evaluates historical encounter records and clinical narrative notes across CMS-HCC V24 & V28 models, surfacing prospective recapture opportunities with verbatim source citations.
+                </p>
+              </div>
+
+              <Link
+                to="/platform/risk-adjustment"
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#4f46e5] hover:text-[#3730a3] transition-colors group"
+              >
+                <span>Explore Risk Adjustment in Platform</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* 4 Capability Cards Grid */}
+            <div className="lg:col-span-7">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
+                    <Award className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">CMS Star Ratings & HEDIS Surveillance</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Year-round tracking of NCQA HEDIS quality measures and projected CMS Star Ratings performance across Medicare Advantage and commercial plan books.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Dual-Engine CMS-HCC V24 & V28 Models</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Calculates prospective RAF scores concurrently under legacy V24 and current V28 models, identifying documentation gaps with sentence-level citations.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
+                    <BarChart3 className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Provider Network Scorecards</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Shares objective quality performance scorecards, open care gap rosters, and documentation accuracy indicators with contracted provider networks.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
+                    <Database className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Claims & Clinical Data Integration</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Ingests 837 claims, 835 remittances, pharmacy encounter files, and multi-EHR clinical feeds into a unified member database with Master Patient Indexing.
+                  </p>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 5: 03 / CIN & PROVIDER ORGANIZATIONS (#cin-providers)
+          ───────────────────────────────────────────────────────────── */}
+      <section id="cin-providers" className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            {/* Header Column */}
+            <div className="lg:col-span-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#9333ea]/10 text-[#9333ea] font-mono text-xs font-bold uppercase tracking-wider mb-3">
+                <Building2 className="w-3.5 h-3.5" />
+                <span>03 / CLINICALLY INTEGRATED NETWORKS</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                Enable clinical integration, specialist alignment, and <span className="text-[#9333ea]">network retention.</span>
+              </h2>
+              <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                Clinically Integrated Networks (CINs) bring independent and employed medical groups together to negotiate risk contracts and coordinate patient care. Guardian links heterogeneous EMR systems across participant sites, providing a unified Patient Master Chart and closed-loop specialist referral routing.
+              </p>
+              
+              <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6">
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
+                  <Share2 className="w-4 h-4 text-[#9333ea]" />
+                  <span>Closed-Loop Referral Coordination</span>
+                </h4>
+                <p className="text-xs text-[#524b6b] leading-relaxed">
+                  Enables primary care providers to locate in-network specialists by specialty and zip code, dispatch Direct Secure Messaging (DSM) referrals, and automatically file consult notes back to the chart.
+                </p>
+              </div>
+
+              <Link
+                to="/platform/referral-management"
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#9333ea] hover:text-[#6b21a8] transition-colors group"
+              >
+                <span>Explore Referral Management in Platform</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* 4 Capability Cards Grid */}
+            <div className="lg:col-span-7">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
+                    <Database className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Multi-Practice EMR Connectivity</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Connects disparate ambulatory EMRs (Epic, Athena, eCW, NextGen) into a single network infrastructure while maintaining tenant isolation between practice sites.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Specialist Geo-Mapping Directory</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Interactive provider geo-mapping and taxonomy search enabling PCPs to locate in-network specialists filtered by clinical subspecialty, accepted insurances, and distance.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
+                    <Share2 className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Direct Secure Messaging (DSM)</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Automated electronic referral creation via native Direct Secure Messaging addresses, attaching clinical summaries, progress notes, and lab PDFs.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
+                    <FileCheck className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Closed-Loop Consult Tracking</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Real-time status tracking from order creation through specialist appointment completion, automatically filing consultation notes in Patient 360 to close loops.
+                  </p>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 6: 04 / CARE MANAGEMENT TEAMS (#care-teams)
+          ───────────────────────────────────────────────────────────── */}
+      <section id="care-teams" className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            {/* Header Column */}
+            <div className="lg:col-span-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#ea580c]/10 text-[#ea580c] font-mono text-xs font-bold uppercase tracking-wider mb-3">
+                <HeartPulse className="w-3.5 h-3.5" />
+                <span>04 / CARE MANAGEMENT TEAMS</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                Supercharge care team productivity, patient engagement, and <span className="text-[#ea580c]">outreach.</span>
+              </h2>
+              <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                Care managers and clinical navigators are the heartbeat of value-based healthcare delivery. Guardian eliminates manual spreadsheet tracking by centralizing real-time ADT event queues, validated assessment scales, and individualized care plans into a single interdisciplinary workspace.
+              </p>
+              
+              <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] mb-6 shadow-2xs">
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
+                  <Workflow className="w-4 h-4 text-[#ea580c]" />
+                  <span>Program Protocol Automation</span>
+                </h4>
+                <p className="text-xs text-[#524b6b] leading-relaxed">
+                  Automated enrollment qualification and intervention scheduling supporting Chronic Care Management (CCM), Transitional Care Management (TCM), and Remote Patient Monitoring (RPM).
+                </p>
+              </div>
+
+              <Link
+                to="/platform/care-management"
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#ea580c] hover:text-[#9a3412] transition-colors group"
+              >
+                <span>Explore Care Management in Platform</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* 4 Capability Cards Grid */}
+            <div className="lg:col-span-7">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
+                    <Bell className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Real-Time ADT Queue Prioritization</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Emergency and inpatient ADT alerts route unassigned attributed patients directly into clinical queues, prioritized dynamically by clinical risk tier.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
+                    <Award className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">150+ Standardized Assessment Scales</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Extensive library of validated clinical, behavioral, and SDoH scales (e.g. PHQ-9, GAD-7, PRAPARE, Katz ADL) with automated longitudinal scoring.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
+                    <FileText className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Personal Care Plan Builder</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Interactive care plan construction supporting patient-centered measurable goals, barrier identification, intervention schedules, and progress tracking.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
+                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
+                    <Users className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Interdisciplinary Care Workspaces</h3>
+                  <p className="text-xs text-[#524b6b] leading-relaxed">
+                    Shared workspaces connecting nurses, care coordinators, and account managers with role-based task delegation and multi-channel patient outreach logging.
+                  </p>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 7: LIVE SOLUTION PROOF (#proof)
+          ───────────────────────────────────────────────────────────── */}
+      <section id="proof" className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="max-w-3xl mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
               <Zap className="w-3.5 h-3.5 text-[#ff7a57]" />
-              <span>CAPABILITY PORTFOLIO</span>
+              <span>LIVE APPLICATION PROOF</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-3 leading-tight">
-              Integrated capabilities <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">powering healthcare delivery.</span>
+              Genuine platform interfaces <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">powering daily healthcare delivery.</span>
             </h2>
             <p className="text-base text-[#524b6b] leading-relaxed">
-              Guardian combines platform technology capabilities with specialized clinical modules to support your organization’s goals:
+              Explore how Guardian’s solution modules deliver actionable insights directly into executive, analytic, clinical, and network workflows:
             </p>
           </div>
 
-          {/* Interactive Capability Module Showcase */}
+          {/* Interactive Capability Showcase Tabs */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            {/* Left Column: Capability Selector Tabs */}
+            {/* Left Selector Tabs */}
             <div className="lg:col-span-5 space-y-3">
-              {capabilityModules.map((mod) => {
-                const isActive = activeCapabilityTab === mod.id;
+              {uiShowcase.map((item) => {
+                const isActive = activeProofTab === item.id;
                 return (
                   <div
-                    key={mod.id}
-                    onClick={() => setActiveCapabilityTab(mod.id)}
+                    key={item.id}
+                    onClick={() => setActiveProofTab(item.id)}
                     className={`p-4 sm:p-5 rounded-2xl border transition-all duration-200 cursor-pointer ${
                       isActive 
                         ? 'bg-white border-[#7b3fc7] border-l-4 border-l-[#7b3fc7] shadow-lg -translate-x-1 ring-1 ring-[#7b3fc7]/15' 
-                        : 'bg-white/65 border-[#e9e4f0] hover:bg-white hover:border-[#7b3fc7]/40 hover:shadow-xs'
+                        : 'bg-[#faf8fd]/80 border-[#e9e4f0] hover:bg-white hover:border-[#7b3fc7]/40 hover:shadow-xs'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1.5">
@@ -493,30 +725,25 @@ export default function SolutionsPage() {
                           <span className="w-2 h-2 rounded-full bg-[#7b3fc7] animate-pulse" />
                         )}
                         <h3 className={`text-base font-extrabold ${isActive ? 'text-[#7b3fc7]' : 'text-[#1c1636]'}`}>
-                          {mod.title}
+                          {item.title}
                         </h3>
                       </div>
-                      <Link 
-                        to={mod.path}
-                        className="text-[11px] font-bold text-[#7b3fc7] hover:underline flex items-center gap-0.5"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <span>View</span>
-                        <ChevronRight className="w-3 h-3" />
-                      </Link>
+                      <span className="text-[10px] font-mono font-bold text-[#716b89] uppercase tracking-wider px-2 py-0.5 rounded bg-gray-100">
+                        {item.badge}
+                      </span>
                     </div>
-                    <p className="text-xs text-[#524b6b] leading-relaxed mb-3">
-                      {mod.desc}
+                    <p className="text-xs text-[#524b6b] leading-relaxed mb-3 font-normal">
+                      {item.desc}
                     </p>
 
                     <div className="flex flex-wrap gap-1.5">
-                      {mod.highlights.map((h, i) => (
+                      {item.highlights.map((h, i) => (
                         <span 
                           key={i} 
                           className={`text-[10px] font-semibold px-2 py-0.5 rounded border transition-colors ${
                             isActive 
                               ? 'bg-[#f2ecf9] text-[#7b3fc7] border-[#7b3fc7]/30' 
-                              : 'bg-gray-100 text-[#524b6b] border-gray-200'
+                              : 'bg-white text-[#524b6b] border-gray-200'
                           }`}
                         >
                           {h}
@@ -528,51 +755,42 @@ export default function SolutionsPage() {
               })}
             </div>
 
-            {/* Right Column: Product UI Screenshot Proof Display (Stitched to Top) */}
+            {/* Right Genuine Screenshot Viewport (Stitched to Top) */}
             <div className="lg:col-span-7 lg:sticky lg:top-24 self-start">
               <div className="relative rounded-2xl bg-[#1c1636] p-3.5 border border-[#2e1065] shadow-2xl overflow-hidden transition-all duration-300">
-                {/* Browser / Application Window Top Bar */}
-                <div className="flex items-center justify-between px-3 py-2.5 bg-[#120b24] rounded-xl border-b border-white/10 mb-3">
+                {/* Application Window Top Bar */}
+                <div className="flex items-center justify-between px-3 py-2 bg-[#120b24] rounded-xl border-b border-white/10 mb-3">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
                     <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/80 inline-block" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block" />
                     <span className="text-[11px] text-purple-200 font-mono ml-2 font-semibold truncate max-w-[200px] sm:max-w-none">
-                      {capabilityModules.find(m => m.id === activeCapabilityTab)?.title} Module
+                      {uiShowcase.find(m => m.id === activeProofTab)?.subtitle}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Link
-                      to={capabilityModules.find(m => m.id === activeCapabilityTab)?.path || '#'}
-                      className="text-[10px] font-mono font-bold text-purple-200 hover:text-white px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 transition-colors hidden sm:inline-flex items-center gap-1"
-                    >
-                      <span>Explore Page</span>
-                      <ChevronRight className="w-3 h-3" />
-                    </Link>
-                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[#7b3fc7] text-white font-medium">
-                      Live UI Preview
-                    </span>
-                  </div>
+                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[#7b3fc7] text-white font-medium">
+                    Verified Application UI
+                  </span>
                 </div>
 
-                {/* Image Viewport (Top Anchored, Smooth Crossfade) */}
+                {/* Genuine Product Image Viewport */}
                 <div className="relative rounded-lg overflow-hidden bg-white border border-[#e9e4f0] shadow-inner">
                   <AnimatePresence mode="wait">
                     <motion.img 
-                      key={activeCapabilityTab}
-                      src={capabilityModules.find(m => m.id === activeCapabilityTab)?.image || '/images/appliction images/Main Platform Dashboard.png'}
-                      alt={`${capabilityModules.find(m => m.id === activeCapabilityTab)?.title} Healthcare Solution UI Capability Showcase`}
+                      key={activeProofTab}
+                      src={uiShowcase.find(m => m.id === activeProofTab)?.image}
+                      alt={`${uiShowcase.find(m => m.id === activeProofTab)?.title} Platform Interface Demonstration`}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.22, ease: 'easeOut' }}
-                      className="w-full h-auto object-contain max-h-[520px] block"
+                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      className="w-full h-auto object-contain max-h-[500px] block"
                     />
                   </AnimatePresence>
                 </div>
               </div>
 
-              {/* Demonstration Data Disclaimer */}
+              {/* Required Technical Demonstration Disclaimer */}
               <p className="text-xs text-[#716b89] leading-relaxed italic text-right mt-2.5">
                 *Illustrative sample demonstration data. Module records and metrics are for demonstration purposes only.
               </p>
@@ -584,12 +802,12 @@ export default function SolutionsPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 5: HUMAN + TECHNOLOGY WORKFLOW STORY
+          SECTION 8: PEOPLE + TECHNOLOGY MODEL & ENTERPRISE TRUST (#trust)
           ───────────────────────────────────────────────────────────── */}
-      <section className="py-20 sm:py-28 bg-white border-b border-[#e9e4f0]">
+      <section id="trust" className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
             
             {/* Left Image Showcase */}
             <div className="lg:col-span-6">
@@ -631,67 +849,66 @@ export default function SolutionsPage() {
               </div>
 
               <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Solutions backed by more than technology. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] to-[#ff7a57]">Amplifying care teams.</span>
+                Solutions backed by more than software. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] to-[#ff7a57]">Amplifying care teams.</span>
               </h2>
 
               <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                Guardian combines platform technology capabilities with healthcare expertise and operational care management support. Technology connects and organizes data; experienced clinical teams turn that data into meaningful patient action.
+                Healthcare organizations succeed when powerful data tools are paired with specialized operational execution. Guardian bridges that connection by offering both turnkey technology modules and experienced care management operational services:
               </p>
 
               <div className="space-y-4 mb-8">
-                <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] flex items-start gap-3">
+                <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] flex items-start gap-3 shadow-2xs">
                   <div className="w-8 h-8 rounded-lg bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center shrink-0 mt-0.5">
                     <Zap className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-[#1c1636] mb-1">Intelligent Software Automation</h3>
-                    <p className="text-xs text-[#524b6b] leading-relaxed">Automates risk suspecting, HEDIS care gap identification, and patient task dispatch so clinicians focus on care.</p>
+                    <h3 className="text-sm font-bold text-[#1c1636] mb-1">Turnkey Software Automation</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">
+                      Automates attribution roster matching, HEDIS care gap identification, and patient queue triage so clinicians focus on patient relationships.
+                    </p>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#059669]/10 text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
+                <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] flex items-start gap-3 shadow-2xs">
+                  <div className="w-8 h-8 rounded-lg bg-[#4f46e5]/10 text-[#4f46e5] flex items-center justify-center shrink-0 mt-0.5">
                     <ShieldCheck className="w-4 h-4" />
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-[#1c1636] mb-1">Clinical Domain Expertise</h3>
-                    <p className="text-xs text-[#524b6b] leading-relaxed">Deep understanding of VBC contracts, CMS regulations, ACO REACH, and quality measure governance.</p>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">
+                      Deep operational knowledge of Medicare Shared Savings Program (MSSP), ACO REACH, Commercial Risk, and NCQA HEDIS quality measure specifications.
+                    </p>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] flex items-start gap-3">
+                <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] flex items-start gap-3 shadow-2xs">
                   <div className="w-8 h-8 rounded-lg bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center shrink-0 mt-0.5">
                     <Users className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-[#1c1636] mb-1">Care Team Operational Services</h3>
-                    <p className="text-xs text-[#524b6b] leading-relaxed">Augmenting clinical staff capacity with experienced care managers, coders, and navigators when needed.</p>
+                    <h3 className="text-sm font-bold text-[#1c1636] mb-1">Staff Augmentation Support</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">
+                      Optional clinical staffing support providing experienced care managers, certified risk coders, and navigators to scale your organizational capacity.
+                    </p>
                   </div>
                 </div>
               </div>
 
               <Link
-                to="/solutions/care-management-teams"
+                to="/company?intent=demo#contact"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-xs sm:text-sm text-white bg-[#7b3fc7] hover:bg-[#9565d2] shadow-md transition-all"
               >
-                <span>Explore Care Management Solutions</span>
+                <span>Discuss Solutions with a Specialist</span>
                 <ArrowRight className="w-4 h-4 text-[#ff7a57]" />
               </Link>
             </div>
 
           </div>
 
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 6: ENTERPRISE TRUST & COMPLIANCE CREDENTIALS
-          ───────────────────────────────────────────────────────────── */}
-      <section className="py-16 bg-[#faf8fd] border-b border-[#e9e4f0]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Enterprise Trust Strip (Accurately Framed - Zero Green) */}
           <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-sm flex flex-wrap items-center justify-between gap-6">
             <span className="text-xs font-mono font-bold text-[#1c1636] uppercase tracking-wider">
-              BUILT ON HEALTHCARE EXPERIENCE & TRUST:
+              BUILT FOR HEALTHCARE INTEROPERABILITY &amp; TRUST:
             </span>
             <div className="flex flex-wrap items-center gap-6 text-xs text-[#35304c] font-semibold">
               <span className="flex items-center gap-2">
@@ -704,24 +921,25 @@ export default function SolutionsPage() {
                 <ShieldCheck className="w-4 h-4 text-[#7b3fc7]" /> CareQuality Framework Alignment
               </span>
               <span className="flex items-center gap-2">
-                <Lock className="w-4 h-4 text-[#ff7a57]" /> HITRUST & HIPAA Security Alignment
+                <Lock className="w-4 h-4 text-[#ea580c]" /> Administrative HIPAA Security Safeguards
               </span>
             </div>
           </div>
+
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 7: FINAL EXECUTIVE CTA
+          SECTION 9: FINAL EXECUTIVE CTA (#contact)
           ───────────────────────────────────────────────────────────── */}
-      <section className="py-20 sm:py-28 bg-gradient-to-b from-white to-[#faf8fd]">
+      <section id="contact" className="py-16 sm:py-24 bg-gradient-to-b from-[#faf8fd] to-white scroll-mt-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
           <div className="p-10 sm:p-16 rounded-3xl bg-gradient-to-br from-[#1c1636] via-[#2d1b54] to-[#0d1527] text-white shadow-2xl relative overflow-hidden border border-white/10">
             
-            {/* Ambient Background Lights */}
+            {/* Ambient Lighting (Guardian Brand Palette - Zero Green) */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-[#7b3fc7]/30 blur-[120px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#ff7a57]/20 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#4f46e5]/25 blur-[120px] rounded-full pointer-events-none" />
 
             <div className="relative z-10 max-w-2xl mx-auto">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-purple-200 text-xs font-semibold tracking-wider uppercase mb-6">
@@ -730,16 +948,16 @@ export default function SolutionsPage() {
               </div>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight leading-tight">
-                Turn complex data into <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-white to-[#ff7a57]">decisive action.</span>
+                Turn complex healthcare data into <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-white to-[#ff7a57]">decisive clinical action.</span>
               </h2>
 
               <p className="text-sm sm:text-base text-purple-100/90 mb-8 leading-relaxed font-normal">
-                Discover how Guardian helps your organization connect disparate data, empower care teams, and deliver measurable clinical and financial outcomes.
+                Discover how Guardian helps your health plan, ACO, CIN, or care management team connect disparate records, empower frontline providers, and deliver measurable performance outcomes.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <Link
-                  to="/company/contact?intent=demo"
+                  to="/company?intent=demo#contact"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#7b3fc7] text-white font-semibold text-xs sm:text-sm hover:bg-[#9565d2] shadow-[0_4px_25px_rgba(123,63,199,0.45)] transition-all duration-300 hover:scale-[1.02] active:scale-95"
                 >
                   <span>Request a Custom Demo</span>

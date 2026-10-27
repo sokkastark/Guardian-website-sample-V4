@@ -193,7 +193,9 @@ export default function Header() {
                                     closeMobileMenu();
                                     if (child.path.includes('#')) {
                                       const [targetPath, targetHash] = child.path.split('#');
-                                      if (window.location.pathname === targetPath && targetHash) {
+                                      const currentNorm = window.location.pathname.replace(/\/$/, '') || '/';
+                                      const targetNorm = targetPath.replace(/\/$/, '') || '/';
+                                      if (currentNorm === targetNorm && targetHash) {
                                         setTimeout(() => {
                                           const el = document.getElementById(targetHash);
                                           if (el) {

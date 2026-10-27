@@ -28,6 +28,94 @@ export default function Footer() {
     }
   };
 
+  const handleResourcesClick = (e, sectionId) => {
+    const isResourcesPage = location.pathname === '/resources' || location.pathname === '/resources/';
+    if (isResourcesPage) {
+      e.preventDefault();
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const headerOffset = 90;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = Math.max(0, elementPosition - headerOffset);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        window.history.pushState(null, '', `/resources#${sectionId}`);
+      }
+    }
+  };
+
+  const handleDataIntegrationClick = (e, sectionId) => {
+    const isDataIntegrationPage = location.pathname === '/data-integration' || location.pathname === '/data-integration/';
+    if (isDataIntegrationPage) {
+      e.preventDefault();
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const headerOffset = 90;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = Math.max(0, elementPosition - headerOffset);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        window.history.pushState(null, '', `/data-integration#${sectionId}`);
+      }
+    }
+  };
+
+  const handleIntelligenceClick = (e, sectionId) => {
+    const isIntelligencePage = location.pathname === '/intelligence' || location.pathname === '/intelligence/';
+    if (isIntelligencePage) {
+      e.preventDefault();
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const headerOffset = 90;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = Math.max(0, elementPosition - headerOffset);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        window.history.pushState(null, '', `/intelligence#${sectionId}`);
+      }
+    }
+  };
+
+  const handleSolutionsClick = (e, sectionId) => {
+    if (window.location.pathname === '/solutions') {
+      e.preventDefault();
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const headerOffset = 90;
+        const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = Math.max(0, elementPosition - headerOffset);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        window.history.pushState(null, '', `/solutions#${sectionId}`);
+      }
+    }
+  };
+
+  const handlePlatformClick = (e, sectionId) => {
+    if (window.location.pathname === '/platform') {
+      e.preventDefault();
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const headerOffset = 90;
+        const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = Math.max(0, elementPosition - headerOffset);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        window.history.pushState(null, '', `/platform#${sectionId}`);
+      }
+    }
+  };
+
   // ─────────────────────────────────────────────────────────────
   // LIGHT FOOTER CONCEPT (FOR HOME PAGE)
   // ─────────────────────────────────────────────────────────────
@@ -104,22 +192,22 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/platform/population-health" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/platform#population-health" onClick={(e) => handlePlatformClick(e, 'population-health')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Population Health
                   </Link>
                 </li>
                 <li>
-                  <Link to="/platform/analytics" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/platform#analytics" onClick={(e) => handlePlatformClick(e, 'analytics')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Analytics
                   </Link>
                 </li>
                 <li>
-                  <Link to="/platform/patient-intelligence" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    Patient Intelligence
+                  <Link to="/platform#patient-360" onClick={(e) => handlePlatformClick(e, 'patient-360')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Patient 360 / PMC
                   </Link>
                 </li>
                 <li>
-                  <Link to="/platform/risk-adjustment" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/platform#risk-adjustment" onClick={(e) => handlePlatformClick(e, 'risk-adjustment')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Risk Adjustment / MRA
                   </Link>
                 </li>
@@ -139,22 +227,22 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/solutions/aco-value-based-care" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    ACO & Value-Based Care
+                  <Link to="/solutions#aco-vbc" onClick={(e) => handleSolutionsClick(e, 'aco-vbc')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    ACO &amp; Value-Based Care
                   </Link>
                 </li>
                 <li>
-                  <Link to="/solutions/health-plans" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/solutions#health-plans" onClick={(e) => handleSolutionsClick(e, 'health-plans')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Health Plans
                   </Link>
                 </li>
                 <li>
-                  <Link to="/solutions/cin-provider-organizations" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    CIN & Provider Orgs
+                  <Link to="/solutions#cin-providers" onClick={(e) => handleSolutionsClick(e, 'cin-providers')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    CIN &amp; Provider Orgs
                   </Link>
                 </li>
                 <li>
-                  <Link to="/solutions/care-management-teams" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/solutions#care-teams" onClick={(e) => handleSolutionsClick(e, 'care-teams')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Care Teams
                   </Link>
                 </li>
@@ -174,22 +262,22 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/intelligence/ai" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    AI & Predictive
+                  <Link to="/intelligence#ai-nlp" onClick={(e) => handleIntelligenceClick(e, 'ai-nlp')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    AI &amp; NLP Engine
                   </Link>
                 </li>
                 <li>
                   <Link to="/data-integration" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    Data & Integration
+                    Data &amp; Integration Hub
                   </Link>
                 </li>
                 <li>
-                  <Link to="/data-integration/clinical-integration" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/data-integration#clinical" onClick={(e) => handleDataIntegrationClick(e, 'clinical')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Clinical Integration
                   </Link>
                 </li>
                 <li>
-                  <Link to="/data-integration/data-foundation" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/data-integration#data-foundation" onClick={(e) => handleDataIntegrationClick(e, 'data-foundation')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Data Foundation
                   </Link>
                 </li>
@@ -204,23 +292,18 @@ export default function Footer() {
               </h3>
               <ul className="space-y-2 text-xs sm:text-[13px]">
                 <li>
-                  <Link to="/resources" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    Resources Overview
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/resources/insights" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                  <Link to="/resources#insights" onClick={(e) => handleResourcesClick(e, 'insights')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Insights
                   </Link>
                 </li>
                 <li>
-                  <Link to="/resources/case-studies" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    Case Studies
+                  <Link to="/resources#guides" onClick={(e) => handleResourcesClick(e, 'guides')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Implementation Guides
                   </Link>
                 </li>
                 <li>
-                  <Link to="/resources/guides" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    Guides
+                  <Link to="/resources#expertise" onClick={(e) => handleResourcesClick(e, 'expertise')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Guardian Expertise
                   </Link>
                 </li>
               </ul>
@@ -394,22 +477,22 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/platform/population-health" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/platform#population-health" onClick={(e) => handlePlatformClick(e, 'population-health')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Population Health
                 </Link>
               </li>
               <li>
-                <Link to="/platform/analytics" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/platform#analytics" onClick={(e) => handlePlatformClick(e, 'analytics')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Analytics
                 </Link>
               </li>
               <li>
-                <Link to="/platform/patient-intelligence" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  Patient Intelligence
+                <Link to="/platform#patient-360" onClick={(e) => handlePlatformClick(e, 'patient-360')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Patient 360 / PMC
                 </Link>
               </li>
               <li>
-                <Link to="/platform/risk-adjustment" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/platform#risk-adjustment" onClick={(e) => handlePlatformClick(e, 'risk-adjustment')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Risk Adjustment / MRA
                 </Link>
               </li>
@@ -429,22 +512,22 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/solutions/aco-value-based-care" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  ACO & Value-Based Care
+                <Link to="/solutions#aco-vbc" onClick={(e) => handleSolutionsClick(e, 'aco-vbc')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  ACO &amp; Value-Based Care
                 </Link>
               </li>
               <li>
-                <Link to="/solutions/health-plans" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/solutions#health-plans" onClick={(e) => handleSolutionsClick(e, 'health-plans')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Health Plans
                 </Link>
               </li>
               <li>
-                <Link to="/solutions/cin-provider-organizations" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  CIN & Provider Orgs
+                <Link to="/solutions#cin-providers" onClick={(e) => handleSolutionsClick(e, 'cin-providers')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  CIN &amp; Provider Orgs
                 </Link>
               </li>
               <li>
-                <Link to="/solutions/care-management-teams" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/solutions#care-teams" onClick={(e) => handleSolutionsClick(e, 'care-teams')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Care Teams
                 </Link>
               </li>
@@ -464,22 +547,22 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/intelligence/ai" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  AI & Predictive
+                <Link to="/intelligence#ai-nlp" onClick={(e) => handleIntelligenceClick(e, 'ai-nlp')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  AI &amp; NLP Engine
                 </Link>
               </li>
               <li>
                 <Link to="/data-integration" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  Data & Integration
+                  Data &amp; Integration Hub
                 </Link>
               </li>
               <li>
-                <Link to="/data-integration/clinical-integration" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/data-integration#clinical" onClick={(e) => handleDataIntegrationClick(e, 'clinical')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Clinical Integration
                 </Link>
               </li>
               <li>
-                <Link to="/data-integration/data-foundation" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/data-integration#data-foundation" onClick={(e) => handleDataIntegrationClick(e, 'data-foundation')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Data Foundation
                 </Link>
               </li>
@@ -494,23 +577,18 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 text-xs sm:text-[13px]">
               <li>
-                <Link to="/resources" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  Resources Overview
-                </Link>
-              </li>
-              <li>
-                <Link to="/resources/insights" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                <Link to="/resources#insights" onClick={(e) => handleResourcesClick(e, 'insights')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Insights
                 </Link>
               </li>
               <li>
-                <Link to="/resources/case-studies" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  Case Studies
+                <Link to="/resources#guides" onClick={(e) => handleResourcesClick(e, 'guides')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Implementation Guides
                 </Link>
               </li>
               <li>
-                <Link to="/resources/guides" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  Guides
+                <Link to="/resources#expertise" onClick={(e) => handleResourcesClick(e, 'expertise')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Guardian Expertise
                 </Link>
               </li>
             </ul>
