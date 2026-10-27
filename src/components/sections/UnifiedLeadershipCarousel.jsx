@@ -790,8 +790,8 @@ export default function UnifiedLeadershipCarousel() {
                   </div>
                 </div>
 
-                {/* 6 Onsite Capsule Cards (Evenly distributed to utilize full vertical height) */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5 flex-1 content-evenly my-2">
+                {/* 6 Onsite Capsule Cards (Refined compact size with comfortable breathing room) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-3.5 lg:gap-4 flex-1 content-center my-auto py-2">
                   {onsiteTeam.map((member) => (
                     <div
                       key={member.id}
@@ -801,10 +801,10 @@ export default function UnifiedLeadershipCarousel() {
                         experience: 'Onsite Team',
                         credentials: member.domain
                       })}
-                      className="group cursor-pointer rounded-3xl lg:rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-xs hover:shadow-[0_12px_28px_rgba(123,63,199,0.25)] hover:-translate-y-0.5 transition-all duration-300 p-3.5 sm:p-4 lg:p-4.5 flex items-center justify-between gap-4"
+                      className="group cursor-pointer rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-xs hover:shadow-[0_8px_22px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 p-2.5 sm:p-3 flex items-center justify-between gap-3 sm:gap-3.5"
                     >
-                      {/* Left Circular Portrait (Enlarged) */}
-                      <div className="relative w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 rounded-full shrink-0 overflow-hidden p-0.5 bg-gradient-to-tr from-[#7b3fc7] via-[#a855f7] to-[#ff7a57] shadow-sm group-hover:scale-105 transition-transform duration-300">
+                      {/* Left Circular Portrait */}
+                      <div className="relative w-13 h-13 sm:w-14 sm:h-14 lg:w-15 lg:h-15 rounded-full shrink-0 overflow-hidden p-0.5 bg-gradient-to-tr from-[#7b3fc7] via-[#a855f7] to-[#ff7a57] shadow-xs group-hover:scale-105 transition-transform duration-300">
                         <div className="w-full h-full rounded-full overflow-hidden bg-[#160d33] flex items-center justify-center">
                           {member.image ? (
                             <img
@@ -814,36 +814,36 @@ export default function UnifiedLeadershipCarousel() {
                               loading="lazy"
                             />
                           ) : (
-                            <span className="font-extrabold text-base sm:text-lg text-white tracking-wider">
+                            <span className="font-extrabold text-sm sm:text-base text-white tracking-wider">
                               {member.initials}
                             </span>
                           )}
                         </div>
                       </div>
 
-                      {/* Middle Content Body (Spacious with full 2-3 line bio) */}
-                      <div className="flex-1 min-w-0 pr-1.5 py-0.5">
-                        <div className="flex flex-wrap items-center gap-2 mb-1">
-                          <h4 className="text-sm sm:text-base font-extrabold text-white group-hover:text-purple-200 transition-colors truncate">
+                      {/* Middle Content Body */}
+                      <div className="flex-1 min-w-0 pr-1">
+                        <div className="flex flex-wrap items-center gap-1.5 mb-0.5">
+                          <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-purple-200 transition-colors truncate">
                             {member.name}
                           </h4>
-                          <span className="text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] bg-[#ff7a57]/15 border border-[#ff7a57]/30 px-2 py-0.5 rounded-full shrink-0">
+                          <span className="text-[8px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] bg-[#ff7a57]/15 border border-[#ff7a57]/30 px-1.5 py-0.2 rounded-full shrink-0">
                             {member.domain}
                           </span>
                         </div>
 
-                        <p className="text-xs sm:text-[13px] font-semibold text-purple-300 mb-1 truncate">
+                        <p className="text-[10.5px] sm:text-[11.5px] font-semibold text-purple-300 mb-0.5 truncate">
                           {member.role}
                         </p>
 
-                        <p className="text-[11px] sm:text-xs text-purple-200/80 line-clamp-2 lg:line-clamp-3 leading-relaxed font-normal">
+                        <p className="text-[10px] sm:text-[10.5px] text-purple-200/75 line-clamp-2 leading-relaxed font-normal">
                           {member.bio}
                         </p>
                       </div>
 
                       {/* Far Right Arrow Circle */}
-                      <div className="hidden sm:flex w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-[#7b3fc7] group-hover:border-purple-400 group-hover:scale-105 text-purple-300 group-hover:text-white items-center justify-center shrink-0 mr-1 transition-all duration-200 shadow-xs">
-                        <ChevronRight className="w-4 h-4" />
+                      <div className="hidden sm:flex w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-[#7b3fc7] group-hover:border-purple-400 group-hover:scale-105 text-purple-300 group-hover:text-white items-center justify-center shrink-0 mr-0.5 transition-all duration-200 shadow-xs">
+                        <ChevronRight className="w-3.5 h-3.5" />
                       </div>
                     </div>
                   ))}
