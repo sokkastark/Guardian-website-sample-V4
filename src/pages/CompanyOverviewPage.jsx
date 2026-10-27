@@ -338,28 +338,36 @@ export default function CompanyOverviewPage() {
             </p>
           </div>
 
-          {/* 2 Core Disciplines */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-7 mb-16">
+          {/* 2 Core Disciplines (Compact Height) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 mb-12">
             {careerDisciplines.map((d, idx) => {
               const Icon = d.icon;
               return (
                 <div
                   key={idx}
-                  className="p-8 rounded-3xl bg-[#faf8fd] border border-[#e1e1e5] shadow-xs hover:border-[#7b3fc7]/40 hover:shadow-lg transition-all flex flex-col justify-between"
+                  className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#faf8fd] border border-[#e1e1e5] shadow-xs hover:border-[#7b3fc7]/40 hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-12 h-12 rounded-2xl bg-[#f2ecf9] text-[#7b3fc7] flex items-center justify-center mb-6">
-                      <Icon className="w-6 h-6" />
+                    {/* Header: Icon and Heading side-by-side */}
+                    <div className="flex items-center gap-3 mb-2.5">
+                      <div className="w-10 h-10 rounded-xl bg-[#f2ecf9] text-[#7b3fc7] flex items-center justify-center shrink-0 shadow-2xs">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <h3 className="text-base sm:text-lg font-bold text-[#1c1636]">{d.title}</h3>
                     </div>
-                    <h3 className="text-xl font-bold text-[#1c1636] mb-3">{d.title}</h3>
-                    <p className="text-xs sm:text-sm text-[#554e6d] leading-relaxed mb-6 font-normal">{d.desc}</p>
+
+                    {/* Description */}
+                    <p className="text-xs sm:text-[13px] text-[#554e6d] leading-relaxed mb-4 font-normal">
+                      {d.desc}
+                    </p>
                   </div>
 
-                  <div className="pt-6 border-t border-[#f0ecf6] space-y-2">
+                  {/* 3 Highlights placed one below one in single lines */}
+                  <div className="pt-3.5 border-t border-[#f0ecf6] space-y-1.5">
                     {d.highlights.map((h, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-[#1c1636] font-medium">
+                      <div key={i} className="flex items-center gap-2 text-xs text-[#1c1636] font-medium whitespace-nowrap">
                         <CheckCircle2 className="w-3.5 h-3.5 text-[#7b3fc7] shrink-0" />
-                        <span>{h}</span>
+                        <span className="truncate">{h}</span>
                       </div>
                     ))}
                   </div>
