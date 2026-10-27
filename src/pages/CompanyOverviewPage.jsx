@@ -362,12 +362,12 @@ export default function CompanyOverviewPage() {
                     </p>
                   </div>
 
-                  {/* 3 Highlights placed one below one in single lines */}
-                  <div className="pt-3.5 border-t border-[#f0ecf6] space-y-1.5">
+                  {/* Highlights placed horizontally side-by-side (one next to one) */}
+                  <div className="pt-3.5 border-t border-[#f0ecf6] flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-2">
                     {d.highlights.map((h, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-[#1c1636] font-medium whitespace-nowrap">
+                      <div key={i} className="flex items-center gap-1.5 text-xs text-[#1c1636] font-medium">
                         <CheckCircle2 className="w-3.5 h-3.5 text-[#7b3fc7] shrink-0" />
-                        <span className="truncate">{h}</span>
+                        <span>{h}</span>
                       </div>
                     ))}
                   </div>
