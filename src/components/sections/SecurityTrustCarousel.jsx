@@ -14,7 +14,9 @@ import {
   Shield, 
   Sparkles,
   Layers,
-  Database
+  Database,
+  Play,
+  Pause
 } from 'lucide-react';
 import { RibbonStepGrid } from '../common/RibbonStepCard';
 
@@ -174,6 +176,8 @@ const securitySlides = [
 export default function SecurityTrustCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const currentSlide = securitySlides[currentIndex];
   const Icon = currentSlide.icon;
@@ -193,10 +197,21 @@ export default function SecurityTrustCarousel() {
     setCurrentIndex(idx);
   };
 
+  // Auto-rotation: 10 seconds per slide (pauses on user hover or manual pause)
+  useEffect(() => {
+    if (isPaused || isHovered) return;
+
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrentIndex((prev) => (prev + 1) % securitySlides.length);
+    }, 10000);
+
+    return () => clearInterval(timer);
+  }, [isPaused, isHovered, currentIndex]);
+
   // Keyboard navigation support
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Only trigger if focus is near the carousel or user uses arrow keys
       if (e.key === 'ArrowRight') {
         nextSlide();
       } else if (e.key === 'ArrowLeft') {
@@ -239,7 +254,7 @@ export default function SecurityTrustCarousel() {
             <button
               key={slide.id}
               onClick={() => goToSlide(idx)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`relative overflow-hidden px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer flex items-center gap-1.5 ${
                 idx === currentIndex
                   ? 'bg-[#1c1636] text-white shadow-sm'
                   : 'bg-[#faf8fd] text-[#524b6b] hover:text-[#1c1636] hover:bg-[#ede8f5] border border-[#e5deef]'
@@ -250,15 +265,34 @@ export default function SecurityTrustCarousel() {
             >
               <span className="font-mono text-[10px] opacity-75">{slide.number}</span>
               <span>{slide.tabTitle}</span>
+
+              {/* 10s Animated Progress Timer Bar on Active Tab */}
+              {idx === currentIndex && !isPaused && !isHovered && (
+                <motion.div
+                  key={`timer-tab-${currentIndex}`}
+                  initial={{ width: '0%' }}
+                  animate={{ width: '100%' }}
+                  transition={{ duration: 10, ease: 'linear' }}
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#10b981] via-[#7b3fc7] to-[#ff7a57]"
+                />
+              )}
             </button>
           ))}
         </div>
 
-        {/* Previous / Next Slide Controls */}
+        {/* Carousel Controls: Counter, Pause/Play, Prev, Next */}
         <div className="flex items-center gap-2 shrink-0">
           <span className="font-mono text-xs font-bold text-[#8e8a9f] mr-1">
             0{currentIndex + 1} / 0{securitySlides.length}
           </span>
+          <button
+            onClick={() => setIsPaused((prev) => !prev)}
+            className="w-9 h-9 rounded-full bg-white border border-[#e1e1e5] hover:border-[#7b3fc7] text-[#1c1636] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-xs hover:shadow-md cursor-pointer active:scale-95"
+            aria-label={isPaused ? "Resume auto rotation" : "Pause auto rotation"}
+            title={isPaused ? "Resume auto rotation (10s)" : "Pause auto rotation"}
+          >
+            {isPaused ? <Play className="w-3.5 h-3.5 fill-current ml-0.5" /> : <Pause className="w-3.5 h-3.5" />}
+          </button>
           <button
             onClick={prevSlide}
             className="w-9 h-9 rounded-full bg-white border border-[#e1e1e5] hover:border-[#7b3fc7] text-[#1c1636] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-xs hover:shadow-md cursor-pointer active:scale-95"
@@ -276,8 +310,12 @@ export default function SecurityTrustCarousel() {
         </div>
       </div>
 
-      {/* ── Animated Slide Deck ── */}
-      <div className="relative overflow-hidden min-h-[460px] rounded-3xl bg-gradient-to-br from-[#120b24] via-[#1a1233] to-[#241744] text-white p-6 sm:p-10 border border-white/15 shadow-2xl">
+      {/* ── Animated Slide Deck (Pauses auto-rotation on hover) ── */}
+      <div 
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="relative overflow-hidden min-h-[460px] rounded-3xl bg-gradient-to-br from-[#120b24] via-[#1a1233] to-[#241744] text-white p-6 sm:p-10 border border-white/15 shadow-2xl"
+      >
         {/* Background glow illumination */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#7b3fc7]/20 blur-[130px] rounded-full pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#10b981]/15 blur-[120px] rounded-full pointer-events-none" />
@@ -364,12 +402,22 @@ export default function SecurityTrustCarousel() {
             key={slide.id}
             onClick={() => goToSlide(idx)}
             aria-label={`Jump to slide ${idx + 1}`}
-            className={`transition-all duration-300 cursor-pointer rounded-full ${
+            className={`relative overflow-hidden transition-all duration-300 cursor-pointer rounded-full ${
               idx === currentIndex
-                ? 'w-8 h-2 bg-[#7b3fc7]'
+                ? 'w-10 h-2 bg-[#7b3fc7]'
                 : 'w-2 h-2 bg-[#d1cadb] hover:bg-[#adabb7]'
             }`}
-          />
+          >
+            {idx === currentIndex && !isPaused && !isHovered && (
+              <motion.div
+                key={`dot-timer-${currentIndex}`}
+                initial={{ width: '0%' }}
+                animate={{ width: '100%' }}
+                transition={{ duration: 10, ease: 'linear' }}
+                className="absolute inset-0 bg-white/70"
+              />
+            )}
+          </button>
         ))}
       </div>
     </div>
