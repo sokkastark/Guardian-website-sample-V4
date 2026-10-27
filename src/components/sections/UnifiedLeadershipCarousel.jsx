@@ -196,7 +196,7 @@ export const onsiteTeam = [
     name: 'Jose Santos',
     role: 'Senior Data Architect',
     domain: 'Data Architecture & Modeling',
-    image: null,
+    image: '/images/team/onsite/Jose Santos.png',
     initials: 'JS',
     bio: 'Shapes data architecture to support reliable, consistent, and accessible information across systems. Helps establish the foundations for effective data integration and analytics.'
   },
@@ -205,7 +205,7 @@ export const onsiteTeam = [
     name: 'Jessica Lopez',
     role: 'Director of Healthcare IT Operations',
     domain: 'IT Operations & Delivery',
-    image: '/images/team/onsite/Jessica Lopez.jpg',
+    image: '/images/team/onsite/Jessica Lopez.png',
     initials: 'JL',
     bio: 'Coordinates healthcare IT operations and technology delivery. Bridges operational requirements and technical teams to support effective implementation and ongoing service delivery.'
   },
