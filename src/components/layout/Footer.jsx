@@ -11,7 +11,8 @@ export default function Footer() {
   };
 
   const handleCompanyClick = (e, sectionId) => {
-    if (location.pathname === '/company') {
+    const isCompanyPage = location.pathname === '/company' || location.pathname === '/company/';
+    if (isCompanyPage) {
       e.preventDefault();
       const element = document.getElementById(sectionId);
       if (element) {
@@ -268,11 +269,19 @@ export default function Footer() {
               © Guardian Health Service, LLC. All rights reserved.
             </p>
             <div className="flex items-center gap-3">
-              <Link to="/company#security" className="hover:text-[#7b3fc7] transition-colors">
+              <Link 
+                to="/company#security" 
+                onClick={(e) => handleCompanyClick(e, 'security')}
+                className="hover:text-[#7b3fc7] transition-colors"
+              >
                 Security & Trust
               </Link>
               <span className="text-[#d6cde2]">|</span>
-              <Link to="/company#careers" className="hover:text-[#7b3fc7] transition-colors">
+              <Link 
+                to="/company#careers" 
+                onClick={(e) => handleCompanyClick(e, 'careers')}
+                className="hover:text-[#7b3fc7] transition-colors"
+              >
                 Careers
               </Link>
               <span className="text-[#d6cde2]">|</span>
@@ -550,11 +559,19 @@ export default function Footer() {
             © Guardian Health Service, LLC. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
-            <Link to="/company/security-trust" className="hover:text-[#ff7a57] transition-colors">
+            <Link 
+              to="/company#security" 
+              onClick={(e) => handleCompanyClick(e, 'security')}
+              className="hover:text-[#ff7a57] transition-colors"
+            >
               Security & Trust
             </Link>
             <span className="text-purple-400/40">|</span>
-            <Link to="/company/careers" className="hover:text-[#ff7a57] transition-colors">
+            <Link 
+              to="/company#careers" 
+              onClick={(e) => handleCompanyClick(e, 'careers')}
+              className="hover:text-[#ff7a57] transition-colors"
+            >
               Careers
             </Link>
             <span className="text-purple-400/40">|</span>
