@@ -343,9 +343,9 @@ export default function UnifiedLeadershipCarousel() {
   const [hoveredConstellationId, setHoveredConstellationId] = useState(null);
   const [focusedMember, setFocusedMember] = useState(null);
 
-  // Auto-rotation interval: 12 seconds per slide (pauses when hovering on cards or paused via button)
+  // Auto-rotation interval: 12 seconds per slide (pauses when hovering, button paused, or viewing an individual profile)
   useEffect(() => {
-    if (isPaused || isCardHovered) return;
+    if (isPaused || isCardHovered || focusedMember !== null) return;
 
     const intervalTime = activeSlide === 2 ? 15000 : 12000;
 
@@ -359,7 +359,7 @@ export default function UnifiedLeadershipCarousel() {
     }, intervalTime);
 
     return () => clearInterval(timer);
-  }, [activeSlide, isPaused, isCardHovered]);
+  }, [activeSlide, isPaused, isCardHovered, focusedMember]);
 
   const handleNext = () => {
     if (activeSlide === 2) {
@@ -439,7 +439,7 @@ export default function UnifiedLeadershipCarousel() {
                 <span>Executive Leadership</span>
                 
                 {/* Smooth Animated Timer Bar */}
-                {activeSlide === 0 && !isPaused && !isCardHovered && (
+                {activeSlide === 0 && !isPaused && !isCardHovered && !focusedMember && (
                   <motion.div 
                     key="bar-0"
                     initial={{ width: '0%' }}
@@ -463,7 +463,7 @@ export default function UnifiedLeadershipCarousel() {
                 <span>Onsite Team</span>
 
                 {/* Smooth Animated Timer Bar */}
-                {activeSlide === 1 && !isPaused && !isCardHovered && (
+                {activeSlide === 1 && !isPaused && !isCardHovered && !focusedMember && (
                   <motion.div 
                     key="bar-1"
                     initial={{ width: '0%' }}
@@ -480,7 +480,7 @@ export default function UnifiedLeadershipCarousel() {
                   <Code2 className="w-3.5 h-3.5" />
                   <span>Offshore Engineering</span>
 
-                  {!isPaused && !isCardHovered && (
+                  {!isPaused && !isCardHovered && !focusedMember && (
                     <motion.div 
                       key="bar-2"
                       initial={{ width: '0%' }}
