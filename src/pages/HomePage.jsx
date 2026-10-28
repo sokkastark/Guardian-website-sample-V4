@@ -7,8 +7,6 @@ import PeopleTechnology from '../components/sections/PeopleTechnology';
 import SolutionsSection from '../components/sections/SolutionsSection';
 import AudienceSwitcher from '../components/sections/AudienceSwitcher';
 import ImpactSection from '../components/sections/ImpactSection';
-import WhyGuardian from '../components/sections/WhyGuardian';
-import ResourcesSection from '../components/sections/ResourcesSection';
 import TrustSection from '../components/sections/TrustSection';
 
 export default function HomePage() {
@@ -38,13 +36,7 @@ export default function HomePage() {
       {/* Section 08: Impact (Proven Clinical & Operational Delivery) */}
       <ImpactSection />
 
-      {/* Section 09: Why Guardian (6 Core Themes) */}
-      <WhyGuardian />
-
-      {/* Section 10: Resources & Case Studies (MSO & ED Utilization) */}
-      <ResourcesSection />
-
-      {/* Section 11: Trust & Certifications (CMS MIPS, HITRUST, CareQuality) */}
+      {/* Section 09: Trust & Certifications (CMS MIPS, HITRUST, CareQuality) */}
       <TrustSection />
     </>
   );

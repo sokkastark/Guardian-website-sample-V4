@@ -9,7 +9,6 @@ export const navigationConfig = [
     children: [
       { label: 'Platform Overview', path: '/platform' },
       { label: 'Population Health', path: '/platform#population-health' },
-      { label: 'Analytics', path: '/platform#analytics' },
       { label: 'Patient 360 / PMC', path: '/platform#patient-360' },
       { label: 'Risk Stratification', path: '/platform#risk-stratification' },
       { label: 'Risk Adjustment / MRA', path: '/platform#risk-adjustment' },
@@ -19,6 +18,7 @@ export const navigationConfig = [
       { label: 'Referral Management', path: '/platform#referral-management' },
       { label: 'Patient Engagement', path: '/platform#patient-engagement' },
       { label: 'Telemedicine', path: '/platform#telemedicine' },
+      { label: 'Analytics', path: '/platform#analytics' },
     ]
   },
   {

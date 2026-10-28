@@ -28,7 +28,6 @@ import {
   DollarSign
 } from 'lucide-react';
 import PlatformFeatureInventory from '../components/platform/PlatformFeatureInventory';
-import EcosystemInteroperabilitySection from '../components/platform/EcosystemInteroperabilitySection';
 
 export default function PlatformPage() {
   const [activePmcDomain, setActivePmcDomain] = useState('Care Gaps');
@@ -1376,9 +1375,6 @@ export default function PlatformPage() {
 
         {/* Complete Feature Inventory Component (Searchable Directory across 17 categories / 241 features) */}
         <PlatformFeatureInventory />
-
-        {/* Ecosystem Interoperability Section */}
-        <EcosystemInteroperabilitySection />
       </section>
 
       {/* ─────────────────────────────────────────────────────────────

@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Award, Layers } from 'lucide-react';
 import { useMouseParallax } from '../../hooks/useMouseParallax';
-import HeroDataPills from './HeroDataPills';
-import HeroVisualCards from './HeroVisualCards';
 
 export default function Hero() {
   // Normalized mouse coords from -1 to +1 with smooth spring damping
@@ -25,16 +23,16 @@ export default function Hero() {
           }}
         >
           <img
-            src="/images/hero-skyline-bg.jpg"
-            alt="Modern Healthcare Tower with City Skyline View"
+            src="/images/hero-clinic-bg.jpg"
+            alt="Modern Healthcare Clinic Consultation Room"
             className="w-full h-full object-cover object-center"
             loading="eager"
           />
         </div>
 
         {/* Ambient Darkened Gradient Veil ensuring text readability on left */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0d1527]/90 via-[#0d1527]/60 to-transparent w-full lg:w-[60%] z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0d1527]/80 via-transparent to-[#0d1527]/30 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1120]/95 via-[#0a1120]/70 to-transparent w-full lg:w-[58%] z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1120]/80 via-transparent to-[#0a1120]/30 z-10" />
 
         {/* Ambient Glowing Accents */}
         <div className="absolute top-1/3 left-1/4 w-[600px] h-[450px] bg-[#7b3fc7]/20 blur-[150px] rounded-full pointer-events-none z-10" />
@@ -42,13 +40,11 @@ export default function Hero() {
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          LAYER 2: Main Character (Clinician Cutout) (Midplane Anchor)
-          Positioned in FRONT of the left data pills (Layer 3)
-          and BEHIND the holographic cards (Layer 1).
+          LAYER 2: Main Characters (Doctor & Patient Cutout) (Midplane Anchor)
+          Positioned in the midplane with gentle parallax motion.
           ANCHORED FLUSH TO THE VERY BOTTOM OF THE HERO SECTION (-bottom-px)
-          Guarantees ZERO gap on mobile, tablet, and desktop!
           ───────────────────────────────────────────────────────────── */}
-      <div className="absolute -bottom-px left-[0%] sm:left-[6%] lg:left-[34%] xl:left-[36%] lg:ml-[120px] pointer-events-none z-20">
+      <div className="absolute -bottom-px left-[5%] sm:left-[11%] lg:left-[39%] xl:left-[43%] pointer-events-none z-20">
         <div
           className="relative will-change-transform"
           style={{
@@ -56,9 +52,9 @@ export default function Hero() {
           }}
         >
           <img
-            src="/images/hero-clinician-cutout.png"
-            alt="Guardian Healthcare Physician Specialist"
-            className="h-[290px] sm:h-[350px] lg:h-[640px] xl:h-[700px] w-auto max-w-none object-contain object-bottom block drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
+            src="/images/hero-doctor-patient-cutout.png"
+            alt="Guardian Healthcare Physician Consulting with Senior Patient"
+            className="h-[260px] sm:h-[328px] lg:h-[504px] xl:h-[554px] w-auto max-w-none object-contain object-bottom block drop-shadow-[0_20px_45px_rgba(0,0,0,0.6)]"
             loading="eager"
           />
         </div>
@@ -66,7 +62,7 @@ export default function Hero() {
 
       {/* ─────────────────────────────────────────────────────────────
           CONTENT GRID:
-          - Desktop (lg:): 3-column split (Text, Pills, Cards) + Absolute Doctor
+          - Desktop (lg:): 2-column split (Narrative Left, HUD Cards Right) + Clinician Center
           - Mobile (< lg): Stacked Text followed by Framed Mobile Visual Stage
           ───────────────────────────────────────────────────────────── */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-between">
@@ -77,7 +73,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 xl:col-span-5 flex flex-col items-start pt-2 lg:pt-0 relative z-30"
+            className="lg:col-span-6 xl:col-span-6 flex flex-col items-start pt-2 lg:pt-0 relative z-30"
             style={{
               transform: 'translate3d(0px, 0px, 0px)',
             }}
@@ -141,31 +137,11 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* ─────────────────────────────────────────────────────────────
-              MOBILE INTERACTIVE STAGE (< lg screens)
-              ───────────────────────────────────────────────────────────── */}
-          <div className="lg:hidden relative w-full h-[290px] sm:h-[350px] mb-0 select-none pointer-events-auto">
-            {/* Mobile Layer 3: Right Holographic Cards (z-10) */}
-            <div className="absolute top-0 right-0 w-[245px] sm:w-[280px] scale-[0.78] sm:scale-90 origin-top-right z-10 pointer-events-auto">
-              <HeroVisualCards mouseX={mouseX} mouseY={mouseY} />
-            </div>
+          {/* Mobile Spacer to provide height for the bottom-anchored characters */}
+          <div className="lg:hidden relative w-full h-[260px] sm:h-[320px] pointer-events-none" />
 
-            {/* Mobile Layer 1: Left Pills (z-30) */}
-            <div className="absolute top-1 left-0 scale-[0.75] sm:scale-85 origin-top-left z-30 pointer-events-auto">
-              <HeroDataPills mouseX={mouseX} mouseY={mouseY} maxItems={3} />
-            </div>
-          </div>
-
-          {/* ─────────────────────────────────────────────────────────────
-              DESKTOP LAYOUT (lg: screens)
-              ───────────────────────────────────────────────────────────── */}
-          <div className="hidden lg:flex lg:col-span-2 xl:col-span-2 items-center justify-start lg:pl-1 relative z-30">
-            <HeroDataPills mouseX={mouseX} mouseY={mouseY} />
-          </div>
-
-          <div className="hidden lg:flex lg:col-span-5 xl:col-span-5 relative w-full items-center justify-end z-10 pt-8 sm:pt-12 lg:pt-16 xl:pt-20 -translate-y-[20px]">
-            <HeroVisualCards mouseX={mouseX} mouseY={mouseY} />
-          </div>
+          {/* Right Column: Open vista for doctor and patient in consultation */}
+          <div className="hidden lg:block lg:col-span-6 xl:col-span-6 pointer-events-none" />
 
         </div>
       </div>

@@ -298,7 +298,7 @@ export const offshoreTeam = [
     name: 'Nalamati Vara Lakshmi',
     role: 'Senior Tester Engineer',
     domain: 'Quality Assurance & Testing',
-    image: null,
+    image: '/images/team/offshore/Nalamati Vara Lakshmi.jpeg',
     initials: 'NL',
     tagline: 'Quality Assurance & Automated Testing',
     bio: 'Tests application functionality and verifies that software behaves as expected. Identifies defects and supports the delivery of dependable software releases.'
@@ -308,7 +308,7 @@ export const offshoreTeam = [
     name: 'Apoorva SM',
     role: 'Engineering Operation Coordinator',
     domain: 'Engineering Operations',
-    image: null,
+    image: '/images/team/offshore/Apoorva SM.png',
     initials: 'AS',
     tagline: 'Operational Execution & Tracking',
     bio: 'Coordinates engineering activities and supports the smooth execution of development operations. Helps maintain alignment across tasks, teams, and delivery processes.'
@@ -909,7 +909,7 @@ export default function UnifiedLeadershipCarousel() {
                 </div>
 
                 {/* 10 Offshore Portrait Cards (Spacious uncropped 2-row layout) */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 flex-1 content-center my-auto py-1">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-3.5 flex-1 content-center my-auto py-1">
                   {offshoreTeam.map((member) => (
                     <div
                       key={member.id}
@@ -919,16 +919,16 @@ export default function UnifiedLeadershipCarousel() {
                         experience: 'Offshore Engineering',
                         credentials: member.domain
                       })}
-                      className="group cursor-pointer rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-sm hover:shadow-[0_12px_28px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden flex flex-col justify-between"
+                      className="group cursor-pointer rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-xs hover:shadow-[0_12px_28px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden flex flex-col justify-between"
                     >
                       <div>
                         {/* Top Portrait Photo Container */}
-                        <div className="relative w-full aspect-[16/11] overflow-hidden bg-gradient-to-t from-[#1b1435] via-[#2a1d4a] to-[#3a2768] flex items-center justify-center">
+                        <div className="relative w-full aspect-[5/4] overflow-hidden bg-[#181131] border-b border-white/[0.08] flex items-center justify-center">
                           {member.image ? (
                             <img
                               src={member.image}
                               alt={member.name}
-                              className="w-full h-full object-cover object-top filter contrast-105 group-hover:scale-105 transition-transform duration-500"
+                              className="block w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                               loading="lazy"
                             />
                           ) : (
@@ -940,41 +940,45 @@ export default function UnifiedLeadershipCarousel() {
                             </div>
                           )}
 
-                          {/* Gradient bottom shadow overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                          {/* Subtle bottom edge feather */}
+                          <div className="absolute bottom-0 inset-x-0 h-4 bg-gradient-to-t from-[#140d24]/40 to-transparent pointer-events-none" />
 
                           {/* Top-Left Pill Badge */}
-                          <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-black/50 backdrop-blur-md text-white/90 border border-white/20 text-[8px] font-bold uppercase tracking-wider z-10">
+                          <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white/90 border border-white/20 text-[8px] font-bold uppercase tracking-wider z-10 shadow-xs">
                             {member.id === 'raghavendra-tg' ? 'LEADERSHIP' : 'ENGINEERING'}
                           </span>
-
-                          {/* Discipline Badge Overlaid at Bottom of Photo */}
-                          <div className="absolute bottom-1.5 left-2.5 right-2.5 z-10">
-                            <span className="text-[8.5px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] block truncate">
-                              {member.domain}
-                            </span>
-                          </div>
                         </div>
 
                         {/* Card Content Body */}
                         <div className="p-2.5 sm:p-3">
+                          {/* Discipline Domain */}
+                          <div className="mb-1">
+                            <span className="text-[8.5px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] block truncate">
+                              {member.domain}
+                            </span>
+                          </div>
+
+                          {/* Name */}
                           <h4 className="text-xs sm:text-sm font-extrabold text-white group-hover:text-purple-200 transition-colors leading-tight truncate">
                             {member.name}
                           </h4>
-                          <p className="text-[10.5px] sm:text-[11px] font-semibold text-purple-300 mt-0.5 leading-tight truncate">
+
+                          {/* Role */}
+                          <p className="text-[10px] sm:text-[10.5px] font-semibold text-purple-300 mt-0.5 leading-tight truncate">
                             {member.role}
                           </p>
 
-                          <p className="text-[9.5px] sm:text-[10px] text-purple-200/75 mt-1 line-clamp-1 leading-tight font-normal">
+                          {/* Short Bio */}
+                          <p className="text-[9px] sm:text-[9.5px] text-purple-200/75 mt-1 line-clamp-1 leading-tight font-normal">
                             {member.bio}
                           </p>
                         </div>
                       </div>
 
                       {/* Footer Callout */}
-                      <div className="px-3 pb-2.5 pt-0">
+                      <div className="px-2.5 sm:px-3 pb-2.5 pt-0">
                         <div className="pt-1.5 border-t border-white/[0.08] flex items-center justify-between text-xs font-semibold text-purple-300">
-                          <span className="text-[9.5px] text-purple-200/60 font-normal truncate max-w-[110px]">
+                          <span className="text-[9px] sm:text-[9.5px] text-purple-200/60 font-normal truncate max-w-[110px]">
                             {member.tagline}
                           </span>
                           <div className="w-5 h-5 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-[#7b3fc7] group-hover:text-white flex items-center justify-center transition-colors text-purple-300 shrink-0">

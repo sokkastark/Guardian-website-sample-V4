@@ -123,7 +123,7 @@ export default function Footer() {
     return (
       <footer className="relative bg-gradient-to-b from-white via-[#f8f6fc] to-[#f2ecf9]/50 pt-12 pb-12 border-t border-[#e1e1e5] text-[#35304c] text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Brand & Location Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-8 mb-10 border-b border-[#e1e1e5]/60 gap-4">
             <div className="space-y-1.5">
@@ -178,7 +178,7 @@ export default function Footer() {
 
           {/* 5 Balanced Secondary Navigation Columns */}
           <nav aria-label="Footer Secondary Navigation" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 pb-14">
-            
+
             {/* 01 — PLATFORM */}
             <div className="space-y-3.5">
               <h3 className="text-[#adabb7] font-semibold uppercase tracking-wider text-xs flex items-center gap-1.5">
@@ -197,11 +197,6 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/platform#analytics" onClick={(e) => handlePlatformClick(e, 'analytics')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    Analytics
-                  </Link>
-                </li>
-                <li>
                   <Link to="/platform#patient-360" onClick={(e) => handlePlatformClick(e, 'patient-360')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Patient 360 / PMC
                   </Link>
@@ -209,6 +204,11 @@ export default function Footer() {
                 <li>
                   <Link to="/platform#risk-adjustment" onClick={(e) => handlePlatformClick(e, 'risk-adjustment')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Risk Adjustment / MRA
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/platform#analytics" onClick={(e) => handlePlatformClick(e, 'analytics')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Analytics
                   </Link>
                 </li>
               </ul>
@@ -352,16 +352,16 @@ export default function Footer() {
               © Guardian Health Service, LLC. All rights reserved.
             </p>
             <div className="flex items-center gap-3">
-              <Link 
-                to="/company#security" 
+              <Link
+                to="/company#security"
                 onClick={(e) => handleCompanyClick(e, 'security')}
                 className="hover:text-[#7b3fc7] transition-colors"
               >
                 Security & Trust
               </Link>
               <span className="text-[#d6cde2]">|</span>
-              <Link 
-                to="/company#careers" 
+              <Link
+                to="/company#careers"
                 onClick={(e) => handleCompanyClick(e, 'careers')}
                 className="hover:text-[#7b3fc7] transition-colors"
               >
@@ -390,12 +390,12 @@ export default function Footer() {
   // ─────────────────────────────────────────────────────────────
   return (
     <footer className="relative bg-[#0b0819] text-white text-xs pt-16 pb-12 overflow-hidden border-t border-[#1c1636]">
-      
+
       {/* Right Flank Blended Healthcare Team Spotlight Image */}
       <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none z-0 opacity-25 hidden md:block">
-        <img 
-          src="/images/footer-people-bg.jpg" 
-          alt="" 
+        <img
+          src="/images/footer-people-bg.jpg"
+          alt=""
           className="w-full h-full object-cover object-left-top filter brightness-110 contrast-105"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b0819] via-[#0b0819]/70 to-transparent" />
@@ -407,7 +407,7 @@ export default function Footer() {
       <div className="absolute bottom-0 left-10 w-[400px] h-[300px] bg-[#ff7a57]/15 blur-[160px] rounded-full pointer-events-none z-0" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-        
+
         {/* Brand & Location Header Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-8 mb-10 border-b border-white/10 gap-4">
           <div className="space-y-1.5">
@@ -463,7 +463,7 @@ export default function Footer() {
 
         {/* 5 Secondary Navigation Columns (Clean & Open Layout) */}
         <nav aria-label="Footer Secondary Navigation" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 pb-14">
-          
+
           {/* 01 — PLATFORM */}
           <div className="space-y-3.5">
             <h3 className="text-purple-300 font-semibold uppercase tracking-wider text-xs flex items-center gap-1.5">
@@ -482,11 +482,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/platform#analytics" onClick={(e) => handlePlatformClick(e, 'analytics')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  Analytics
-                </Link>
-              </li>
-              <li>
                 <Link to="/platform#patient-360" onClick={(e) => handlePlatformClick(e, 'patient-360')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Patient 360 / PMC
                 </Link>
@@ -494,6 +489,11 @@ export default function Footer() {
               <li>
                 <Link to="/platform#risk-adjustment" onClick={(e) => handlePlatformClick(e, 'risk-adjustment')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Risk Adjustment / MRA
+                </Link>
+              </li>
+              <li>
+                <Link to="/platform#analytics" onClick={(e) => handlePlatformClick(e, 'analytics')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Analytics
                 </Link>
               </li>
             </ul>
@@ -637,16 +637,16 @@ export default function Footer() {
             © Guardian Health Service, LLC. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
-            <Link 
-              to="/company#security" 
+            <Link
+              to="/company#security"
               onClick={(e) => handleCompanyClick(e, 'security')}
               className="hover:text-[#ff7a57] transition-colors"
             >
               Security & Trust
             </Link>
             <span className="text-purple-400/40">|</span>
-            <Link 
-              to="/company#careers" 
+            <Link
+              to="/company#careers"
               onClick={(e) => handleCompanyClick(e, 'careers')}
               className="hover:text-[#ff7a57] transition-colors"
             >
