@@ -351,40 +351,6 @@ export default function SolutionsPage() {
             <RibbonStepGrid steps={progressionSteps} />
           </div>
 
-          {/* Quick-Jump Section Anchor Pills */}
-          <div className="mt-10 pt-8 border-t border-[#e9e4f0] flex flex-wrap items-center justify-between gap-3 text-xs">
-            <span className="font-mono font-bold uppercase tracking-wider text-[#716b89]">Explore Stakeholder Solutions:</span>
-            <div className="flex flex-wrap items-center gap-2">
-              <a 
-                href="#aco-vbc" 
-                onClick={() => setSolStage1Tab(0)}
-                className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#7b3fc7] hover:text-[#7b3fc7] transition-colors"
-              >
-                01. ACO & Value-Based Care
-              </a>
-              <a 
-                href="#health-plans" 
-                onClick={() => setSolStage1Tab(1)}
-                className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#4f46e5] hover:text-[#4f46e5] transition-colors"
-              >
-                02. Health Plans & Payers
-              </a>
-              <a 
-                href="#cin-providers" 
-                onClick={() => setSolStage2Tab(0)}
-                className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#9333ea] hover:text-[#9333ea] transition-colors"
-              >
-                03. CIN & Provider Orgs
-              </a>
-              <a 
-                href="#care-teams" 
-                onClick={() => setSolStage2Tab(1)}
-                className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#ea580c] hover:text-[#ea580c] transition-colors"
-              >
-                04. Care Management Teams
-              </a>
-            </div>
-          </div>
 
         </div>
       </section>
