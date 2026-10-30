@@ -7,6 +7,7 @@ import {
   FileText, 
   ShieldCheck, 
   ArrowRight, 
+  ChevronLeft,
   ChevronRight, 
   CheckCircle2, 
   Lock, 
@@ -33,8 +34,18 @@ import {
 import { RibbonStepGrid } from '../components/common/RibbonStepCard';
 
 export default function DataIntegrationOverviewPage() {
-  const [activeTab, setActiveTab] = useState('clinical-integration');
+  const [activeProofIdx, setActiveProofIdx] = useState(0);
+  const [proofPaused, setProofPaused] = useState(false);
   const location = useLocation();
+
+  // Auto 15-second carousel timer for Interoperability Proof (pauses on hover, resets on manual change)
+  useEffect(() => {
+    if (proofPaused) return;
+    const timer = setInterval(() => {
+      setActiveProofIdx((prev) => (prev + 1) % 4);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [proofPaused, activeProofIdx]);
 
   // Smooth hash scrolling for direct links and dropdown navigation
   useEffect(() => {
@@ -121,32 +132,40 @@ export default function DataIntegrationOverviewPage() {
     {
       id: 'clinical-integration',
       title: 'Real-Time ADT Alert Ingestion',
+      subtitle: 'Acute Event & Regional HIE Ingestion',
+      badge: 'Real-Time ADT Alerts',
       path: '/platform/transitions-of-care-adt',
-      desc: 'Live streaming of emergency department visits and hospital discharge alerts across regional HIEs.',
+      desc: 'Live streaming of emergency department visits and hospital discharge alerts across regional HIEs, routing event payloads directly into frontline clinical care queues.',
       image: '/images/appliction images/ui-adt-notifications.png',
       highlights: ['Real-Time ADT Streaming', 'Regional HIE Ingestion', 'Discharge Alerting']
     },
     {
       id: 'claims-integration',
       title: 'Patient 360 & Claims Aggregation',
+      subtitle: 'Longitudinal EHR & Claims Synthesis',
+      badge: 'Unified Patient Master Chart',
       path: '/platform/patient-intelligence/patient-360',
-      desc: 'Synthesized longitudinal chart connecting clinical EHR records with payer 837/835 claims lines.',
+      desc: 'Synthesized longitudinal chart connecting clinical EHR records with payer 837/835 claims lines, pharmacy encounters, and Master Patient Indexing.',
       image: '/images/appliction images/ui-patient-360.png',
       highlights: ['Claims & Clinical Mesh', 'MPI Matching', 'Cost Trajectory']
     },
     {
       id: 'hie-adt',
       title: 'Population Data Ingestion Engine',
+      subtitle: 'Multi-Source Feeds & Cohort Builder',
+      badge: 'Population Data Pipeline',
       path: '/platform/population-health',
-      desc: 'Multi-source ingestion pipeline aggregating CCLF, BCDA, and ambulatory EHR feeds into cohort analytics.',
+      desc: 'Multi-source ingestion pipeline aggregating CCLF, BCDA, and ambulatory EHR feeds into cohort analytics and population health registries.',
       image: '/images/appliction images/ui-pop-health-analytics.png',
       highlights: ['Multi-Source Ingestion', 'Terminology Normalization', 'Cohort Builder']
     },
     {
       id: 'apis-mobile',
       title: 'Referral & Network Integration',
+      subtitle: 'Provider Geo-Mapping & Closed-Loop APIs',
+      badge: 'Interoperable Network Routing',
       path: '/platform/referral-management',
-      desc: 'Specialist referral routing and prior authorization tracking integrated via secure REST APIs.',
+      desc: 'Specialist referral routing and prior authorization tracking integrated via secure REST and FHIR APIs with automated status reconciliation.',
       image: '/images/appliction images/ui-referral-manager.png',
       highlights: ['RESTful & FHIR APIs', 'In-Network Routing', 'Webhooks Engine']
     }
@@ -797,136 +816,204 @@ export default function DataIntegrationOverviewPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 9: #proof (INTEROPERABILITY UI PROOF & DEMONSTRATION)
+          SECTION 9: #proof (INTEROPERABILITY UI PROOF CAROUSEL)
           ───────────────────────────────────────────────────────────── */}
-      <section id="proof" className="py-20 sm:py-28 bg-white border-b border-[#e9e4f0] scroll-mt-24">
+      <section 
+        id="proof" 
+        onMouseEnter={() => setProofPaused(true)}
+        onMouseLeave={() => setProofPaused(false)}
+        className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="max-w-3xl mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
-              <Zap className="w-3.5 h-3.5 text-[#ff7a57]" />
-              <span>INTEROPERABILITY PROOF</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-3 leading-tight">
-              Enterprise connectors processing <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">millions of records daily.</span>
-            </h2>
-            <p className="text-base text-[#524b6b] leading-relaxed">
-              Discover how Guardian’s Data &amp; Integration connectors surface real-time events and longitudinal patient records in live clinical interfaces:
-            </p>
-          </div>
-
-          {/* Interactive Showcase Tabs */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left Selector Tabs */}
-            <div className="lg:col-span-5 space-y-3">
-              {uiShowcase.map((item) => {
-                const isActive = activeTab === item.id;
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() => setActiveTab(item.id)}
-                    className={`p-4 sm:p-5 rounded-2xl border transition-all duration-200 cursor-pointer ${
-                      isActive 
-                        ? 'bg-white border-[#7b3fc7] border-l-4 border-l-[#7b3fc7] shadow-lg -translate-x-1 ring-1 ring-[#7b3fc7]/15' 
-                        : 'bg-white/65 border-[#e9e4f0] hover:bg-white hover:border-[#7b3fc7]/40 hover:shadow-xs'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="flex items-center gap-2">
-                        {isActive && (
-                          <span className="w-2 h-2 rounded-full bg-[#7b3fc7] animate-pulse" />
-                        )}
-                        <h3 className={`text-base font-extrabold ${isActive ? 'text-[#7b3fc7]' : 'text-[#1c1636]'}`}>
-                          {item.title}
-                        </h3>
-                      </div>
-                      <Link 
-                        to={item.path}
-                        className="text-[11px] font-bold text-[#7b3fc7] hover:underline flex items-center gap-0.5"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <span>View</span>
-                        <ChevronRight className="w-3 h-3 text-[#ff7a57]" />
-                      </Link>
-                    </div>
-                    <p className="text-xs text-[#524b6b] leading-relaxed mb-3 font-normal">
-                      {item.desc}
-                    </p>
-
-                    <div className="flex flex-wrap gap-1.5">
-                      {item.highlights.map((h, i) => (
-                        <span 
-                          key={i} 
-                          className={`text-[10px] font-semibold px-2 py-0.5 rounded border transition-colors ${
-                            isActive 
-                              ? 'bg-[#7b3fc7]/10 text-[#7b3fc7] border-[#7b3fc7]/20' 
-                              : 'bg-gray-100 text-[#524b6b] border-gray-200'
-                          }`}
-                        >
-                          {h}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Right Display (Stitched to Top) */}
-            <div className="lg:col-span-7 lg:sticky lg:top-24 self-start">
-              <div className="relative rounded-2xl bg-[#1c1636] p-3.5 border border-[#2e1065] shadow-2xl overflow-hidden transition-all duration-300">
-                {/* Browser / Application Window Top Bar */}
-                <div className="flex items-center justify-between px-3 py-2.5 bg-[#120b24] rounded-xl border-b border-white/10 mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#ff7a57]/80 inline-block" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#eab308]/80 inline-block" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#7b3fc7]/80 inline-block" />
-                    <span className="text-[11px] text-purple-200 font-mono ml-2 font-semibold truncate max-w-[200px] sm:max-w-none">
-                      {uiShowcase.find(m => m.id === activeTab)?.title}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Link
-                      to={uiShowcase.find(m => m.id === activeTab)?.path || '#'}
-                      className="text-[10px] font-mono font-bold text-purple-200 hover:text-white px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 transition-colors hidden sm:inline-flex items-center gap-1"
-                    >
-                      <span>Explore Page</span>
-                      <ChevronRight className="w-3 h-3 text-[#ff7a57]" />
-                    </Link>
-                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[#7b3fc7] text-white font-medium">
-                      Live Connector Proof
-                    </span>
-                  </div>
-                </div>
-
-                {/* Image Viewport (Top Anchored, Smooth Crossfade) */}
-                <div className="relative rounded-lg overflow-hidden bg-white border border-[#e9e4f0] shadow-inner">
-                  <AnimatePresence mode="wait">
-                    <motion.img 
-                      key={activeTab}
-                      src={uiShowcase.find(m => m.id === activeTab)?.image || '/images/appliction images/ui-adt-notifications.png'}
-                      alt={`${uiShowcase.find(m => m.id === activeTab)?.title} Interface Proof`}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.22, ease: 'easeOut' }}
-                      className="w-full h-auto object-contain max-h-[520px] block"
-                    />
-                  </AnimatePresence>
-                </div>
+          {/* Section Header & Carousel Controller */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
+                <Zap className="w-3.5 h-3.5 text-[#ff7a57]" />
+                <span>INTEROPERABILITY PROOF</span>
               </div>
-
-              {/* Demonstration Data Disclaimer */}
-              <p className="text-xs text-[#716b89] leading-relaxed italic text-right mt-2.5">
-                *Illustrative sample demonstration data. Module records and metrics are for demonstration purposes only.
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-2 leading-tight">
+                Enterprise connectors processing <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">millions of records daily.</span>
+              </h2>
+              <p className="text-sm text-[#524b6b] leading-relaxed">
+                Discover how Guardian’s Data &amp; Integration connectors surface real-time events and longitudinal patient records in live clinical interfaces:
               </p>
             </div>
 
+            {/* Carousel Tabs & Slide Controls */}
+            <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={proofPaused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
+              >
+                <Clock className="w-3 h-3 text-[#7b3fc7]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`data-proof-timer-${activeProofIdx}-${proofPaused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: proofPaused ? '0%' : '100%' }}
+                    transition={{ duration: proofPaused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#7b3fc7] rounded-full"
+                  />
+                </div>
+                <span>15s</span>
+              </div>
+
+              {/* Prev / Next Chevrons & Counter */}
+              <div className="inline-flex items-center gap-1.5">
+                <button
+                  onClick={() => setActiveProofIdx((prev) => (prev > 0 ? prev - 1 : uiShowcase.length - 1))}
+                  aria-label="Previous interface"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                  {activeProofIdx + 1}/{uiShowcase.length}
+                </span>
+                <button
+                  onClick={() => setActiveProofIdx((prev) => (prev < uiShowcase.length - 1 ? prev + 1 : 0))}
+                  aria-label="Next interface"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </div>
+
+          {/* Top Segmented Tab Switcher Pills */}
+          <div className="mb-8 overflow-x-auto pb-2 scrollbar-none">
+            <div className="inline-flex items-center p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1.5 shadow-2xs min-w-full sm:min-w-0">
+              {uiShowcase.map((item, idx) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveProofIdx(idx)}
+                  className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center gap-2 ${
+                    activeProofIdx === idx
+                      ? 'bg-[#7b3fc7] text-white shadow-xs'
+                      : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-white'
+                  }`}
+                >
+                  <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                    activeProofIdx === idx ? 'bg-white/20 text-white' : 'bg-gray-100 text-[#716b89]'
+                  }`}>
+                    0${idx + 1}
+                  </span>
+                  <span>{item.title}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Active Carousel Slide Content */}
+          <AnimatePresence mode="wait">
+            {(() => {
+              const current = uiShowcase[activeProofIdx] || uiShowcase[0];
+              return (
+                <motion.div
+                  key={current.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.25 }}
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center"
+                >
+                  {/* Left Narrative Detail Card */}
+                  <div className="lg:col-span-5">
+                    <div className="p-6 sm:p-8 rounded-3xl bg-[#faf8fd] border border-[#e9e4f0] shadow-sm">
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span className="text-xs font-mono font-bold text-[#7b3fc7] uppercase tracking-wider px-2.5 py-1 rounded-lg bg-[#7b3fc7]/10 border border-[#7b3fc7]/20">
+                          {current.badge}
+                        </span>
+                        <span className="text-[11px] font-mono text-[#716b89]">
+                          Interface 0${activeProofIdx + 1} of 0${uiShowcase.length}
+                        </span>
+                      </div>
+
+                      <h3 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-2 leading-tight">
+                        {current.title}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm font-semibold text-[#7b3fc7] mb-4">
+                        {current.subtitle}
+                      </p>
+
+                      <p className="text-xs sm:text-sm text-[#524b6b] leading-relaxed mb-6 font-normal">
+                        {current.desc}
+                      </p>
+
+                      <div className="pt-4 border-t border-[#e9e4f0]">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#716b89] block mb-2.5">
+                          Key Functional Highlights:
+                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          {current.highlights.map((h, i) => (
+                            <span 
+                              key={i}
+                              className="text-xs font-semibold px-3 py-1 rounded-full bg-white text-[#1c1636] border border-[#e5deee] shadow-2xs flex items-center gap-1.5"
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5 text-[#ff7a57]" />
+                              <span>{h}</span>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mt-6 pt-4 border-t border-[#e9e4f0] flex items-center justify-between">
+                        <Link
+                          to={current.path || '/company?intent=demo#contact'}
+                          className="inline-flex items-center gap-2 text-xs font-bold text-[#7b3fc7] hover:text-[#9333ea] transition-colors"
+                        >
+                          <span>Explore capability details</span>
+                          <ArrowRight className="w-3.5 h-3.5 text-[#ff7a57]" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Application Window Mockup */}
+                  <div className="lg:col-span-7">
+                    <div className="relative rounded-2xl bg-[#1c1636] p-3.5 border border-[#2e1065] shadow-2xl overflow-hidden">
+                      {/* Application Window Top Bar */}
+                      <div className="flex items-center justify-between px-3 py-2 bg-[#120b24] rounded-xl border-b border-white/10 mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block" />
+                          <span className="text-[11px] text-purple-200 font-mono ml-2 font-semibold truncate max-w-[200px] sm:max-w-none">
+                            {current.subtitle}
+                          </span>
+                        </div>
+                        <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[#7b3fc7] text-white font-medium">
+                          Verified Application UI
+                        </span>
+                      </div>
+
+                      {/* Genuine Product Image Viewport */}
+                      <div className="relative rounded-lg overflow-hidden bg-white border border-[#e9e4f0] shadow-inner">
+                        <img 
+                          src={current.image}
+                          alt={`${current.title} Platform Interface Demonstration`}
+                          className="w-full h-auto object-contain max-h-[480px] block"
+                        />
+                      </div>
+                    </div>
+
+                    <p className="text-[11px] text-[#716b89] text-center mt-3 italic">
+                      *Illustrative sample demonstration data. Module records and metrics are for demonstration purposes only.
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })()}
+          </AnimatePresence>
 
         </div>
       </section>
+
 
       {/* ─────────────────────────────────────────────────────────────
           SECTION 11: #contact (FINAL EXECUTIVE CTA)
