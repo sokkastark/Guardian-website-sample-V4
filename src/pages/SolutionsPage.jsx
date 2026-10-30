@@ -32,9 +32,31 @@ import {
 import { RibbonStepGrid } from '../components/common/RibbonStepCard';
 
 export default function SolutionsPage() {
+  const [solStage1Tab, setSolStage1Tab] = useState(0);
+  const [solStage1Paused, setSolStage1Paused] = useState(false);
+  const [solStage2Tab, setSolStage2Tab] = useState(0);
+  const [solStage2Paused, setSolStage2Paused] = useState(false);
   const [activeProofIdx, setActiveProofIdx] = useState(0);
   const [proofPaused, setProofPaused] = useState(false);
   const location = useLocation();
+
+  // Auto 15-second timer for Carousel Stage 1 (ACO & Health Plans)
+  useEffect(() => {
+    if (solStage1Paused) return;
+    const timer = setInterval(() => {
+      setSolStage1Tab((prev) => (prev + 1) % 2);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [solStage1Paused, solStage1Tab]);
+
+  // Auto 15-second timer for Carousel Stage 2 (CIN & Care Teams)
+  useEffect(() => {
+    if (solStage2Paused) return;
+    const timer = setInterval(() => {
+      setSolStage2Tab((prev) => (prev + 1) % 2);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [solStage2Paused, solStage2Tab]);
 
   // Auto 15-second carousel timer for Live Application Proof (pauses on hover, resets on manual change)
   useEffect(() => {
@@ -42,19 +64,7 @@ export default function SolutionsPage() {
     const timer = setInterval(() => {
       setActiveProofIdx((prev) => (prev + 1) % 4);
     }, 15000);
-    // Stage 1 Tab metadata (ACO & Health Plans)
-  const solStage1Tabs = [
-    { id: 'aco-vbc', badge: '01 / ACO & Value-Based Care', title: 'ACO & Value-Based Care Organizations' },
-    { id: 'health-plans', badge: '02 / Health Plans & Payers', title: 'Health Plans & Risk-Bearing Payers' },
-  ];
-
-  // Stage 2 Tab metadata (CIN & Care Teams)
-  const solStage2Tabs = [
-    { id: 'cin-providers', badge: '03 / CIN & Provider Orgs', title: 'Clinically Integrated Networks & Providers' },
-    { id: 'care-teams', badge: '04 / Care Management Teams', title: 'Frontline Care Management Teams' },
-  ];
-
-  return () => clearInterval(timer);
+    return () => clearInterval(timer);
   }, [proofPaused, activeProofIdx]);
 
   // Smooth hash scrolling for direct links and dropdown navigation
@@ -75,6 +85,17 @@ export default function SolutionsPage() {
       };
       const targetId = aliasMap[rawHash] || rawHash;
 
+      // Automatically switch to the matching tab in Carousel Stage 1 or 2
+      if (targetId === 'aco-vbc') {
+        setSolStage1Tab(0);
+      } else if (targetId === 'health-plans') {
+        setSolStage1Tab(1);
+      } else if (targetId === 'cin-providers') {
+        setSolStage2Tab(0);
+      } else if (targetId === 'care-teams') {
+        setSolStage2Tab(1);
+      }
+
       const timer = setTimeout(() => {
         const el = document.getElementById(targetId);
         if (el) {
@@ -86,7 +107,7 @@ export default function SolutionsPage() {
             behavior: 'smooth'
           });
         }
-      }, 50);
+      }, 60);
 
       return () => clearTimeout(timer);
     }
@@ -179,6 +200,18 @@ export default function SolutionsPage() {
       badge: 'CIN Provider Directory',
       highlights: ['Network Geo-Mapping', 'DSM Electronic Dispatch', 'Closed-Loop Loop Closure']
     }
+  ];
+
+  // Stage 1 Tab metadata (ACO & Health Plans)
+  const solStage1Tabs = [
+    { id: 'aco-vbc', badge: '01 / ACO & Value-Based Care', title: 'ACO & Value-Based Care Organizations' },
+    { id: 'health-plans', badge: '02 / Health Plans & Payers', title: 'Health Plans & Risk-Bearing Payers' },
+  ];
+
+  // Stage 2 Tab metadata (CIN & Care Teams)
+  const solStage2Tabs = [
+    { id: 'cin-providers', badge: '03 / CIN & Provider Orgs', title: 'Clinically Integrated Networks & Providers' },
+    { id: 'care-teams', badge: '04 / Care Management Teams', title: 'Frontline Care Management Teams' },
   ];
 
   return (
