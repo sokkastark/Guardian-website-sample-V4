@@ -8,7 +8,8 @@ import {
   ShieldCheck, 
   ArrowRight, 
   ChevronLeft,
-  ChevronRight, 
+  ChevronRight,
+  Sparkles, 
   CheckCircle2, 
   Lock, 
   Cpu, 
@@ -34,9 +35,31 @@ import {
 import { RibbonStepGrid } from '../components/common/RibbonStepCard';
 
 export default function DataIntegrationOverviewPage() {
+  const [dataStage1Tab, setDataStage1Tab] = useState(0);
+  const [dataStage1Paused, setDataStage1Paused] = useState(false);
+  const [dataStage2Tab, setDataStage2Tab] = useState(0);
+  const [dataStage2Paused, setDataStage2Paused] = useState(false);
   const [activeProofIdx, setActiveProofIdx] = useState(0);
   const [proofPaused, setProofPaused] = useState(false);
   const location = useLocation();
+
+  // Auto 15-second timer for Carousel Stage 1 (Clinical, Claims, HIE & ADT)
+  useEffect(() => {
+    if (dataStage1Paused) return;
+    const timer = setInterval(() => {
+      setDataStage1Tab((prev) => (prev + 1) % 3);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [dataStage1Paused, dataStage1Tab]);
+
+  // Auto 15-second timer for Carousel Stage 2 (Labs & Pharmacy, Data Foundation, APIs & Mobile)
+  useEffect(() => {
+    if (dataStage2Paused) return;
+    const timer = setInterval(() => {
+      setDataStage2Tab((prev) => (prev + 1) % 3);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [dataStage2Paused, dataStage2Tab]);
 
   // Auto 15-second carousel timer for Interoperability Proof (pauses on hover, resets on manual change)
   useEffect(() => {
@@ -57,6 +80,21 @@ export default function DataIntegrationOverviewPage() {
         'labs-pharmacy-other': 'labs-pharmacy'
       };
       const targetId = aliasMap[rawHash] || rawHash;
+
+      // Automatically switch to the matching tab in Carousel Stage 1 or 2
+      if (targetId === 'clinical') {
+        setDataStage1Tab(0);
+      } else if (targetId === 'claims') {
+        setDataStage1Tab(1);
+      } else if (targetId === 'hie-adt') {
+        setDataStage1Tab(2);
+      } else if (targetId === 'labs-pharmacy') {
+        setDataStage2Tab(0);
+      } else if (targetId === 'data-foundation') {
+        setDataStage2Tab(1);
+      } else if (targetId === 'apis-mobile') {
+        setDataStage2Tab(2);
+      }
 
       const timer = setTimeout(() => {
         const el = document.getElementById(targetId);
@@ -169,6 +207,20 @@ export default function DataIntegrationOverviewPage() {
       image: '/images/appliction images/ui-referral-manager.png',
       highlights: ['RESTful & FHIR APIs', 'In-Network Routing', 'Webhooks Engine']
     }
+  ];
+
+  // Stage 1 Tab metadata (Clinical, Claims, HIE & ADT)
+  const dataStage1Tabs = [
+    { id: 'clinical', badge: '01 / Clinical Integration', title: 'Multi-EHR Clinical Connectivity & Data Ingestion' },
+    { id: 'claims', badge: '02 / Claims Integration', title: '837 / 835 Claims, Remittances & Enrollment Feeds' },
+    { id: 'hie-adt', badge: '03 / HIE & ADT Alerts', title: 'Regional HIE Networks & Real-Time Event Monitoring' },
+  ];
+
+  // Stage 2 Tab metadata (Labs & Pharmacy, Data Foundation, APIs & Mobile)
+  const dataStage2Tabs = [
+    { id: 'labs-pharmacy', badge: '04 / Labs & Pharmacy', title: 'Diagnostic Labs, Pharmacy PBM & Supplemental Data' },
+    { id: 'data-foundation', badge: '05 / Data Foundation', title: 'Enterprise Data Foundation & Longitudinal Record Mesh' },
+    { id: 'apis-mobile', badge: '06 / APIs & Mobile', title: 'Secure REST/FHIR APIs & Mobile Application Connectors' },
   ];
 
   return (
@@ -312,505 +364,687 @@ export default function DataIntegrationOverviewPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 3: #clinical (01 / CLINICAL INTEGRATION)
+          CAROUSEL STAGE 1: INGESTION & REAL-TIME FEEDS (SECTIONS 1, 2, 3)
+          Contains Modules:
+          - 01 / Clinical Integration (#clinical)
+          - 02 / Claims Integration (#claims)
+          - 03 / HIE & ADT Event Monitoring (#hie-adt)
           ───────────────────────────────────────────────────────────── */}
-      <section id="clinical" className="py-20 sm:py-28 bg-white border-b border-[#e9e4f0] scroll-mt-24">
+      <section 
+        id="data-stage-1" 
+        onMouseEnter={() => setDataStage1Paused(true)}
+        onMouseLeave={() => setDataStage1Paused(false)}
+        className="py-20 sm:py-28 bg-white border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
+        {/* Invisible anchor target points for header dropdown links */}
+        <div id="clinical" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
+        <div id="claims" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
+        <div id="hie-adt" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            
-            {/* Left Narrative */}
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-4 border border-[#7b3fc7]/20 shadow-2xs">
-                <Network className="w-3.5 h-3.5 text-[#ff7a57]" />
-                <span>01 / CLINICAL EHR INTEGRATION</span>
+          {/* Carousel Stage Header & Controller */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] font-mono text-xs font-bold uppercase tracking-wider mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-[#7b3fc7]" />
+                <span>DATA &amp; INTEGRATION STAGE 01 • INGESTION &amp; REAL-TIME FEEDS</span>
               </div>
-
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Bi-directional clinical data exchange across <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">disparate EHR platforms.</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-[#1c1636]">
+                {dataStage1Tabs[dataStage1Tab].title}
               </h2>
+            </div>
 
-              <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                Connect ambulatory and acute EHR systems across hospital networks, independent practices, and specialized clinics. Ingest clinical encounters, problem lists, vital signs, and discharge summaries with write-back capabilities directly into clinician workflows.
-              </p>
-
-              <div className="p-4 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] mb-6 space-y-2.5">
-                <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#7b3fc7]">
-                  Supported Standards &amp; Formats
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">C-CDA XML</span>
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">FHIR R4</span>
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">Direct Messaging (DSM)</span>
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">LOINC / SNOMED</span>
-                </div>
-              </div>
-
-              <Link
-                to="/platform/patient-intelligence/patient-360"
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#7b3fc7] hover:text-[#9565d2] transition-colors group"
+            {/* Stage Tabs & Slide Navigation */}
+            <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={dataStage1Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
               >
-                <span>Explore Longitudinal Patient Master Chart</span>
-                <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
-              </Link>
+                <Clock className="w-3 h-3 text-[#7b3fc7]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`data1-${dataStage1Tab}-${dataStage1Paused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: dataStage1Paused ? '0%' : '100%' }}
+                    transition={{ duration: dataStage1Paused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#7b3fc7] rounded-full"
+                  />
+                </div>
+                <span>15s</span>
+              </div>
+
+              <div className="inline-flex items-center p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1 shadow-2xs">
+                {dataStage1Tabs.map((tab, idx) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setDataStage1Tab(idx)}
+                    className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                      dataStage1Tab === idx
+                        ? 'bg-[#7b3fc7] text-white shadow-xs'
+                        : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-white'
+                    }`}
+                  >
+                    {tab.badge}
+                  </button>
+                ))}
+              </div>
+
+              {/* Prev / Next Chevrons */}
+              <div className="inline-flex items-center gap-1.5">
+                <button
+                  onClick={() => setDataStage1Tab((prev) => (prev > 0 ? prev - 1 : dataStage1Tabs.length - 1))}
+                  aria-label="Previous integration feed"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                  {dataStage1Tab + 1}/{dataStage1Tabs.length}
+                </span>
+                <button
+                  onClick={() => setDataStage1Tab((prev) => (prev < dataStage1Tabs.length - 1 ? prev + 1 : 0))}
+                  aria-label="Next integration feed"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-
-            {/* Right Capability Cards (2x2 Grid) */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <Database className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Multi-EHR Feed Connectivity</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Connect disparate ambulatory and acute EHR platforms into a single unified clinical integration network across multi-practice systems.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <FileCode className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">C-CDA &amp; FHIR Ingestion</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Ingest and parse structured C-CDA XML documents, CCD summaries, FHIR R4 resources, and clinical notes in real time.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <Share2 className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Direct Secure Messaging (DSM)</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Automated DSM protocol integration for securely transmitting and receiving patient summary documents and referral packets.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <Workflow className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Point-of-Care Write-Back</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Route validated care plans, suspected risk conditions, and quality care gap alerts back into clinician EHR encounter workflows.</p>
-              </div>
-            </div>
-
           </div>
+
+          {/* Carousel Slide Content */}
+          <AnimatePresence mode="wait">
+            {dataStage1Tab === 0 && (
+              <motion.div
+                key="dataStage1-0"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start"
+              >
+                {/* Left Narrative */}
+                <div className="lg:col-span-5">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-4 border border-[#7b3fc7]/20 shadow-2xs">
+                    <Network className="w-3.5 h-3.5 text-[#ff7a57]" />
+                    <span>01 / CLINICAL EHR INTEGRATION</span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                    Bi-directional clinical data exchange across <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">disparate EHR platforms.</span>
+                  </h2>
+
+                  <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                    Connect ambulatory and acute EHR systems across hospital networks, independent practices, and specialized clinics. Ingest clinical encounters, problem lists, vital signs, and discharge summaries with write-back capabilities directly into clinician workflows.
+                  </p>
+
+                  <div className="p-4 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] mb-6 space-y-2.5">
+                    <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#7b3fc7]">
+                      Supported Standards &amp; Formats
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">C-CDA XML</span>
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">FHIR R4</span>
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">Direct Messaging (DSM)</span>
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">LOINC / SNOMED</span>
+                    </div>
+                  </div>
+
+                  <Link
+                    to="/platform/patient-intelligence/patient-360"
+                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#7b3fc7] hover:text-[#9565d2] transition-colors group"
+                  >
+                    <span>Explore Longitudinal Patient Master Chart</span>
+                    <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+
+                {/* Right Capability Cards (2x2 Grid) */}
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <Database className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Multi-EHR Feed Connectivity</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Connect disparate ambulatory and acute EHR platforms into a single unified clinical integration network across multi-practice systems.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <FileCode className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">C-CDA &amp; FHIR Ingestion</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Ingest and parse structured C-CDA XML documents, CCD summaries, FHIR R4 resources, and clinical notes in real time.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <Share2 className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Direct Secure Messaging (DSM)</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Automated DSM protocol integration for securely transmitting and receiving patient summary documents and referral packets.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <Workflow className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Point-of-Care Write-Back</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Route validated care plans, suspected risk conditions, and quality care gap alerts back into clinician EHR encounter workflows.</p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {dataStage1Tab === 1 && (
+              <motion.div
+                key="dataStage1-1"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start"
+              >
+                {/* Left Narrative */}
+                <div className="lg:col-span-5">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff7a57]/10 text-[#ea580c] text-xs font-semibold tracking-wider uppercase mb-4 border border-[#ff7a57]/20 shadow-2xs">
+                    <FileText className="w-3.5 h-3.5 text-[#ff7a57]" />
+                    <span>02 / PAYER CLAIMS &amp; FINANCIAL FEEDS</span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                    Ingest 837/835 claims, CMS CCLF files, and <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff7a57] via-[#ea580c] to-[#7b3fc7]">payer remittance feeds.</span>
+                  </h2>
+
+                  <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                    Aggregate historical and ongoing medical, pharmacy, and institutional claims files. Ingest CMS Bulk BCDA and CCLF 1–9 files to reconstruct complete patient utilization histories, calculate PMPM/PMPY expenditure trajectories, and reconcile multi-payer attribution rosters.
+                  </p>
+
+                  <div className="p-4 rounded-2xl bg-white border border-[#e9e4f0] mb-6 space-y-2.5">
+                    <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#ea580c]">
+                      Supported Claims Standards
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">CMS CCLF 1–9</span>
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">EDI 837P / 837I</span>
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">EDI 835 Remittance</span>
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">CMS BCDA Bulk Data</span>
+                    </div>
+                  </div>
+
+                  <Link
+                    to="/platform/analytics"
+                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#ea580c] hover:text-[#c2410c] transition-colors group"
+                  >
+                    <span>Explore Financial Analytics Cockpit</span>
+                    <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+
+                {/* Right Capability Cards (2x2 Grid) */}
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
+                      <Database className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">CMS CCLF &amp; BCDA Feed Ingestion</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Automated parsing of monthly CMS CCLF files and API-based Bulk BCDA data for Medicare Advantage and MSSP ACO surveillance.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
+                      <FileCheck2 className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">EDI 837 / 835 Processing</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Automated processing of professional (837P) and institutional (837I) claims feeds paired with payment remittance advice.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
+                      <LineChart className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">PMPM / PMPY Cost Analytics</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Synthesize multi-payer claims into Per Member Per Month financial baselines, medical loss trends, and risk cost trajectories.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
+                      <Activity className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Attribution Roster Matching</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Reconcile payer attribution rosters against live clinical encounters to track assigned patient panel changes continuously.</p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {dataStage1Tab === 2 && (
+              <motion.div
+                key="dataStage1-2"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start"
+              >
+                {/* Left Narrative */}
+                <div className="lg:col-span-5">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4f46e5]/10 text-[#4f46e5] text-xs font-semibold tracking-wider uppercase mb-4 border border-[#4f46e5]/20 shadow-2xs">
+                    <Radio className="w-3.5 h-3.5 text-[#ff7a57]" />
+                    <span>03 / REAL-TIME HIE &amp; ADT EVENT STREAMING</span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                    Real-time hospital event notifications for <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4f46e5] via-[#7b3fc7] to-[#ff7a57]">acute admissions and discharges.</span>
+                  </h2>
+
+                  <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                    Stream event notifications from regional Health Information Exchanges (HIEs), hospital networks, and emergency departments. Automatically detect acute inpatient admissions and ER visits to trigger timely 48-hour clinical outreach and 30-day transition-of-care protocols.
+                  </p>
+
+                  <div className="p-4 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] mb-6 space-y-2.5">
+                    <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#4f46e5]">
+                      HL7 v2 ADT Specifications
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">A01 Inpatient Admission</span>
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">A03 Hospital Discharge</span>
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">A08 Patient Update</span>
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">Regional HIE Feeds</span>
+                    </div>
+                  </div>
+
+                  <Link
+                    to="/platform/transitions-of-care-adt"
+                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#4f46e5] hover:text-[#7b3fc7] transition-colors group"
+                  >
+                    <span>Explore Transitions-of-Care (TOC) Protocols</span>
+                    <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+
+                {/* Right Capability Cards (2x2 Grid) */}
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#4f46e5]/10 text-[#4f46e5] flex items-center justify-center mb-3">
+                      <Radio className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Real-Time HL7 v2 ADT Ingestion</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Instant parsing of acute hospital Admit, Discharge, and Transfer feeds directly into active patient queues.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#4f46e5]/10 text-[#4f46e5] flex items-center justify-center mb-3">
+                      <Globe className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Regional HIE Interoperability</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Connect with regional health information exchanges to capture out-of-network utilization across non-affiliated health systems.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#4f46e5]/10 text-[#4f46e5] flex items-center justify-center mb-3">
+                      <Clock className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">ED High-Utilizer Event Triggers</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Automated alert logic that flags frequent emergency department visits to redirect patients to primary care resources.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#4f46e5]/10 text-[#4f46e5] flex items-center justify-center mb-3">
+                      <Workflow className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">30-Day TCM Workflow Automation</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Automatically trigger medication reconciliation and primary care follow-up visit scheduling upon hospital discharge.</p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 4: #claims (02 / CLAIMS INTEGRATION)
+          CAROUSEL STAGE 2: DATA FOUNDATION & CONNECTIVITY (SECTIONS 4, 5, 6)
+          Contains Modules:
+          - 04 / Labs, Pharmacy & Supplemental (#labs-pharmacy)
+          - 05 / Data Foundation & Longitudinal Mesh (#data-foundation)
+          - 06 / APIs & Mobile Integration (#apis-mobile)
           ───────────────────────────────────────────────────────────── */}
-      <section id="claims" className="py-20 sm:py-28 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
+      <section 
+        id="data-stage-2" 
+        onMouseEnter={() => setDataStage2Paused(true)}
+        onMouseLeave={() => setDataStage2Paused(false)}
+        className="py-20 sm:py-28 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
+        {/* Invisible anchor target points for header dropdown links */}
+        <div id="labs-pharmacy" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
+        <div id="data-foundation" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
+        <div id="apis-mobile" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            
-            {/* Left Narrative */}
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff7a57]/10 text-[#ea580c] text-xs font-semibold tracking-wider uppercase mb-4 border border-[#ff7a57]/20 shadow-2xs">
-                <FileText className="w-3.5 h-3.5 text-[#ff7a57]" />
-                <span>02 / PAYER CLAIMS &amp; FINANCIAL FEEDS</span>
+          {/* Carousel Stage Header & Controller */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#4f46e5]/10 text-[#4f46e5] font-mono text-xs font-bold uppercase tracking-wider mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-[#4f46e5]" />
+                <span>DATA &amp; INTEGRATION STAGE 02 • DATA FOUNDATION &amp; CONNECTIVITY</span>
               </div>
-
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Ingest 837/835 claims, CMS CCLF files, and <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff7a57] via-[#ea580c] to-[#7b3fc7]">payer remittance feeds.</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-[#1c1636]">
+                {dataStage2Tabs[dataStage2Tab].title}
               </h2>
+            </div>
 
-              <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                Aggregate historical and ongoing medical, pharmacy, and institutional claims files. Ingest CMS Bulk BCDA and CCLF 1–9 files to reconstruct complete patient utilization histories, calculate PMPM/PMPY expenditure trajectories, and reconcile multi-payer attribution rosters.
-              </p>
-
-              <div className="p-4 rounded-2xl bg-white border border-[#e9e4f0] mb-6 space-y-2.5">
-                <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#ea580c]">
-                  Supported Claims Standards
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">CMS CCLF 1–9</span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">EDI 837P / 837I</span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">EDI 835 Remittance</span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">CMS BCDA Bulk Data</span>
-                </div>
-              </div>
-
-              <Link
-                to="/platform/analytics"
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#ea580c] hover:text-[#c2410c] transition-colors group"
+            {/* Stage Tabs & Slide Navigation */}
+            <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={dataStage2Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
               >
-                <span>Explore Financial Analytics Cockpit</span>
-                <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
-              </Link>
+                <Clock className="w-3 h-3 text-[#4f46e5]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`data2-${dataStage2Tab}-${dataStage2Paused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: dataStage2Paused ? '0%' : '100%' }}
+                    transition={{ duration: dataStage2Paused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#4f46e5] rounded-full"
+                  />
+                </div>
+                <span>15s</span>
+              </div>
+
+              <div className="inline-flex items-center p-1.5 rounded-2xl bg-white border border-[#e5deee] gap-1 shadow-2xs">
+                {dataStage2Tabs.map((tab, idx) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setDataStage2Tab(idx)}
+                    className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                      dataStage2Tab === idx
+                        ? 'bg-[#4f46e5] text-white shadow-xs'
+                        : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-[#faf8fd]'
+                    }`}
+                  >
+                    {tab.badge}
+                  </button>
+                ))}
+              </div>
+
+              {/* Prev / Next Chevrons */}
+              <div className="inline-flex items-center gap-1.5">
+                <button
+                  onClick={() => setDataStage2Tab((prev) => (prev > 0 ? prev - 1 : dataStage2Tabs.length - 1))}
+                  aria-label="Previous data capability"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#4f46e5] text-[#524b6b] hover:text-[#4f46e5] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                  {dataStage2Tab + 1}/{dataStage2Tabs.length}
+                </span>
+                <button
+                  onClick={() => setDataStage2Tab((prev) => (prev < dataStage2Tabs.length - 1 ? prev + 1 : 0))}
+                  aria-label="Next data capability"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#4f46e5] text-[#524b6b] hover:text-[#4f46e5] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-
-            {/* Right Capability Cards (2x2 Grid) */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
-                  <Database className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">CMS CCLF &amp; BCDA Feed Ingestion</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Automated parsing of monthly CMS CCLF files and API-based Bulk BCDA data for Medicare Advantage and MSSP ACO surveillance.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
-                  <FileCheck2 className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">EDI 837 / 835 Processing</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Automated processing of professional (837P) and institutional (837I) claims feeds paired with payment remittance advice.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
-                  <LineChart className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">PMPM / PMPY Cost Analytics</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Synthesize multi-payer claims into Per Member Per Month financial baselines, medical loss trends, and risk cost trajectories.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
-                  <Activity className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Attribution Roster Matching</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Reconcile payer attribution rosters against live clinical encounters to track assigned patient panel changes continuously.</p>
-              </div>
-            </div>
-
           </div>
 
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 5: #hie-adt (03 / HIE & ADT EVENT MONITORING)
-          ───────────────────────────────────────────────────────────── */}
-      <section id="hie-adt" className="py-20 sm:py-28 bg-white border-b border-[#e9e4f0] scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            
-            {/* Left Narrative */}
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4f46e5]/10 text-[#4f46e5] text-xs font-semibold tracking-wider uppercase mb-4 border border-[#4f46e5]/20 shadow-2xs">
-                <Radio className="w-3.5 h-3.5 text-[#ff7a57]" />
-                <span>03 / REAL-TIME HIE &amp; ADT EVENT STREAMING</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Real-time hospital event notifications for <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4f46e5] via-[#7b3fc7] to-[#ff7a57]">acute admissions and discharges.</span>
-              </h2>
-
-              <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                Stream event notifications from regional Health Information Exchanges (HIEs), hospital networks, and emergency departments. Automatically detect acute inpatient admissions and ER visits to trigger timely 48-hour clinical outreach and 30-day transition-of-care protocols.
-              </p>
-
-              <div className="p-4 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] mb-6 space-y-2.5">
-                <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#4f46e5]">
-                  HL7 v2 ADT Specifications
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">A01 Inpatient Admission</span>
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">A03 Hospital Discharge</span>
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">A08 Patient Update</span>
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">Regional HIE Feeds</span>
-                </div>
-              </div>
-
-              <Link
-                to="/platform/transitions-of-care-adt"
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#4f46e5] hover:text-[#7b3fc7] transition-colors group"
+          {/* Carousel Slide Content */}
+          <AnimatePresence mode="wait">
+            {dataStage2Tab === 0 && (
+              <motion.div
+                key="dataStage2-0"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start"
               >
-                <span>Explore Transitions-of-Care (TOC) Protocols</span>
-                <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
+                {/* Left Narrative */}
+                <div className="lg:col-span-5">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-4 border border-[#7b3fc7]/20 shadow-2xs">
+                    <Pill className="w-3.5 h-3.5 text-[#ff7a57]" />
+                    <span>04 / DIAGNOSTIC LABS, PHARMACY &amp; RPM</span>
+                  </div>
 
-            {/* Right Capability Cards (2x2 Grid) */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#4f46e5]/10 text-[#4f46e5] flex items-center justify-center mb-3">
-                  <Radio className="w-5 h-5" />
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                    Connect diagnostic lab feeds, pharmacy fill records, and <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#9333ea] to-[#4f46e5]">clinical assessments.</span>
+                  </h2>
+
+                  <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                    Standardize incoming laboratory test results, pharmacy dispensing history, and validated clinical assessment scales directly into the patient longitudinal health record. Monitor ongoing medication adherence trends and remote patient monitoring readings continuously.
+                  </p>
+
+                  <div className="p-4 rounded-2xl bg-white border border-[#e9e4f0] mb-6 space-y-2.5">
+                    <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#7b3fc7]">
+                      Standardized Clinical Terminologies
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">LOINC Test Codes</span>
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">RxNorm CUIs</span>
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">150+ Assessment Scales</span>
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">Biometric RPM Feeds</span>
+                    </div>
+                  </div>
+
+                  <Link
+                    to="/platform/care-management"
+                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#7b3fc7] hover:text-[#9565d2] transition-colors group"
+                  >
+                    <span>Explore Care Management Applications</span>
+                    <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Real-Time HL7 v2 ADT Ingestion</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Instant parsing of acute hospital Admit, Discharge, and Transfer feeds directly into active patient queues.</p>
-              </div>
 
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#4f46e5]/10 text-[#4f46e5] flex items-center justify-center mb-3">
-                  <Globe className="w-5 h-5" />
+                {/* Right Capability Cards (2x2 Grid) */}
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <Database className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">LOINC-Standardized Lab Ingestion</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Harmonize disparate reference lab results, HbA1c panels, and creatinine trends to standard LOINC terminologies.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <Pill className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">RxNorm Pharmacy &amp; Adherence Feeds</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Track pharmacy dispensing claims and calculate Proportion of Days Covered (PDC) medication adherence metrics.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <Stethoscope className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">150+ Standardized Assessment Scales</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Ingest standardized assessment scales (PHQ-9, GAD-7, Morse Fall, SDOH) directly into multi-disciplinary care plans.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <Activity className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Biometric RPM Device Ingestion</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Continuous ingestion of cellular blood pressure cuffs, glucometers, and weight scale readings into patient profiles.</p>
+                  </div>
                 </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Regional HIE Interoperability</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Connect with regional health information exchanges to capture out-of-network utilization across non-affiliated health systems.</p>
-              </div>
+              </motion.div>
+            )}
 
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#4f46e5]/10 text-[#4f46e5] flex items-center justify-center mb-3">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">ED High-Utilizer Event Triggers</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Automated alert logic that flags frequent emergency department visits to redirect patients to primary care resources.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#4f46e5]/10 text-[#4f46e5] flex items-center justify-center mb-3">
-                  <Workflow className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">30-Day TCM Workflow Automation</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Automatically trigger medication reconciliation and primary care follow-up visit scheduling upon hospital discharge.</p>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 6: #labs-pharmacy (04 / LABS, PHARMACY & SUPPLEMENTAL)
-          ───────────────────────────────────────────────────────────── */}
-      <section id="labs-pharmacy" className="py-20 sm:py-28 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            
-            {/* Left Narrative */}
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-4 border border-[#7b3fc7]/20 shadow-2xs">
-                <Pill className="w-3.5 h-3.5 text-[#ff7a57]" />
-                <span>04 / DIAGNOSTIC LABS, PHARMACY &amp; RPM</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Connect diagnostic lab feeds, pharmacy fill records, and <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#9333ea] to-[#4f46e5]">clinical assessments.</span>
-              </h2>
-
-              <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                Standardize incoming laboratory test results, pharmacy dispensing history, and validated clinical assessment scales directly into the patient longitudinal health record. Monitor ongoing medication adherence trends and remote patient monitoring readings continuously.
-              </p>
-
-              <div className="p-4 rounded-2xl bg-white border border-[#e9e4f0] mb-6 space-y-2.5">
-                <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#7b3fc7]">
-                  Standardized Clinical Terminologies
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">LOINC Test Codes</span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">RxNorm CUIs</span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">150+ Assessment Scales</span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">Biometric RPM Feeds</span>
-                </div>
-              </div>
-
-              <Link
-                to="/platform/care-management"
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#7b3fc7] hover:text-[#9565d2] transition-colors group"
+            {dataStage2Tab === 1 && (
+              <motion.div
+                key="dataStage2-1"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start"
               >
-                <span>Explore Care Management Applications</span>
-                <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
+                {/* Left Narrative */}
+                <div className="lg:col-span-5">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1c1636] text-white text-xs font-semibold tracking-wider uppercase mb-4 shadow-2xs">
+                    <Server className="w-3.5 h-3.5 text-[#ff7a57]" />
+                    <span>05 / DATA FOUNDATION &amp; LONGITUDINAL MESH</span>
+                  </div>
 
-            {/* Right Capability Cards (2x2 Grid) */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <Database className="w-5 h-5" />
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                    Enterprise longitudinal data architecture with <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1c1636] via-[#4f46e5] to-[#7b3fc7]">robust security and tenant isolation.</span>
+                  </h2>
+
+                  <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                    The core operational data layer featuring deterministic and probabilistic Master Patient Indexing (MPI), a canonical Patient Master Chart unifying 13 clinical domains, multi-tenant row-level isolation, and complete audit trail lineage.
+                  </p>
+
+                  <div className="p-4 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] mb-6 space-y-2.5">
+                    <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#1c1636]">
+                      Data Foundation Components
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">Deterministic &amp; Probabilistic MPI</span>
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">13-Domain Clinical Schema</span>
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">Row-Level Tenant Isolation</span>
+                      <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">AES-256 / TLS 1.3 Encryption</span>
+                    </div>
+                  </div>
+
+                  <Link
+                    to="/company#security"
+                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#7b3fc7] hover:text-[#9565d2] transition-colors group"
+                  >
+                    <span>Explore Security &amp; Compliance Specifications</span>
+                    <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">LOINC-Standardized Lab Ingestion</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Harmonize disparate reference lab results, HbA1c panels, and creatinine trends to standard LOINC terminologies.</p>
-              </div>
 
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <Pill className="w-5 h-5" />
+                {/* Right Capability Cards (2x2 Grid) */}
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <Search className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Master Patient Indexing (MPI)</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Deterministic and probabilistic identity resolution algorithms that eliminate duplicate medical records across fragmented networks.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <Layers className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Patient Master Chart (PMC) Model</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Unified canonical data model synthesizing 13 clinical domains (demographics, encounters, meds, labs, gaps) into a single timeline.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <KeyRound className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Multi-Tenant Isolation &amp; RBAC</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Granular row-level data segregation preventing cross-organization leakage with strict role-based access control policies.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Data Lineage &amp; Audit Logging</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Complete provenance tracking for every clinical data point, documenting original source feeds, transformation history, and access logs.</p>
+                  </div>
                 </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">RxNorm Pharmacy &amp; Adherence Feeds</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Track pharmacy dispensing claims and calculate Proportion of Days Covered (PDC) medication adherence metrics.</p>
-              </div>
+              </motion.div>
+            )}
 
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <Stethoscope className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">150+ Standardized Assessment Scales</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Ingest standardized assessment scales (PHQ-9, GAD-7, Morse Fall, SDOH) directly into multi-disciplinary care plans.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <Activity className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Biometric RPM Device Ingestion</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Continuous ingestion of cellular blood pressure cuffs, glucometers, and weight scale readings into patient profiles.</p>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 7: #data-foundation (05 / DATA FOUNDATION & LONGITUDINAL MESH)
-          ───────────────────────────────────────────────────────────── */}
-      <section id="data-foundation" className="py-20 sm:py-28 bg-white border-b border-[#e9e4f0] scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            
-            {/* Left Narrative */}
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1c1636] text-white text-xs font-semibold tracking-wider uppercase mb-4 shadow-2xs">
-                <Server className="w-3.5 h-3.5 text-[#ff7a57]" />
-                <span>05 / DATA FOUNDATION &amp; LONGITUDINAL MESH</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Enterprise longitudinal data architecture with <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1c1636] via-[#4f46e5] to-[#7b3fc7]">robust security and tenant isolation.</span>
-              </h2>
-
-              <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                The core operational data layer featuring deterministic and probabilistic Master Patient Indexing (MPI), a canonical Patient Master Chart unifying 13 clinical domains, multi-tenant row-level isolation, and complete audit trail lineage.
-              </p>
-
-              <div className="p-4 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] mb-6 space-y-2.5">
-                <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#1c1636]">
-                  Data Foundation Components
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">Deterministic &amp; Probabilistic MPI</span>
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">13-Domain Clinical Schema</span>
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">Row-Level Tenant Isolation</span>
-                  <span className="px-2.5 py-1 rounded-md bg-white border border-[#e9e4f0] font-mono font-medium">AES-256 / TLS 1.3 Encryption</span>
-                </div>
-              </div>
-
-              <Link
-                to="/company#security"
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#7b3fc7] hover:text-[#9565d2] transition-colors group"
+            {dataStage2Tab === 2 && (
+              <motion.div
+                key="dataStage2-2"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start"
               >
-                <span>Explore Security &amp; Compliance Specifications</span>
-                <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
+                {/* Left Narrative */}
+                <div className="lg:col-span-5">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff7a57]/10 text-[#ea580c] text-xs font-semibold tracking-wider uppercase mb-4 border border-[#ff7a57]/20 shadow-2xs">
+                    <Smartphone className="w-3.5 h-3.5 text-[#ff7a57]" />
+                    <span>06 / DEVELOPER APIS &amp; MOBILE CONNECTORS</span>
+                  </div>
 
-            {/* Right Capability Cards (2x2 Grid) */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <Search className="w-5 h-5" />
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                    Secure RESTful APIs, FHIR endpoints, and <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff7a57] via-[#f97316] to-[#7b3fc7]">real-time event webhooks.</span>
+                  </h2>
+
+                  <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                    Equip technical teams with standardized FHIR R4 interfaces, webhook subscriptions, and scheduling connectors to integrate Guardian intelligence into third-party portals, mobile apps, and clinical systems.
+                  </p>
+
+                  <div className="p-4 rounded-2xl bg-white border border-[#e9e4f0] mb-6 space-y-2.5">
+                    <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#ea580c]">
+                      Developer &amp; Integration Specs
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">RESTful FHIR R4 APIs</span>
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">Real-Time Event Webhooks</span>
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">Mobile Patient SDKs</span>
+                      <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">EMR Scheduling Connectors</span>
+                    </div>
+                  </div>
+
+                  <Link
+                    to="/platform/patient-engagement"
+                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#ea580c] hover:text-[#c2410c] transition-colors group"
+                  >
+                    <span>Explore Patient Engagement Connectors</span>
+                    <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Master Patient Indexing (MPI)</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Deterministic and probabilistic identity resolution algorithms that eliminate duplicate medical records across fragmented networks.</p>
-              </div>
 
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <Layers className="w-5 h-5" />
+                {/* Right Capability Cards (2x2 Grid) */}
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
+                      <Globe className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Standardized FHIR R4 Endpoints</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Secure RESTful query endpoints supporting standard FHIR R4 resources (Patient, Condition, Observation, Encounter).</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
+                      <Zap className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Real-Time Webhook Subscriptions</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Event-driven webhook engine notifying downstream clinical platforms immediately upon acute ADT alerts or gap closures.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
+                      <Smartphone className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Mobile Engagement &amp; Portals</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Connect external patient portals, SMS communication channels, and remote digital intake tools directly to Guardian.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
+                      <Calendar className="w-5 h-5 text-[#ea580c]" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">EMR Scheduling Connectors</h3>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">Bi-directional scheduling connectors enabling automated patient appointment booking directly within host EMR systems.</p>
+                  </div>
                 </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Patient Master Chart (PMC) Model</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Unified canonical data model synthesizing 13 clinical domains (demographics, encounters, meds, labs, gaps) into a single timeline.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <KeyRound className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Multi-Tenant Isolation &amp; RBAC</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Granular row-level data segregation preventing cross-organization leakage with strict role-based access control policies.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#7b3fc7]/10 text-[#7b3fc7] flex items-center justify-center mb-3">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Data Lineage &amp; Audit Logging</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Complete provenance tracking for every clinical data point, documenting original source feeds, transformation history, and access logs.</p>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 8: #apis-mobile (06 / APIS & MOBILE INTEGRATION)
-          ───────────────────────────────────────────────────────────── */}
-      <section id="apis-mobile" className="py-20 sm:py-28 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            
-            {/* Left Narrative */}
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff7a57]/10 text-[#ea580c] text-xs font-semibold tracking-wider uppercase mb-4 border border-[#ff7a57]/20 shadow-2xs">
-                <Smartphone className="w-3.5 h-3.5 text-[#ff7a57]" />
-                <span>06 / DEVELOPER APIS &amp; MOBILE CONNECTORS</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Secure RESTful APIs, FHIR endpoints, and <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff7a57] via-[#f97316] to-[#7b3fc7]">real-time event webhooks.</span>
-              </h2>
-
-              <p className="text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                Equip technical teams with standardized FHIR R4 interfaces, webhook subscriptions, and scheduling connectors to integrate Guardian intelligence into third-party portals, mobile apps, and clinical systems.
-              </p>
-
-              <div className="p-4 rounded-2xl bg-white border border-[#e9e4f0] mb-6 space-y-2.5">
-                <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#ea580c]">
-                  Developer &amp; Integration Specs
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs text-[#1c1636]">
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">RESTful FHIR R4 APIs</span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">Real-Time Event Webhooks</span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">Mobile Patient SDKs</span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#faf8fd] border border-[#e9e4f0] font-mono font-medium">EMR Scheduling Connectors</span>
-                </div>
-              </div>
-
-              <Link
-                to="/platform/patient-engagement"
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#ea580c] hover:text-[#c2410c] transition-colors group"
-              >
-                <span>Explore Patient Engagement Connectors</span>
-                <ArrowRight className="w-4 h-4 text-[#ff7a57] group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-            {/* Right Capability Cards (2x2 Grid) */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
-                  <Globe className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Standardized FHIR R4 Endpoints</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Secure RESTful query endpoints supporting standard FHIR R4 resources (Patient, Condition, Observation, Encounter).</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
-                  <Zap className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Real-Time Webhook Subscriptions</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Event-driven webhook engine notifying downstream clinical platforms immediately upon acute ADT alerts or gap closures.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
-                  <Smartphone className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">Mobile Engagement &amp; Portals</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Connect external patient portals, SMS communication channels, and remote digital intake tools directly to Guardian.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#ff7a57]/10 text-[#ea580c] flex items-center justify-center mb-3">
-                  <Calendar className="w-5 h-5 text-[#ea580c]" />
-                </div>
-                <h3 className="text-base font-extrabold text-[#1c1636] mb-1.5">EMR Scheduling Connectors</h3>
-                <p className="text-xs text-[#524b6b] leading-relaxed">Bi-directional scheduling connectors enabling automated patient appointment booking directly within host EMR systems.</p>
-              </div>
-            </div>
-
-          </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </div>
       </section>
