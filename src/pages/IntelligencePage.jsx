@@ -39,8 +39,18 @@ export default function IntelligencePage() {
   const [intelStage1Paused, setIntelStage1Paused] = useState(false);
   const [intelStage2Tab, setIntelStage2Tab] = useState(0);
   const [intelStage2Paused, setIntelStage2Paused] = useState(false);
-  const [activeProofTab, setActiveProofTab] = useState('risk-strat');
+  const [activeProofIdx, setActiveProofIdx] = useState(0);
+  const [proofPaused, setProofPaused] = useState(false);
   const location = useLocation();
+
+  // Auto 15-second carousel timer for Live Intelligence Proof (pauses on hover, resets on manual change)
+  useEffect(() => {
+    if (proofPaused) return;
+    const timer = setInterval(() => {
+      setActiveProofIdx((prev) => (prev + 1) % 4);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [proofPaused, activeProofIdx]);
 
   // Auto 15-second timer for Carousel Stage 1 (Knowledge Graph, AI & NLP, Predictive Risk)
   useEffect(() => {
@@ -991,36 +1001,86 @@ export default function IntelligencePage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 8: LIVE INTELLIGENCE PROOF (GENUINE SCREENSHOTS)
+          SECTION 8: LIVE INTELLIGENCE PROOF (GENUINE SCREENSHOTS CAROUSEL)
           ───────────────────────────────────────────────────────────── */}
-      <section id="proof" className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
+      <section 
+        id="proof" 
+        onMouseEnter={() => setProofPaused(true)}
+        onMouseLeave={() => setProofPaused(false)}
+        className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="max-w-3xl mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
-              <Zap className="w-3.5 h-3.5 text-[#ff7a57]" />
-              <span>LIVE INTELLIGENCE PROOF</span>
+          {/* Section Header & Carousel Controller */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
+                <Zap className="w-3.5 h-3.5 text-[#ff7a57]" />
+                <span>LIVE INTELLIGENCE PROOF</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-2 leading-tight">
+                Genuine platform interfaces <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">substantiating core capabilities.</span>
+              </h2>
+              <p className="text-sm text-[#524b6b] leading-relaxed">
+                Explore how Guardian’s intelligence suite renders clinical evidence directly into clinician workspaces through authentic, production-grade application modules:
+              </p>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-3 leading-tight">
-              Genuine platform interfaces <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">substantiating core capabilities.</span>
-            </h2>
-            <p className="text-base text-[#524b6b] leading-relaxed">
-              Explore how Guardian’s intelligence suite renders clinical evidence directly into clinician workspaces through authentic, production-grade application modules:
-            </p>
+
+            {/* Carousel Slide Controls */}
+            <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={proofPaused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
+              >
+                <Clock className="w-3 h-3 text-[#7b3fc7]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`intel-proof-timer-${activeProofIdx}-${proofPaused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: proofPaused ? '0%' : '100%' }}
+                    transition={{ duration: proofPaused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#7b3fc7] rounded-full"
+                  />
+                </div>
+                <span>15s</span>
+              </div>
+
+              {/* Prev / Next Chevrons & Counter */}
+              <div className="inline-flex items-center gap-1.5">
+                <button
+                  onClick={() => setActiveProofIdx((prev) => (prev > 0 ? prev - 1 : uiShowcase.length - 1))}
+                  aria-label="Previous interface"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                  {activeProofIdx + 1}/{uiShowcase.length}
+                </span>
+                <button
+                  onClick={() => setActiveProofIdx((prev) => (prev < uiShowcase.length - 1 ? prev + 1 : 0))}
+                  aria-label="Next interface"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </div>
 
-          {/* Interactive Showcase Tabs */}
+          {/* Interactive Showcase Tabs & Viewport */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            {/* Left Selector Tabs */}
+            {/* Left Selector Cards */}
             <div className="lg:col-span-5 space-y-3">
-              {uiShowcase.map((item) => {
-                const isActive = activeProofTab === item.id;
+              {uiShowcase.map((item, idx) => {
+                const isActive = activeProofIdx === idx;
                 return (
                   <div
                     key={item.id}
-                    onClick={() => setActiveProofTab(item.id)}
-                    className={`p-4 sm:p-5 rounded-2xl border transition-all duration-200 cursor-pointer ${
+                    onClick={() => setActiveProofIdx(idx)}
+                    className={`p-4 sm:p-5 rounded-2xl border transition-all duration-300 cursor-pointer ${
                       isActive 
                         ? 'bg-white border-[#7b3fc7] border-l-4 border-l-[#7b3fc7] shadow-lg -translate-x-1 ring-1 ring-[#7b3fc7]/15' 
                         : 'bg-white/70 border-[#e9e4f0] hover:bg-white hover:border-[#7b3fc7]/40 hover:shadow-xs'
@@ -1072,7 +1132,7 @@ export default function IntelligencePage() {
                     <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block" />
                     <span className="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block" />
                     <span className="text-[11px] text-purple-200 font-mono ml-2 font-semibold truncate max-w-[200px] sm:max-w-none">
-                      {uiShowcase.find(m => m.id === activeProofTab)?.subtitle}
+                      {uiShowcase[activeProofIdx]?.subtitle}
                     </span>
                   </div>
                   <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[#7b3fc7] text-white font-medium">
@@ -1084,13 +1144,13 @@ export default function IntelligencePage() {
                 <div className="relative rounded-lg overflow-hidden bg-white border border-[#e9e4f0] shadow-inner">
                   <AnimatePresence mode="wait">
                     <motion.img 
-                      key={activeProofTab}
-                      src={uiShowcase.find(m => m.id === activeProofTab)?.image}
-                      alt={`${uiShowcase.find(m => m.id === activeProofTab)?.title} Platform Interface Demonstration`}
+                      key={uiShowcase[activeProofIdx]?.id}
+                      src={uiShowcase[activeProofIdx]?.image}
+                      alt={`${uiShowcase[activeProofIdx]?.title} Platform Interface Demonstration`}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      transition={{ duration: 0.25, ease: 'easeOut' }}
                       className="w-full h-auto object-contain max-h-[500px] block"
                     />
                   </AnimatePresence>
