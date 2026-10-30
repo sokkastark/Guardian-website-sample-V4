@@ -24,13 +24,26 @@ import {
   DollarSign, 
   Share2, 
   FileCheck, 
-  Bell 
+  Bell,
+  ChevronLeft,
+  ChevronRight,
+  Clock 
 } from 'lucide-react';
 import { RibbonStepGrid } from '../components/common/RibbonStepCard';
 
 export default function SolutionsPage() {
-  const [activeProofTab, setActiveProofTab] = useState('executive');
+  const [activeProofIdx, setActiveProofIdx] = useState(0);
+  const [proofPaused, setProofPaused] = useState(false);
   const location = useLocation();
+
+  // Auto 15-second carousel timer for Live Application Proof (pauses on hover, resets on manual change)
+  useEffect(() => {
+    if (proofPaused) return;
+    const timer = setInterval(() => {
+      setActiveProofIdx((prev) => (prev + 1) % 4);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [proofPaused, activeProofIdx]);
 
   // Smooth hash scrolling for direct links and dropdown navigation
   useEffect(() => {
@@ -686,117 +699,199 @@ export default function SolutionsPage() {
       {/* ─────────────────────────────────────────────────────────────
           SECTION 7: LIVE SOLUTION PROOF (#proof)
           ───────────────────────────────────────────────────────────── */}
-      <section id="proof" className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24">
+      <section 
+        id="proof" 
+        onMouseEnter={() => setProofPaused(true)}
+        onMouseLeave={() => setProofPaused(false)}
+        className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="max-w-3xl mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
-              <Zap className="w-3.5 h-3.5 text-[#ff7a57]" />
-              <span>LIVE APPLICATION PROOF</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1636] tracking-tight mb-3 leading-tight">
-              Genuine platform interfaces <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">powering daily healthcare delivery.</span>
-            </h2>
-            <p className="text-base text-[#524b6b] leading-relaxed">
-              Explore how Guardian’s solution modules deliver actionable insights directly into executive, analytic, clinical, and network workflows:
-            </p>
-          </div>
-
-          {/* Interactive Capability Showcase Tabs */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left Selector Tabs */}
-            <div className="lg:col-span-5 space-y-3">
-              {uiShowcase.map((item) => {
-                const isActive = activeProofTab === item.id;
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() => setActiveProofTab(item.id)}
-                    className={`p-4 sm:p-5 rounded-2xl border transition-all duration-200 cursor-pointer ${
-                      isActive 
-                        ? 'bg-white border-[#7b3fc7] border-l-4 border-l-[#7b3fc7] shadow-lg -translate-x-1 ring-1 ring-[#7b3fc7]/15' 
-                        : 'bg-[#faf8fd]/80 border-[#e9e4f0] hover:bg-white hover:border-[#7b3fc7]/40 hover:shadow-xs'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="flex items-center gap-2">
-                        {isActive && (
-                          <span className="w-2 h-2 rounded-full bg-[#7b3fc7] animate-pulse" />
-                        )}
-                        <h3 className={`text-base font-extrabold ${isActive ? 'text-[#7b3fc7]' : 'text-[#1c1636]'}`}>
-                          {item.title}
-                        </h3>
-                      </div>
-                      <span className="text-[10px] font-mono font-bold text-[#716b89] uppercase tracking-wider px-2 py-0.5 rounded bg-gray-100">
-                        {item.badge}
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#524b6b] leading-relaxed mb-3 font-normal">
-                      {item.desc}
-                    </p>
-
-                    <div className="flex flex-wrap gap-1.5">
-                      {item.highlights.map((h, i) => (
-                        <span 
-                          key={i} 
-                          className={`text-[10px] font-semibold px-2 py-0.5 rounded border transition-colors ${
-                            isActive 
-                              ? 'bg-[#f2ecf9] text-[#7b3fc7] border-[#7b3fc7]/30' 
-                              : 'bg-white text-[#524b6b] border-gray-200'
-                          }`}
-                        >
-                          {h}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Right Genuine Screenshot Viewport (Stitched to Top) */}
-            <div className="lg:col-span-7 lg:sticky lg:top-24 self-start">
-              <div className="relative rounded-2xl bg-[#1c1636] p-3.5 border border-[#2e1065] shadow-2xl overflow-hidden transition-all duration-300">
-                {/* Application Window Top Bar */}
-                <div className="flex items-center justify-between px-3 py-2 bg-[#120b24] rounded-xl border-b border-white/10 mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block" />
-                    <span className="text-[11px] text-purple-200 font-mono ml-2 font-semibold truncate max-w-[200px] sm:max-w-none">
-                      {uiShowcase.find(m => m.id === activeProofTab)?.subtitle}
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[#7b3fc7] text-white font-medium">
-                    Verified Application UI
-                  </span>
-                </div>
-
-                {/* Genuine Product Image Viewport */}
-                <div className="relative rounded-lg overflow-hidden bg-white border border-[#e9e4f0] shadow-inner">
-                  <AnimatePresence mode="wait">
-                    <motion.img 
-                      key={activeProofTab}
-                      src={uiShowcase.find(m => m.id === activeProofTab)?.image}
-                      alt={`${uiShowcase.find(m => m.id === activeProofTab)?.title} Platform Interface Demonstration`}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2, ease: 'easeOut' }}
-                      className="w-full h-auto object-contain max-h-[500px] block"
-                    />
-                  </AnimatePresence>
-                </div>
+          {/* Section Header & Carousel Controller */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
+                <Zap className="w-3.5 h-3.5 text-[#ff7a57]" />
+                <span>LIVE APPLICATION PROOF</span>
               </div>
-
-              {/* Required Technical Demonstration Disclaimer */}
-              <p className="text-xs text-[#716b89] leading-relaxed italic text-right mt-2.5">
-                *Illustrative sample demonstration data. Module records and metrics are for demonstration purposes only.
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-2 leading-tight">
+                Genuine platform interfaces <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7b3fc7] via-[#4f46e5] to-[#ff7a57]">powering daily healthcare delivery.</span>
+              </h2>
+              <p className="text-sm text-[#524b6b] leading-relaxed">
+                Explore how Guardian’s solution modules deliver actionable insights directly into executive, analytic, clinical, and network workflows:
               </p>
             </div>
 
+            {/* Carousel Tabs & Slide Controls */}
+            <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={proofPaused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
+              >
+                <Clock className="w-3 h-3 text-[#7b3fc7]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`proof-timer-${activeProofIdx}-${proofPaused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: proofPaused ? '0%' : '100%' }}
+                    transition={{ duration: proofPaused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#7b3fc7] rounded-full"
+                  />
+                </div>
+                <span>15s</span>
+              </div>
+
+              {/* Prev / Next Chevrons & Counter */}
+              <div className="inline-flex items-center gap-1.5">
+                <button
+                  onClick={() => setActiveProofIdx((prev) => (prev > 0 ? prev - 1 : uiShowcase.length - 1))}
+                  aria-label="Previous interface"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                  {activeProofIdx + 1}/{uiShowcase.length}
+                </span>
+                <button
+                  onClick={() => setActiveProofIdx((prev) => (prev < uiShowcase.length - 1 ? prev + 1 : 0))}
+                  aria-label="Next interface"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </div>
+
+          {/* Top Segmented Tab Switcher Pills */}
+          <div className="mb-8 overflow-x-auto pb-2 scrollbar-none">
+            <div className="inline-flex items-center p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1.5 shadow-2xs min-w-full sm:min-w-0">
+              {uiShowcase.map((item, idx) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveProofIdx(idx)}
+                  className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center gap-2 ${
+                    activeProofIdx === idx
+                      ? 'bg-[#7b3fc7] text-white shadow-xs'
+                      : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-white'
+                  }`}
+                >
+                  <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                    activeProofIdx === idx ? 'bg-white/20 text-white' : 'bg-gray-100 text-[#716b89]'
+                  }`}>
+                    0{idx + 1}
+                  </span>
+                  <span>{item.title}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Active Carousel Slide Content */}
+          <AnimatePresence mode="wait">
+            {(() => {
+              const current = uiShowcase[activeProofIdx] || uiShowcase[0];
+              return (
+                <motion.div
+                  key={current.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.25 }}
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center"
+                >
+                  {/* Left Narrative Detail Card */}
+                  <div className="lg:col-span-5">
+                    <div className="p-6 sm:p-8 rounded-3xl bg-[#faf8fd] border border-[#e9e4f0] shadow-sm">
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span className="text-xs font-mono font-bold text-[#7b3fc7] uppercase tracking-wider px-2.5 py-1 rounded-lg bg-[#7b3fc7]/10 border border-[#7b3fc7]/20">
+                          {current.badge}
+                        </span>
+                        <span className="text-[11px] font-mono text-[#716b89]">
+                          Interface 0{activeProofIdx + 1} of 0{uiShowcase.length}
+                        </span>
+                      </div>
+
+                      <h3 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-2 leading-tight">
+                        {current.title}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm font-semibold text-[#7b3fc7] mb-4">
+                        {current.subtitle}
+                      </p>
+
+                      <p className="text-xs sm:text-sm text-[#524b6b] leading-relaxed mb-6 font-normal">
+                        {current.desc}
+                      </p>
+
+                      <div className="pt-4 border-t border-[#e9e4f0]">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#716b89] block mb-2.5">
+                          Key Functional Highlights:
+                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          {current.highlights.map((h, i) => (
+                            <span 
+                              key={i}
+                              className="text-xs font-semibold px-3 py-1 rounded-full bg-white text-[#1c1636] border border-[#e5deee] shadow-2xs flex items-center gap-1.5"
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5 text-[#ff7a57]" />
+                              <span>{h}</span>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mt-6 pt-4 border-t border-[#e9e4f0] flex items-center justify-between">
+                        <Link
+                          to="/company?intent=demo#contact"
+                          className="inline-flex items-center gap-2 text-xs font-bold text-[#7b3fc7] hover:text-[#9333ea] transition-colors"
+                        >
+                          <span>Request interactive demonstration</span>
+                          <ArrowRight className="w-3.5 h-3.5 text-[#ff7a57]" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Application Window Mockup */}
+                  <div className="lg:col-span-7">
+                    <div className="relative rounded-2xl bg-[#1c1636] p-3.5 border border-[#2e1065] shadow-2xl overflow-hidden">
+                      {/* Application Window Top Bar */}
+                      <div className="flex items-center justify-between px-3 py-2 bg-[#120b24] rounded-xl border-b border-white/10 mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block" />
+                          <span className="text-[11px] text-purple-200 font-mono ml-2 font-semibold truncate max-w-[200px] sm:max-w-none">
+                            {current.subtitle}
+                          </span>
+                        </div>
+                        <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[#7b3fc7] text-white font-medium">
+                          Verified Application UI
+                        </span>
+                      </div>
+
+                      {/* Genuine Product Image Viewport */}
+                      <div className="relative rounded-lg overflow-hidden bg-white border border-[#e9e4f0] shadow-inner">
+                        <img 
+                          src={current.image}
+                          alt={`${current.title} Platform Interface Demonstration`}
+                          className="w-full h-auto object-contain max-h-[480px] block"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Required Technical Demonstration Disclaimer */}
+                    <p className="text-xs text-[#716b89] leading-relaxed italic text-right mt-2.5">
+                      *Illustrative sample demonstration data. Module records and metrics are for demonstration purposes only.
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })()}
+          </AnimatePresence>
 
         </div>
       </section>
