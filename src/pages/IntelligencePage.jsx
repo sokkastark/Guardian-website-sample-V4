@@ -292,27 +292,6 @@ export default function IntelligencePage() {
             <RibbonStepGrid steps={continuumSteps} />
           </div>
 
-          {/* Quick-Jump Section Anchor Pills */}
-          <div className="mt-10 pt-8 border-t border-[#e9e4f0] flex flex-wrap items-center justify-between gap-3 text-xs">
-            <span className="font-mono font-bold uppercase tracking-wider text-[#716b89]">Explore Capabilities:</span>
-            <div className="flex flex-wrap items-center gap-2">
-              <a href="#knowledge-graph" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#7b3fc7] hover:text-[#7b3fc7] transition-colors">
-                01. Knowledge Graph
-              </a>
-              <a href="#ai-nlp" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#4f46e5] hover:text-[#4f46e5] transition-colors">
-                02. AI & NLP Engine
-              </a>
-              <a href="#predictive-intelligence" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#9333ea] hover:text-[#9333ea] transition-colors">
-                03. Predictive Intelligence
-              </a>
-              <a href="#intelligent-workflows" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#ea580c] hover:text-[#ea580c] transition-colors">
-                04. Intelligent Workflows
-              </a>
-              <a href="#human-in-the-loop" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#ff7a57] hover:text-[#ff7a57] transition-colors">
-                05. Human-in-the-Loop
-              </a>
-            </div>
-          </div>
 
         </div>
       </section>
