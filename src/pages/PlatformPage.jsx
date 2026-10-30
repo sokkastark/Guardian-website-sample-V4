@@ -36,8 +36,45 @@ export default function PlatformPage() {
   const [stage2Tab, setStage2Tab] = useState(0);
   const [stage3Tab, setStage3Tab] = useState(0);
   const [stage4Tab, setStage4Tab] = useState(0);
+  const [stage1Paused, setStage1Paused] = useState(false);
+  const [stage2Paused, setStage2Paused] = useState(false);
+  const [stage3Paused, setStage3Paused] = useState(false);
+  const [stage4Paused, setStage4Paused] = useState(false);
   const [activePmcDomain, setActivePmcDomain] = useState('Care Gaps');
   const location = useLocation();
+
+  // Auto 15-second carousel timer for all 4 stages (pauses on hover, resets on manual change)
+  useEffect(() => {
+    if (stage1Paused) return;
+    const timer = setInterval(() => {
+      setStage1Tab((prev) => (prev + 1) % 3);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [stage1Paused, stage1Tab]);
+
+  useEffect(() => {
+    if (stage2Paused) return;
+    const timer = setInterval(() => {
+      setStage2Tab((prev) => (prev + 1) % 3);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [stage2Paused, stage2Tab]);
+
+  useEffect(() => {
+    if (stage3Paused) return;
+    const timer = setInterval(() => {
+      setStage3Tab((prev) => (prev + 1) % 3);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [stage3Paused, stage3Tab]);
+
+  useEffect(() => {
+    if (stage4Paused) return;
+    const timer = setInterval(() => {
+      setStage4Tab((prev) => (prev + 1) % 2);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [stage4Paused, stage4Tab]);
 
   // Mapping from dropdown hashes & aliases to the stage + tab index
   useEffect(() => {
@@ -439,7 +476,12 @@ export default function PlatformPage() {
           - 02 / Patient 360 & Patient Master Chart (#patient-360)
           - 03 / Risk Stratification (#risk-stratification)
           ───────────────────────────────────────────────────────────── */}
-      <section id="stage-1" className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24 relative">
+      <section 
+        id="stage-1" 
+        onMouseEnter={() => setStage1Paused(true)}
+        onMouseLeave={() => setStage1Paused(false)}
+        className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
         {/* Invisible anchor target points for header dropdown links */}
         <div id="population-health" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
         <div id="patient-360" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
@@ -461,6 +503,24 @@ export default function PlatformPage() {
 
             {/* Stage Tabs & Slide Navigation */}
             <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={stage1Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
+              >
+                <Clock className="w-3 h-3 text-[#7b3fc7]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`p1-${stage1Tab}-${stage1Paused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: stage1Paused ? '0%' : '100%' }}
+                    transition={{ duration: stage1Paused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#7b3fc7] rounded-full"
+                  />
+                </div>
+                <span>15s</span>
+              </div>
+
               <div className="inline-flex items-center p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1 shadow-2xs">
                 {stage1Tabs.map((tab, idx) => (
                   <button
@@ -760,7 +820,12 @@ export default function PlatformPage() {
           - 05 / Quality & Care Gaps (#quality-care-gaps)
           - 06 / Care Management (#care-management)
           ───────────────────────────────────────────────────────────── */}
-      <section id="stage-2" className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24 relative">
+      <section 
+        id="stage-2" 
+        onMouseEnter={() => setStage2Paused(true)}
+        onMouseLeave={() => setStage2Paused(false)}
+        className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
         {/* Invisible anchor target points for header dropdown links */}
         <div id="risk-adjustment" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
         <div id="quality-care-gaps" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
@@ -782,6 +847,24 @@ export default function PlatformPage() {
 
             {/* Stage Tabs & Slide Navigation */}
             <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={stage2Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
+              >
+                <Clock className="w-3 h-3 text-[#9333ea]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`p2-${stage2Tab}-${stage2Paused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: stage2Paused ? '0%' : '100%' }}
+                    transition={{ duration: stage2Paused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#9333ea] rounded-full"
+                  />
+                </div>
+                <span>15s</span>
+              </div>
+
               <div className="inline-flex items-center p-1.5 rounded-2xl bg-white border border-[#e5deee] gap-1 shadow-2xs">
                 {stage2Tabs.map((tab, idx) => (
                   <button
@@ -1068,7 +1151,12 @@ export default function PlatformPage() {
           - 08 / Referral Management & Directory (#referral-management)
           - 09 / Patient Engagement (#patient-engagement)
           ───────────────────────────────────────────────────────────── */}
-      <section id="stage-3" className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24 relative">
+      <section 
+        id="stage-3" 
+        onMouseEnter={() => setStage3Paused(true)}
+        onMouseLeave={() => setStage3Paused(false)}
+        className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
         {/* Invisible anchor target points for header dropdown links */}
         <div id="transitions-of-care" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
         <div id="referral-management" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
@@ -1090,6 +1178,24 @@ export default function PlatformPage() {
 
             {/* Stage Tabs & Slide Navigation */}
             <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={stage3Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
+              >
+                <Clock className="w-3 h-3 text-[#7b3fc7]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`p3-${stage3Tab}-${stage3Paused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: stage3Paused ? '0%' : '100%' }}
+                    transition={{ duration: stage3Paused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#7b3fc7] rounded-full"
+                  />
+                </div>
+                <span>15s</span>
+              </div>
+
               <div className="inline-flex items-center p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1 shadow-2xs">
                 {stage3Tabs.map((tab, idx) => (
                   <button
@@ -1395,7 +1501,12 @@ export default function PlatformPage() {
           - 10 / Telemedicine & Virtual Care (#telemedicine)
           - 11 / Analytics & Reporting (#analytics)
           ───────────────────────────────────────────────────────────── */}
-      <section id="stage-4" className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24 relative">
+      <section 
+        id="stage-4" 
+        onMouseEnter={() => setStage4Paused(true)}
+        onMouseLeave={() => setStage4Paused(false)}
+        className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
         {/* Invisible anchor target points for header dropdown links */}
         <div id="telemedicine" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
         <div id="analytics" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
@@ -1416,6 +1527,24 @@ export default function PlatformPage() {
 
             {/* Stage Tabs & Slide Navigation */}
             <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={stage4Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
+              >
+                <Clock className="w-3 h-3 text-[#ea580c]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`p4-${stage4Tab}-${stage4Paused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: stage4Paused ? '0%' : '100%' }}
+                    transition={{ duration: stage4Paused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#ea580c] rounded-full"
+                  />
+                </div>
+                <span>15s</span>
+              </div>
+
               <div className="inline-flex items-center p-1.5 rounded-2xl bg-white border border-[#e5deee] gap-1 shadow-2xs">
                 {stage4Tabs.map((tab, idx) => (
                   <button
