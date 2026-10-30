@@ -42,7 +42,19 @@ export default function SolutionsPage() {
     const timer = setInterval(() => {
       setActiveProofIdx((prev) => (prev + 1) % 4);
     }, 15000);
-    return () => clearInterval(timer);
+    // Stage 1 Tab metadata (ACO & Health Plans)
+  const solStage1Tabs = [
+    { id: 'aco-vbc', badge: '01 / ACO & Value-Based Care', title: 'ACO & Value-Based Care Organizations' },
+    { id: 'health-plans', badge: '02 / Health Plans & Payers', title: 'Health Plans & Risk-Bearing Payers' },
+  ];
+
+  // Stage 2 Tab metadata (CIN & Care Teams)
+  const solStage2Tabs = [
+    { id: 'cin-providers', badge: '03 / CIN & Provider Orgs', title: 'Clinically Integrated Networks & Providers' },
+    { id: 'care-teams', badge: '04 / Care Management Teams', title: 'Frontline Care Management Teams' },
+  ];
+
+  return () => clearInterval(timer);
   }, [proofPaused, activeProofIdx]);
 
   // Smooth hash scrolling for direct links and dropdown navigation
@@ -310,16 +322,32 @@ export default function SolutionsPage() {
           <div className="mt-10 pt-8 border-t border-[#e9e4f0] flex flex-wrap items-center justify-between gap-3 text-xs">
             <span className="font-mono font-bold uppercase tracking-wider text-[#716b89]">Explore Stakeholder Solutions:</span>
             <div className="flex flex-wrap items-center gap-2">
-              <a href="#aco-vbc" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#7b3fc7] hover:text-[#7b3fc7] transition-colors">
+              <a 
+                href="#aco-vbc" 
+                onClick={() => setSolStage1Tab(0)}
+                className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#7b3fc7] hover:text-[#7b3fc7] transition-colors"
+              >
                 01. ACO & Value-Based Care
               </a>
-              <a href="#health-plans" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#4f46e5] hover:text-[#4f46e5] transition-colors">
+              <a 
+                href="#health-plans" 
+                onClick={() => setSolStage1Tab(1)}
+                className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#4f46e5] hover:text-[#4f46e5] transition-colors"
+              >
                 02. Health Plans & Payers
               </a>
-              <a href="#cin-providers" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#9333ea] hover:text-[#9333ea] transition-colors">
+              <a 
+                href="#cin-providers" 
+                onClick={() => setSolStage2Tab(0)}
+                className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#9333ea] hover:text-[#9333ea] transition-colors"
+              >
                 03. CIN & Provider Orgs
               </a>
-              <a href="#care-teams" className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#ea580c] hover:text-[#ea580c] transition-colors">
+              <a 
+                href="#care-teams" 
+                onClick={() => setSolStage2Tab(1)}
+                className="px-3 py-1.5 rounded-full bg-white border border-[#e9e4f0] text-[#35304c] font-medium hover:border-[#ea580c] hover:text-[#ea580c] transition-colors"
+              >
                 04. Care Management Teams
               </a>
             </div>
@@ -328,370 +356,552 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 3: 01 / ACO & VALUE-BASED CARE (#aco-vbc)
+            {/* ─────────────────────────────────────────────────────────────
+          CAROUSEL STAGE 1: VALUE-BASED CONTRACTS & HEALTH PLANS
+          Contains Modules:
+          - 01 / ACO & Value-Based Care (#aco-vbc)
+          - 02 / Health Plans & Payers (#health-plans)
           ───────────────────────────────────────────────────────────── */}
-      <section id="aco-vbc" className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24">
+      <section 
+        id="sol-stage-1" 
+        onMouseEnter={() => setSolStage1Paused(true)}
+        onMouseLeave={() => setSolStage1Paused(false)}
+        className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
+        {/* Invisible anchor target points for header dropdown links */}
+        <div id="aco-vbc" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
+        <div id="health-plans" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            
-            {/* Header Column */}
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#7b3fc7]/10 text-[#7b3fc7] font-mono text-xs font-bold uppercase tracking-wider mb-3">
-                <TrendingUp className="w-3.5 h-3.5" />
-                <span>01 / ACO & VALUE-BASED CARE</span>
+          {/* Carousel Stage Header & Controller */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] font-mono text-xs font-bold uppercase tracking-wider mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-[#7b3fc7]" />
+                <span>SOLUTIONS STAGE 01 • VALUE-BASED CARE &amp; PAYERS</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Maximize shared savings and risk performance across <span className="text-[#7b3fc7]">value-based contracts.</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-[#1c1636]">
+                {solStage1Tabs[solStage1Tab].title}
               </h2>
-              <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                Accountable Care Organizations face the dual pressure of controlling total cost of care while achieving stringent quality scores. Guardian consolidates CMS CCLF and BCDA feeds with clinical EHR records to give ACO leadership complete visibility into attributed panels, baseline expenditure trends, and medical loss ratios.
-              </p>
-              
-              <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6">
-                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
-                  <DollarSign className="w-4 h-4 text-[#7b3fc7]" />
-                  <span>Contract Financial Analytics</span>
-                </h4>
-                <p className="text-xs text-[#524b6b] leading-relaxed">
-                  Monitors Per Member Per Month (PMPM) and Per Member Per Year (PMPY) expenditure trends against benchmark targets to track financial performance across risk-bearing arrangements.
-                </p>
-              </div>
+            </div>
 
-              <Link
-                to="/platform/population-health"
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#7b3fc7] hover:text-[#5b21b6] transition-colors group"
+            {/* Stage Tabs & Slide Navigation */}
+            <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={solStage1Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
               >
-                <span>Explore Population Health in Platform</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-            {/* 4 Capability Cards Grid */}
-            <div className="lg:col-span-7">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
-                    <Users className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">CCLF & BCDA Attribution Analytics</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Automated ingestion of CMS CCLF files and BCDA FHIR APIs for accurate beneficiary roster matching and primary care attribution across network practices.
-                  </p>
+                <Clock className="w-3 h-3 text-[#7b3fc7]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`sol1-${solStage1Tab}-${solStage1Paused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: solStage1Paused ? '0%' : '100%' }}
+                    transition={{ duration: solStage1Paused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#7b3fc7] rounded-full"
+                  />
                 </div>
+                <span>15s</span>
+              </div>
 
-                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
-                    <DollarSign className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">PMPM / PMPY Cost Tracking</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Continuous expenditure tracking across inpatient, outpatient, and pharmacy claims categories to identify cost drivers and shared savings opportunities.
-                  </p>
-                </div>
+              <div className="inline-flex items-center p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1 shadow-2xs">
+                {solStage1Tabs.map((tab, idx) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setSolStage1Tab(idx)}
+                    className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                      solStage1Tab === idx
+                        ? 'bg-[#7b3fc7] text-white shadow-xs'
+                        : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-white'
+                    }`}
+                  >
+                    {tab.badge}
+                  </button>
+                ))}
+              </div>
 
-                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
-                    <Target className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">MSSP Quality Measure Management</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Continuous monitoring of Medicare Shared Savings Program (MSSP) quality metrics, screening gaps, and point-of-care clinician alerts during encounters.
-                  </p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
-                    <Bell className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">High-Cost Utilization & ADT Alerts</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Real-time hospital admission, discharge, and transfer alerts paired with 30-day post-discharge transition tracking to curb preventable readmissions.
-                  </p>
-                </div>
-
+              {/* Prev / Next Chevrons */}
+              <div className="inline-flex items-center gap-1.5">
+                <button
+                  onClick={() => setSolStage1Tab((prev) => (prev > 0 ? prev - 1 : solStage1Tabs.length - 1))}
+                  aria-label="Previous solution"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                  {solStage1Tab + 1}/{solStage1Tabs.length}
+                </span>
+                <button
+                  onClick={() => setSolStage1Tab((prev) => (prev < solStage1Tabs.length - 1 ? prev + 1 : 0))}
+                  aria-label="Next solution"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
               </div>
             </div>
-
           </div>
+
+          {/* Carousel Slide Content */}
+          <AnimatePresence mode="wait">
+            {solStage1Tab === 0 && (
+              <motion.div
+                key="solStage1-0"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
+              >
+                {/* Header Column */}
+                <div className="lg:col-span-5">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#7b3fc7]/10 text-[#7b3fc7] font-mono text-xs font-bold uppercase tracking-wider mb-3">
+                    <TrendingUp className="w-3.5 h-3.5" />
+                    <span>01 / ACO & VALUE-BASED CARE</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                    Maximize shared savings and risk performance across <span className="text-[#7b3fc7]">value-based contracts.</span>
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                    Accountable Care Organizations face the dual pressure of controlling total cost of care while achieving stringent quality scores. Guardian consolidates CMS CCLF and BCDA feeds with clinical EHR records to give ACO leadership complete visibility into attributed panels, baseline expenditure trends, and medical loss ratios.
+                  </p>
+                  
+                  <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6">
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
+                      <DollarSign className="w-4 h-4 text-[#7b3fc7]" />
+                      <span>Contract Financial Analytics</span>
+                    </h4>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">
+                      Monitors Per Member Per Month (PMPM) and Per Member Per Year (PMPY) expenditure trends against benchmark targets to track financial performance across risk-bearing arrangements.
+                    </p>
+                  </div>
+
+                  <Link
+                    to="/platform/population-health"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-[#7b3fc7] hover:text-[#5b21b6] transition-colors group"
+                  >
+                    <span>Explore Population Health in Platform</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+
+                {/* 4 Capability Cards Grid */}
+                <div className="lg:col-span-7">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
+                        <Users className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">CCLF & BCDA Attribution Analytics</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Automated ingestion of CMS CCLF files and BCDA FHIR APIs for accurate beneficiary roster matching and primary care attribution across network practices.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
+                        <DollarSign className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">PMPM / PMPY Cost Tracking</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Continuous expenditure tracking across inpatient, outpatient, and pharmacy claims categories to identify cost drivers and shared savings opportunities.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
+                        <Target className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">MSSP Quality Measure Management</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Continuous monitoring of Medicare Shared Savings Program (MSSP) quality metrics, screening gaps, and point-of-care clinician alerts during encounters.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#7b3fc7]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#7b3fc7] flex items-center justify-center mb-3 shadow-2xs">
+                        <Bell className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">High-Cost Utilization & ADT Alerts</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Real-time hospital admission, discharge, and transfer alerts paired with 30-day post-discharge transition tracking to curb preventable readmissions.
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {solStage1Tab === 1 && (
+              <motion.div
+                key="solStage1-1"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
+              >
+                {/* Header Column */}
+                <div className="lg:col-span-5">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#4f46e5]/10 text-[#4f46e5] font-mono text-xs font-bold uppercase tracking-wider mb-3">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>02 / HEALTH PLANS & PAYERS</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                    Drive HEDIS Star ratings and compliant risk adjustment <span className="text-[#4f46e5]">at scale.</span>
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                    Medicare Advantage and commercial health plans must coordinate quality closure with accurate, audit-ready clinical documentation. Guardian links plan claims feeds with clinical EHR notes to automate care gap surveillance, monitor Star Ratings, and support compliant CMS-HCC risk adjustment under V24 and V28 models.
+                  </p>
+                  
+                  <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6 shadow-2xs">
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
+                      <Award className="w-4 h-4 text-[#4f46e5]" />
+                      <span>Dual-Engine Suspecting & Quality</span>
+                    </h4>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">
+                      Evaluates historical encounter records and clinical narrative notes across CMS-HCC V24 & V28 models, surfacing prospective recapture opportunities with verbatim source citations.
+                    </p>
+                  </div>
+
+                  <Link
+                    to="/platform/risk-adjustment"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-[#4f46e5] hover:text-[#3730a3] transition-colors group"
+                  >
+                    <span>Explore Risk Adjustment in Platform</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+
+                {/* 4 Capability Cards Grid */}
+                <div className="lg:col-span-7">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
+                        <Award className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">CMS Star Ratings & HEDIS Surveillance</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Year-round tracking of NCQA HEDIS quality measures and projected CMS Star Ratings performance across Medicare Advantage and commercial plan books.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
+                        <ShieldCheck className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Dual-Engine CMS-HCC V24 & V28 Models</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Calculates prospective RAF scores concurrently under legacy V24 and current V28 models, identifying documentation gaps with sentence-level citations.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
+                        <BarChart3 className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Provider Network Scorecards</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Shares objective quality performance scorecards, open care gap rosters, and documentation accuracy indicators with contracted provider networks.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
+                        <Database className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Claims & Clinical Data Integration</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Ingests 837 claims, 835 remittances, pharmacy encounter files, and multi-EHR clinical feeds into a unified member database with Master Patient Indexing.
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 4: 02 / HEALTH PLANS & PAYERS (#health-plans)
+          CAROUSEL STAGE 2: CLINICALLY INTEGRATED NETWORKS & CARE TEAMS
+          Contains Modules:
+          - 03 / CIN & Provider Organizations (#cin-providers)
+          - 04 / Care Management Teams (#care-teams)
           ───────────────────────────────────────────────────────────── */}
-      <section id="health-plans" className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
+      <section 
+        id="sol-stage-2" 
+        onMouseEnter={() => setSolStage2Paused(true)}
+        onMouseLeave={() => setSolStage2Paused(false)}
+        className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24 relative"
+      >
+        {/* Invisible anchor target points for header dropdown links */}
+        <div id="cin-providers" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
+        <div id="care-teams" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            
-            {/* Header Column */}
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#4f46e5]/10 text-[#4f46e5] font-mono text-xs font-bold uppercase tracking-wider mb-3">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>02 / HEALTH PLANS & PAYERS</span>
+          {/* Carousel Stage Header & Controller */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9333ea]/10 text-[#9333ea] font-mono text-xs font-bold uppercase tracking-wider mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-[#9333ea]" />
+                <span>SOLUTIONS STAGE 02 • PROVIDER NETWORKS &amp; CARE TEAMS</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Drive HEDIS Star ratings and compliant risk adjustment <span className="text-[#4f46e5]">at scale.</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-[#1c1636]">
+                {solStage2Tabs[solStage2Tab].title}
               </h2>
-              <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                Medicare Advantage and commercial health plans must coordinate quality closure with accurate, audit-ready clinical documentation. Guardian links plan claims feeds with clinical EHR notes to automate care gap surveillance, monitor Star Ratings, and support compliant CMS-HCC risk adjustment under V24 and V28 models.
-              </p>
-              
-              <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] mb-6 shadow-2xs">
-                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
-                  <Award className="w-4 h-4 text-[#4f46e5]" />
-                  <span>Dual-Engine Suspecting & Quality</span>
-                </h4>
-                <p className="text-xs text-[#524b6b] leading-relaxed">
-                  Evaluates historical encounter records and clinical narrative notes across CMS-HCC V24 & V28 models, surfacing prospective recapture opportunities with verbatim source citations.
-                </p>
-              </div>
+            </div>
 
-              <Link
-                to="/platform/risk-adjustment"
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#4f46e5] hover:text-[#3730a3] transition-colors group"
+            {/* Stage Tabs & Slide Navigation */}
+            <div className="flex items-center gap-3 flex-wrap">
+              {/* 15-second Auto-Change Visual Indicator */}
+              <div 
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                title={solStage2Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
               >
-                <span>Explore Risk Adjustment in Platform</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-            {/* 4 Capability Cards Grid */}
-            <div className="lg:col-span-7">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
-                    <Award className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">CMS Star Ratings & HEDIS Surveillance</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Year-round tracking of NCQA HEDIS quality measures and projected CMS Star Ratings performance across Medicare Advantage and commercial plan books.
-                  </p>
+                <Clock className="w-3 h-3 text-[#9333ea]" />
+                <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
+                  <motion.div
+                    key={`sol2-${solStage2Tab}-${solStage2Paused}`}
+                    initial={{ width: '0%' }}
+                    animate={{ width: solStage2Paused ? '0%' : '100%' }}
+                    transition={{ duration: solStage2Paused ? 0 : 15, ease: 'linear' }}
+                    className="h-full bg-[#9333ea] rounded-full"
+                  />
                 </div>
+                <span>15s</span>
+              </div>
 
-                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
-                    <ShieldCheck className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Dual-Engine CMS-HCC V24 & V28 Models</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Calculates prospective RAF scores concurrently under legacy V24 and current V28 models, identifying documentation gaps with sentence-level citations.
-                  </p>
-                </div>
+              <div className="inline-flex items-center p-1.5 rounded-2xl bg-white border border-[#e5deee] gap-1 shadow-2xs">
+                {solStage2Tabs.map((tab, idx) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setSolStage2Tab(idx)}
+                    className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                      solStage2Tab === idx
+                        ? 'bg-[#9333ea] text-white shadow-xs'
+                        : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-[#faf8fd]'
+                    }`}
+                  >
+                    {tab.badge}
+                  </button>
+                ))}
+              </div>
 
-                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
-                    <BarChart3 className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Provider Network Scorecards</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Shares objective quality performance scorecards, open care gap rosters, and documentation accuracy indicators with contracted provider networks.
-                  </p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#4f46e5]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#4f46e5] flex items-center justify-center mb-3 shadow-2xs">
-                    <Database className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Claims & Clinical Data Integration</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Ingests 837 claims, 835 remittances, pharmacy encounter files, and multi-EHR clinical feeds into a unified member database with Master Patient Indexing.
-                  </p>
-                </div>
-
+              {/* Prev / Next Chevrons */}
+              <div className="inline-flex items-center gap-1.5">
+                <button
+                  onClick={() => setSolStage2Tab((prev) => (prev > 0 ? prev - 1 : solStage2Tabs.length - 1))}
+                  aria-label="Previous solution"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#9333ea] text-[#524b6b] hover:text-[#9333ea] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                  {solStage2Tab + 1}/{solStage2Tabs.length}
+                </span>
+                <button
+                  onClick={() => setSolStage2Tab((prev) => (prev < solStage2Tabs.length - 1 ? prev + 1 : 0))}
+                  aria-label="Next solution"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#9333ea] text-[#524b6b] hover:text-[#9333ea] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
               </div>
             </div>
-
           </div>
 
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 5: 03 / CIN & PROVIDER ORGANIZATIONS (#cin-providers)
-          ───────────────────────────────────────────────────────────── */}
-      <section id="cin-providers" className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            
-            {/* Header Column */}
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#9333ea]/10 text-[#9333ea] font-mono text-xs font-bold uppercase tracking-wider mb-3">
-                <Building2 className="w-3.5 h-3.5" />
-                <span>03 / CLINICALLY INTEGRATED NETWORKS</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Enable clinical integration, specialist alignment, and <span className="text-[#9333ea]">network retention.</span>
-              </h2>
-              <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                Clinically Integrated Networks (CINs) bring independent and employed medical groups together to negotiate risk contracts and coordinate patient care. Guardian links heterogeneous EMR systems across participant sites, providing a unified Patient Master Chart and closed-loop specialist referral routing.
-              </p>
-              
-              <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6">
-                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
-                  <Share2 className="w-4 h-4 text-[#9333ea]" />
-                  <span>Closed-Loop Referral Coordination</span>
-                </h4>
-                <p className="text-xs text-[#524b6b] leading-relaxed">
-                  Enables primary care providers to locate in-network specialists by specialty and zip code, dispatch Direct Secure Messaging (DSM) referrals, and automatically file consult notes back to the chart.
-                </p>
-              </div>
-
-              <Link
-                to="/platform/referral-management"
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#9333ea] hover:text-[#6b21a8] transition-colors group"
+          {/* Carousel Slide Content */}
+          <AnimatePresence mode="wait">
+            {solStage2Tab === 0 && (
+              <motion.div
+                key="solStage2-0"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
               >
-                <span>Explore Referral Management in Platform</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-            {/* 4 Capability Cards Grid */}
-            <div className="lg:col-span-7">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
-                    <Database className="w-4 h-4" />
+                {/* Header Column */}
+                <div className="lg:col-span-5">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#9333ea]/10 text-[#9333ea] font-mono text-xs font-bold uppercase tracking-wider mb-3">
+                    <Building2 className="w-3.5 h-3.5" />
+                    <span>03 / CLINICALLY INTEGRATED NETWORKS</span>
                   </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Multi-Practice EMR Connectivity</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Connects disparate ambulatory EMRs (Epic, Athena, eCW, NextGen) into a single network infrastructure while maintaining tenant isolation between practice sites.
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                    Enable clinical integration, specialist alignment, and <span className="text-[#9333ea]">network retention.</span>
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                    Clinically Integrated Networks (CINs) bring independent and employed medical groups together to negotiate risk contracts and coordinate patient care. Guardian links heterogeneous EMR systems across participant sites, providing a unified Patient Master Chart and closed-loop specialist referral routing.
                   </p>
+                  
+                  <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] mb-6 shadow-2xs">
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
+                      <Share2 className="w-4 h-4 text-[#9333ea]" />
+                      <span>Closed-Loop Referral Coordination</span>
+                    </h4>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">
+                      Enables primary care providers to locate in-network specialists by specialty and zip code, dispatch Direct Secure Messaging (DSM) referrals, and automatically file consult notes back to the chart.
+                    </p>
+                  </div>
+
+                  <Link
+                    to="/platform/referral-management"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-[#9333ea] hover:text-[#6b21a8] transition-colors group"
+                  >
+                    <span>Explore Referral Management in Platform</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
-                    <MapPin className="w-4 h-4" />
+                {/* 4 Capability Cards Grid */}
+                <div className="lg:col-span-7">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
+                        <Database className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Multi-Practice EMR Connectivity</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Connects disparate ambulatory EMRs (Epic, Athena, eCW, NextGen) into a single network infrastructure while maintaining tenant isolation between practice sites.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
+                        <MapPin className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Specialist Geo-Mapping Directory</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Interactive provider geo-mapping and taxonomy search enabling PCPs to locate in-network specialists filtered by clinical subspecialty, accepted insurances, and distance.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
+                        <Share2 className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Direct Secure Messaging (DSM)</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Automated electronic referral creation via native Direct Secure Messaging addresses, attaching clinical summaries, progress notes, and lab PDFs.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
+                        <FileCheck className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Closed-Loop Consult Tracking</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Real-time status tracking from order creation through specialist appointment completion, automatically filing consultation notes in Patient 360 to close loops.
+                      </p>
+                    </div>
+
                   </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Specialist Geo-Mapping Directory</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Interactive provider geo-mapping and taxonomy search enabling PCPs to locate in-network specialists filtered by clinical subspecialty, accepted insurances, and distance.
-                  </p>
                 </div>
+              </motion.div>
+            )}
 
-                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
-                    <Share2 className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Direct Secure Messaging (DSM)</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Automated electronic referral creation via native Direct Secure Messaging addresses, attaching clinical summaries, progress notes, and lab PDFs.
-                  </p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-[#faf8fd] border border-[#e9e4f0] hover:border-[#9333ea]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-white border border-[#e9e4f0] text-[#9333ea] flex items-center justify-center mb-3 shadow-2xs">
-                    <FileCheck className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Closed-Loop Consult Tracking</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Real-time status tracking from order creation through specialist appointment completion, automatically filing consultation notes in Patient 360 to close loops.
-                  </p>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 6: 04 / CARE MANAGEMENT TEAMS (#care-teams)
-          ───────────────────────────────────────────────────────────── */}
-      <section id="care-teams" className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            
-            {/* Header Column */}
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#ea580c]/10 text-[#ea580c] font-mono text-xs font-bold uppercase tracking-wider mb-3">
-                <HeartPulse className="w-3.5 h-3.5" />
-                <span>04 / CARE MANAGEMENT TEAMS</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
-                Supercharge care team productivity, patient engagement, and <span className="text-[#ea580c]">outreach.</span>
-              </h2>
-              <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
-                Care managers and clinical navigators are the heartbeat of value-based healthcare delivery. Guardian eliminates manual spreadsheet tracking by centralizing real-time ADT event queues, validated assessment scales, and individualized care plans into a single interdisciplinary workspace.
-              </p>
-              
-              <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] mb-6 shadow-2xs">
-                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
-                  <Workflow className="w-4 h-4 text-[#ea580c]" />
-                  <span>Program Protocol Automation</span>
-                </h4>
-                <p className="text-xs text-[#524b6b] leading-relaxed">
-                  Automated enrollment qualification and intervention scheduling supporting Chronic Care Management (CCM), Transitional Care Management (TCM), and Remote Patient Monitoring (RPM).
-                </p>
-              </div>
-
-              <Link
-                to="/platform/care-management"
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#ea580c] hover:text-[#9a3412] transition-colors group"
+            {solStage2Tab === 1 && (
+              <motion.div
+                key="solStage2-1"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
               >
-                <span>Explore Care Management in Platform</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-            {/* 4 Capability Cards Grid */}
-            <div className="lg:col-span-7">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
-                    <Bell className="w-4 h-4" />
+                {/* Header Column */}
+                <div className="lg:col-span-5">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#ea580c]/10 text-[#ea580c] font-mono text-xs font-bold uppercase tracking-wider mb-3">
+                    <HeartPulse className="w-3.5 h-3.5" />
+                    <span>04 / CARE MANAGEMENT TEAMS</span>
                   </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Real-Time ADT Queue Prioritization</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Emergency and inpatient ADT alerts route unassigned attributed patients directly into clinical queues, prioritized dynamically by clinical risk tier.
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1636] tracking-tight mb-4 leading-tight">
+                    Supercharge care team productivity, patient engagement, and <span className="text-[#ea580c]">outreach.</span>
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
+                    Care managers and clinical navigators are the heartbeat of value-based healthcare delivery. Guardian eliminates manual spreadsheet tracking by centralizing real-time ADT event queues, validated assessment scales, and individualized care plans into a single interdisciplinary workspace.
                   </p>
+                  
+                  <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] mb-6 shadow-2xs">
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-2 flex items-center gap-2">
+                      <Workflow className="w-4 h-4 text-[#ea580c]" />
+                      <span>Program Protocol Automation</span>
+                    </h4>
+                    <p className="text-xs text-[#524b6b] leading-relaxed">
+                      Automated enrollment qualification and intervention scheduling supporting Chronic Care Management (CCM), Transitional Care Management (TCM), and Remote Patient Monitoring (RPM).
+                    </p>
+                  </div>
+
+                  <Link
+                    to="/platform/care-management"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-[#ea580c] hover:text-[#9a3412] transition-colors group"
+                  >
+                    <span>Explore Care Management in Platform</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
-                    <Award className="w-4 h-4" />
+                {/* 4 Capability Cards Grid */}
+                <div className="lg:col-span-7">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
+                        <Bell className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Real-Time ADT Queue Prioritization</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Emergency and inpatient ADT alerts route unassigned attributed patients directly into clinical queues, prioritized dynamically by clinical risk tier.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
+                        <Award className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">150+ Standardized Assessment Scales</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Extensive library of validated clinical, behavioral, and SDoH scales (e.g. PHQ-9, GAD-7, PRAPARE, Katz ADL) with automated longitudinal scoring.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
+                        <FileText className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Personal Care Plan Builder</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Interactive care plan construction supporting patient-centered measurable goals, barrier identification, intervention schedules, and progress tracking.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
+                      <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
+                        <Users className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Interdisciplinary Care Workspaces</h3>
+                      <p className="text-xs text-[#524b6b] leading-relaxed">
+                        Shared workspaces connecting nurses, care coordinators, and account managers with role-based task delegation and multi-channel patient outreach logging.
+                      </p>
+                    </div>
+
                   </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">150+ Standardized Assessment Scales</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Extensive library of validated clinical, behavioral, and SDoH scales (e.g. PHQ-9, GAD-7, PRAPARE, Katz ADL) with automated longitudinal scoring.
-                  </p>
                 </div>
-
-                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
-                    <FileText className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Personal Care Plan Builder</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Interactive care plan construction supporting patient-centered measurable goals, barrier identification, intervention schedules, and progress tracking.
-                  </p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-white border border-[#e9e4f0] hover:border-[#ea580c]/40 hover:shadow-md transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] text-[#ea580c] flex items-center justify-center mb-3 shadow-2xs">
-                    <Users className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-[#1c1636] mb-1.5">Interdisciplinary Care Workspaces</h3>
-                  <p className="text-xs text-[#524b6b] leading-relaxed">
-                    Shared workspaces connecting nurses, care coordinators, and account managers with role-based task delegation and multi-channel patient outreach logging.
-                  </p>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </div>
       </section>
