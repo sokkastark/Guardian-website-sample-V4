@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  Layers, 
-  Database, 
-  Sparkles, 
-  UserCheck, 
-  Workflow, 
-  TrendingUp, 
-  ArrowRight, 
-  Network, 
-  Activity, 
-  CheckCircle2, 
-  Users, 
-  FileText, 
-  HeartPulse, 
-  BarChart3, 
-  Target, 
-  Zap, 
-  Share2, 
-  FileCheck, 
-  Bell, 
-  Video, 
-  Award, 
-  Clock, 
-  MapPin, 
+import {
+  Layers,
+  Database,
+  Sparkles,
+  UserCheck,
+  Workflow,
+  TrendingUp,
+  ArrowRight,
+  Network,
+  Activity,
+  CheckCircle2,
+  Users,
+  FileText,
+  HeartPulse,
+  BarChart3,
+  Target,
+  Zap,
+  Share2,
+  FileCheck,
+  Bell,
+  Video,
+  Award,
+  Clock,
+  MapPin,
   DollarSign,
   ChevronLeft,
   ChevronRight
@@ -80,7 +80,7 @@ export default function PlatformPage() {
   useEffect(() => {
     if (location.hash) {
       const rawHash = location.hash.replace('#', '');
-      
+
       const hashToStageTabMap = {
         // Stage 1: Data & Patient Intelligence (Sections 1, 2, 3)
         'population-health': { stage: 'stage-1', tab: 0, setTab: setStage1Tab },
@@ -278,17 +278,17 @@ export default function PlatformPage() {
           SECTION 1: HERO (PANORAMIC COMMAND CENTER HERO)
           ───────────────────────────────────────────────────────────── */}
       <section className="relative w-full pt-32 sm:pt-40 pb-16 sm:pb-24 bg-[#0d1527] text-white overflow-hidden border-b border-[#1c1636]">
-        
+
         {/* Full-Bleed Background Image */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <img 
-            src="/images/platform-hero-banner.jpg" 
-            alt="Guardian Health Platform Command & Intelligence Center" 
+          <img
+            src="/images/platform-hero-banner.jpg"
+            alt="Guardian Health Platform Command & Intelligence Center"
             className="w-full h-full object-cover object-center filter brightness-90 contrast-105"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0d1527]/98 via-[#0d1527]/85 to-[#0d1527]/55" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0d1527]/90 via-transparent to-[#0d1527]" />
-          
+
           {/* Ambient Lighting Accents */}
           <div className="absolute top-1/4 right-1/4 w-[600px] h-[450px] bg-[#7b3fc7]/25 blur-[160px] rounded-full" />
           <div className="absolute bottom-10 left-10 w-[500px] h-[350px] bg-[#4f46e5]/20 blur-[140px] rounded-full" />
@@ -297,9 +297,9 @@ export default function PlatformPage() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
+
             {/* Left Narrative */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -337,7 +337,7 @@ export default function PlatformPage() {
             </motion.div>
 
             {/* Right Compact Floating Live Dashboard Visual */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
@@ -359,9 +359,9 @@ export default function PlatformPage() {
                   </div>
 
                   <div className="relative rounded-md overflow-hidden bg-white border border-[#e9e4f0] shadow-md">
-                    <img 
-                      src="/images/appliction images/Main Platform Dashboard.png" 
-                      alt="Guardian Population Health Platform Dashboard" 
+                    <img
+                      src="/images/appliction images/Main Platform Dashboard.png"
+                      alt="Guardian Population Health Platform Dashboard"
                       className="w-full h-auto object-contain filter brightness-[1.04] contrast-[1.02]"
                     />
                   </div>
@@ -389,7 +389,7 @@ export default function PlatformPage() {
           ───────────────────────────────────────────────────────────── */}
       <section id="pillars" className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24">
         <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="max-w-3xl mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] text-xs font-semibold tracking-wider uppercase mb-3 border border-[#7b3fc7]/20 shadow-2xs">
               <Layers className="w-3.5 h-3.5 text-[#ff7a57]" />
@@ -476,8 +476,8 @@ export default function PlatformPage() {
           - 02 / Patient 360 & Patient Master Chart (#patient-360)
           - 03 / Risk Stratification (#risk-stratification)
           ───────────────────────────────────────────────────────────── */}
-      <section 
-        id="stage-1" 
+      <section
+        id="stage-1"
         onMouseEnter={() => setStage1Paused(true)}
         onMouseLeave={() => setStage1Paused(false)}
         className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24 relative"
@@ -488,9 +488,9 @@ export default function PlatformPage() {
         <div id="risk-stratification" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Carousel Stage Header & Controller */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] font-mono text-xs font-bold uppercase tracking-wider mb-2">
                 <Sparkles className="w-3.5 h-3.5 text-[#7b3fc7]" />
@@ -502,13 +502,13 @@ export default function PlatformPage() {
             </div>
 
             {/* Stage Tabs & Slide Navigation */}
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2 sm:gap-3 flex-nowrap shrink-0 overflow-x-auto scrollbar-none max-w-full py-1">
               {/* 15-second Auto-Change Visual Indicator */}
-              <div 
-                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+              <div
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89] shrink-0 whitespace-nowrap"
                 title={stage1Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
               >
-                <Clock className="w-3 h-3 text-[#7b3fc7]" />
+                <Clock className="w-3.5 h-3.5 text-[#7b3fc7]" />
                 <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
                   <motion.div
                     key={`p1-${stage1Tab}-${stage1Paused}`}
@@ -521,16 +521,15 @@ export default function PlatformPage() {
                 <span>15s</span>
               </div>
 
-              <div className="inline-flex items-center p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1 shadow-2xs">
+              <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1 shadow-2xs shrink-0 whitespace-nowrap">
                 {stage1Tabs.map((tab, idx) => (
                   <button
                     key={tab.id}
                     onClick={() => setStage1Tab(idx)}
-                    className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
-                      stage1Tab === idx
+                    className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap ${stage1Tab === idx
                         ? 'bg-[#7b3fc7] text-white shadow-xs'
                         : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-white'
-                    }`}
+                      }`}
                   >
                     {tab.badge}
                   </button>
@@ -538,21 +537,21 @@ export default function PlatformPage() {
               </div>
 
               {/* Prev / Next Chevrons */}
-              <div className="inline-flex items-center gap-1.5">
+              <div className="inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
                 <button
                   onClick={() => setStage1Tab((prev) => (prev > 0 ? prev - 1 : stage1Tabs.length - 1))}
                   aria-label="Previous capability"
-                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
-                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1 shrink-0">
                   {stage1Tab + 1}/{stage1Tabs.length}
                 </span>
                 <button
                   onClick={() => setStage1Tab((prev) => (prev < stage1Tabs.length - 1 ? prev + 1 : 0))}
                   aria-label="Next capability"
-                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -582,7 +581,7 @@ export default function PlatformPage() {
                   <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
                     Guardian harmonizes cross-payer claims feeds, multi-EHR clinical encounters, and lab results into unified population registries. Clinical teams can segment panels by chronic disease state, risk trajectory, or utilization frequency to launch targeted interventions.
                   </p>
-                  
+
                   <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6">
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-1.5 flex items-center gap-2">
                       <Activity className="w-4 h-4 text-[#7b3fc7]" />
@@ -690,7 +689,7 @@ export default function PlatformPage() {
                           <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
                           <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block" />
                           <span className="w-2.5 h-2.5 rounded-full bg-green-500/80 inline-block" />
-                          <span className="text-[11px] text-purple-200 font-mono ml-2">patient360.itsguardian.com</span>
+                          <span className="text-[11px] text-purple-200 font-mono ml-2">www.itsguardian.com</span>
                         </div>
                         <span className="text-[10px] px-2.5 py-0.5 rounded bg-[#7b3fc7] text-white font-mono font-bold">
                           Active: {activePmcDomain}
@@ -698,9 +697,9 @@ export default function PlatformPage() {
                       </div>
 
                       <div className="relative rounded-lg overflow-hidden bg-white border border-[#e9e4f0]">
-                        <img 
-                          src="/images/appliction images/ui-patient-360.png" 
-                          alt="Guardian Patient Master Chart 360° View" 
+                        <img
+                          src="/images/appliction images/ui-patient-360.png"
+                          alt="Guardian Patient Master Chart 360° View"
                           className="w-full h-auto object-contain max-h-[440px] block"
                         />
                       </div>
@@ -711,11 +710,10 @@ export default function PlatformPage() {
                           <button
                             key={dom.name}
                             onClick={() => setActivePmcDomain(dom.name)}
-                            className={`p-1.5 rounded transition-all cursor-pointer ${
-                              activePmcDomain === dom.name
+                            className={`p-1.5 rounded transition-all cursor-pointer ${activePmcDomain === dom.name
                                 ? 'bg-[#7b3fc7] text-white font-bold border border-[#9565d2]'
                                 : 'bg-white/5 border border-white/10 text-purple-200 hover:bg-white/10'
-                            }`}
+                              }`}
                           >
                             {dom.name}
                           </button>
@@ -751,7 +749,7 @@ export default function PlatformPage() {
                   <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
                     Guardian’s risk stratification models evaluate historical claims trends, inpatient and ER admission notifications, and longitudinal clinical markers to segment attributed panels into High Risk, Rising Risk, Moderate Risk, and Low Risk tiers.
                   </p>
-                  
+
                   <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6">
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-1.5 flex items-center gap-2">
                       <TrendingUp className="w-4 h-4 text-[#4f46e5]" />
@@ -820,8 +818,8 @@ export default function PlatformPage() {
           - 05 / Quality & Care Gaps (#quality-care-gaps)
           - 06 / Care Management (#care-management)
           ───────────────────────────────────────────────────────────── */}
-      <section 
-        id="stage-2" 
+      <section
+        id="stage-2"
         onMouseEnter={() => setStage2Paused(true)}
         onMouseLeave={() => setStage2Paused(false)}
         className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24 relative"
@@ -832,9 +830,9 @@ export default function PlatformPage() {
         <div id="care-management" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Carousel Stage Header & Controller */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9333ea]/10 text-[#9333ea] font-mono text-xs font-bold uppercase tracking-wider mb-2">
                 <Award className="w-3.5 h-3.5 text-[#9333ea]" />
@@ -846,13 +844,13 @@ export default function PlatformPage() {
             </div>
 
             {/* Stage Tabs & Slide Navigation */}
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2 sm:gap-3 flex-nowrap shrink-0 overflow-x-auto scrollbar-none max-w-full py-1">
               {/* 15-second Auto-Change Visual Indicator */}
-              <div 
-                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+              <div
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89] shrink-0 whitespace-nowrap"
                 title={stage2Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
               >
-                <Clock className="w-3 h-3 text-[#9333ea]" />
+                <Clock className="w-3.5 h-3.5 text-[#9333ea]" />
                 <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
                   <motion.div
                     key={`p2-${stage2Tab}-${stage2Paused}`}
@@ -865,16 +863,15 @@ export default function PlatformPage() {
                 <span>15s</span>
               </div>
 
-              <div className="inline-flex items-center p-1.5 rounded-2xl bg-white border border-[#e5deee] gap-1 shadow-2xs">
+              <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-white border border-[#e5deee] gap-1 shadow-2xs shrink-0 whitespace-nowrap">
                 {stage2Tabs.map((tab, idx) => (
                   <button
                     key={tab.id}
                     onClick={() => setStage2Tab(idx)}
-                    className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
-                      stage2Tab === idx
+                    className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap ${stage2Tab === idx
                         ? 'bg-[#9333ea] text-white shadow-xs'
                         : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-[#faf8fd]'
-                    }`}
+                      }`}
                   >
                     {tab.badge}
                   </button>
@@ -882,21 +879,21 @@ export default function PlatformPage() {
               </div>
 
               {/* Prev / Next Chevrons */}
-              <div className="inline-flex items-center gap-1.5">
+              <div className="inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
                 <button
                   onClick={() => setStage2Tab((prev) => (prev > 0 ? prev - 1 : stage2Tabs.length - 1))}
                   aria-label="Previous capability"
-                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#9333ea] text-[#524b6b] hover:text-[#9333ea] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#9333ea] text-[#524b6b] hover:text-[#9333ea] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
-                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1 shrink-0">
                   {stage2Tab + 1}/{stage2Tabs.length}
                 </span>
                 <button
                   onClick={() => setStage2Tab((prev) => (prev < stage2Tabs.length - 1 ? prev + 1 : 0))}
                   aria-label="Next capability"
-                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#9333ea] text-[#524b6b] hover:text-[#9333ea] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#9333ea] text-[#524b6b] hover:text-[#9333ea] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -926,7 +923,7 @@ export default function PlatformPage() {
                   <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
                     Medicare Advantage plans and risk-bearing provider organizations must maintain accurate, audit-ready clinical documentation. Guardian evaluates unstructured progress notes, discharge summaries, and lab reports across concurrent CMS-HCC V24 and V28 models.
                   </p>
-                  
+
                   <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] mb-6 shadow-2xs">
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-1.5 flex items-center gap-2">
                       <FileText className="w-4 h-4 text-[#9333ea]" />
@@ -1004,7 +1001,7 @@ export default function PlatformPage() {
                   <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
                     Closing clinical quality gaps requires continuous surveillance rather than end-of-year manual chart chasing. Guardian monitors NCQA HEDIS, CMS MIPS, and MSSP quality measures year-round, delivering point-of-care alerts to clinicians during scheduled encounters.
                   </p>
-                  
+
                   <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] mb-6 shadow-2xs">
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-1.5 flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-[#ea580c]" />
@@ -1082,7 +1079,7 @@ export default function PlatformPage() {
                   <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
                     Frontline care teams need dedicated tools that coordinate interventions across disciplines. Guardian combines an extensive library of 150+ validated clinical assessment scales, an individualized care plan builder, and protocol automation for Medicare clinical programs.
                   </p>
-                  
+
                   <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] mb-6 shadow-2xs">
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-1.5 flex items-center gap-2">
                       <Workflow className="w-4 h-4 text-[#ea580c]" />
@@ -1151,8 +1148,8 @@ export default function PlatformPage() {
           - 08 / Referral Management & Directory (#referral-management)
           - 09 / Patient Engagement (#patient-engagement)
           ───────────────────────────────────────────────────────────── */}
-      <section 
-        id="stage-3" 
+      <section
+        id="stage-3"
         onMouseEnter={() => setStage3Paused(true)}
         onMouseLeave={() => setStage3Paused(false)}
         className="py-16 sm:py-24 bg-white border-b border-[#e9e4f0] scroll-mt-24 relative"
@@ -1163,9 +1160,9 @@ export default function PlatformPage() {
         <div id="patient-engagement" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Carousel Stage Header & Controller */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] font-mono text-xs font-bold uppercase tracking-wider mb-2">
                 <Network className="w-3.5 h-3.5 text-[#7b3fc7]" />
@@ -1177,13 +1174,13 @@ export default function PlatformPage() {
             </div>
 
             {/* Stage Tabs & Slide Navigation */}
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2 sm:gap-3 flex-nowrap shrink-0 overflow-x-auto scrollbar-none max-w-full py-1">
               {/* 15-second Auto-Change Visual Indicator */}
-              <div 
-                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+              <div
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89] shrink-0 whitespace-nowrap"
                 title={stage3Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
               >
-                <Clock className="w-3 h-3 text-[#7b3fc7]" />
+                <Clock className="w-3.5 h-3.5 text-[#7b3fc7]" />
                 <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
                   <motion.div
                     key={`p3-${stage3Tab}-${stage3Paused}`}
@@ -1196,16 +1193,15 @@ export default function PlatformPage() {
                 <span>15s</span>
               </div>
 
-              <div className="inline-flex items-center p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1 shadow-2xs">
+              <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1 shadow-2xs shrink-0 whitespace-nowrap">
                 {stage3Tabs.map((tab, idx) => (
                   <button
                     key={tab.id}
                     onClick={() => setStage3Tab(idx)}
-                    className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
-                      stage3Tab === idx
+                    className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap ${stage3Tab === idx
                         ? 'bg-[#7b3fc7] text-white shadow-xs'
                         : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-white'
-                    }`}
+                      }`}
                   >
                     {tab.badge}
                   </button>
@@ -1213,21 +1209,21 @@ export default function PlatformPage() {
               </div>
 
               {/* Prev / Next Chevrons */}
-              <div className="inline-flex items-center gap-1.5">
+              <div className="inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
                 <button
                   onClick={() => setStage3Tab((prev) => (prev > 0 ? prev - 1 : stage3Tabs.length - 1))}
                   aria-label="Previous capability"
-                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
-                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1 shrink-0">
                   {stage3Tab + 1}/{stage3Tabs.length}
                 </span>
                 <button
                   onClick={() => setStage3Tab((prev) => (prev < stage3Tabs.length - 1 ? prev + 1 : 0))}
                   aria-label="Next capability"
-                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -1257,7 +1253,7 @@ export default function PlatformPage() {
                   <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
                     Post-discharge care transitions represent the highest-risk window for clinical decompensation and costly hospital readmissions. Guardian captures emergency department and inpatient admission, discharge, and transfer (ADT) event notifications in real time.
                   </p>
-                  
+
                   <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6">
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-1.5 flex items-center gap-2">
                       <Clock className="w-4 h-4 text-[#7b3fc7]" />
@@ -1335,7 +1331,7 @@ export default function PlatformPage() {
                   <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
                     Out-of-network specialist referrals drive up contract costs and fracture clinical continuity. Guardian enables primary care clinicians to locate in-network specialists by clinical specialty and zip code, dispatch Direct Secure Messaging (DSM) orders, and close referral loops.
                   </p>
-                  
+
                   <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6">
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-1.5 flex items-center gap-2">
                       <MapPin className="w-4 h-4 text-[#4f46e5]" />
@@ -1413,7 +1409,7 @@ export default function PlatformPage() {
                   <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
                     Value-based healthcare success relies on sustained patient participation between clinical visits. Guardian automates personalized communication across SMS, email, and care coordinator queues—improving appointment adherence and closing preventive care gaps.
                   </p>
-                  
+
                   <div className="p-4 rounded-xl bg-[#faf8fd] border border-[#e9e4f0] mb-6">
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-1.5 flex items-center gap-2">
                       <Activity className="w-4 h-4 text-[#ea580c]" />
@@ -1480,9 +1476,9 @@ export default function PlatformPage() {
                       <span className="text-[10px] px-2 py-0.5 rounded bg-[#ea580c]/10 text-[#ea580c] font-bold">Automated Queue</span>
                     </div>
                     <div className="relative rounded-lg overflow-hidden border border-[#e9e4f0] bg-white">
-                      <img 
-                        src="/images/product-ui/ui-er-rpm-triage.png" 
-                        alt="Guardian Patient Engagement and Triage Queue Interface" 
+                      <img
+                        src="/images/product-ui/ui-er-rpm-triage.png"
+                        alt="Guardian Patient Engagement and Triage Queue Interface"
                         className="w-full h-auto object-cover max-h-[320px]"
                       />
                     </div>
@@ -1501,8 +1497,8 @@ export default function PlatformPage() {
           - 10 / Telemedicine & Virtual Care (#telemedicine)
           - 11 / Analytics & Reporting (#analytics)
           ───────────────────────────────────────────────────────────── */}
-      <section 
-        id="stage-4" 
+      <section
+        id="stage-4"
         onMouseEnter={() => setStage4Paused(true)}
         onMouseLeave={() => setStage4Paused(false)}
         className="py-16 sm:py-24 bg-[#faf8fd] border-b border-[#e9e4f0] scroll-mt-24 relative"
@@ -1512,9 +1508,9 @@ export default function PlatformPage() {
         <div id="analytics" className="absolute top-0 left-0 -mt-24 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Carousel Stage Header & Controller */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff7a57]/10 text-[#ea580c] font-mono text-xs font-bold uppercase tracking-wider mb-2">
                 <Video className="w-3.5 h-3.5 text-[#ff7a57]" />
@@ -1526,13 +1522,13 @@ export default function PlatformPage() {
             </div>
 
             {/* Stage Tabs & Slide Navigation */}
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2 sm:gap-3 flex-nowrap shrink-0 overflow-x-auto scrollbar-none max-w-full py-1">
               {/* 15-second Auto-Change Visual Indicator */}
-              <div 
-                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+              <div
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89] shrink-0 whitespace-nowrap"
                 title={stage4Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
               >
-                <Clock className="w-3 h-3 text-[#ea580c]" />
+                <Clock className="w-3.5 h-3.5 text-[#ea580c]" />
                 <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
                   <motion.div
                     key={`p4-${stage4Tab}-${stage4Paused}`}
@@ -1545,16 +1541,15 @@ export default function PlatformPage() {
                 <span>15s</span>
               </div>
 
-              <div className="inline-flex items-center p-1.5 rounded-2xl bg-white border border-[#e5deee] gap-1 shadow-2xs">
+              <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-white border border-[#e5deee] gap-1 shadow-2xs shrink-0 whitespace-nowrap">
                 {stage4Tabs.map((tab, idx) => (
                   <button
                     key={tab.id}
                     onClick={() => setStage4Tab(idx)}
-                    className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
-                      stage4Tab === idx
+                    className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap ${stage4Tab === idx
                         ? 'bg-[#ea580c] text-white shadow-xs'
                         : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-[#faf8fd]'
-                    }`}
+                      }`}
                   >
                     {tab.badge}
                   </button>
@@ -1562,21 +1557,21 @@ export default function PlatformPage() {
               </div>
 
               {/* Prev / Next Chevrons */}
-              <div className="inline-flex items-center gap-1.5">
+              <div className="inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
                 <button
                   onClick={() => setStage4Tab((prev) => (prev > 0 ? prev - 1 : stage4Tabs.length - 1))}
                   aria-label="Previous capability"
-                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#ea580c] text-[#524b6b] hover:text-[#ea580c] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#ea580c] text-[#524b6b] hover:text-[#ea580c] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
-                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1 shrink-0">
                   {stage4Tab + 1}/{stage4Tabs.length}
                 </span>
                 <button
                   onClick={() => setStage4Tab((prev) => (prev < stage4Tabs.length - 1 ? prev + 1 : 0))}
                   aria-label="Next capability"
-                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#ea580c] text-[#524b6b] hover:text-[#ea580c] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#ea580c] text-[#524b6b] hover:text-[#ea580c] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -1606,7 +1601,7 @@ export default function PlatformPage() {
                   <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
                     Virtual care is an essential component of comprehensive care coordination and post-discharge follow-up. Guardian’s integrated telemedicine module requires no external app downloads, running securely through standard web browsers while connected directly to the Patient Master Chart.
                   </p>
-                  
+
                   <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] mb-6 shadow-2xs">
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-1.5 flex items-center gap-2">
                       <Video className="w-4 h-4 text-[#ea580c]" />
@@ -1673,9 +1668,9 @@ export default function PlatformPage() {
                       <span className="text-[10px] px-2 py-0.5 rounded bg-[#ff7a57]/10 text-[#ea580c] font-bold">WebRTC Active</span>
                     </div>
                     <div className="relative rounded-lg overflow-hidden border border-[#e9e4f0] bg-white">
-                      <img 
-                        src="/images/product-ui/ui-telemedicine.png" 
-                        alt="Guardian Telemedicine and Virtual Care Consultation Interface" 
+                      <img
+                        src="/images/product-ui/ui-telemedicine.png"
+                        alt="Guardian Telemedicine and Virtual Care Consultation Interface"
                         className="w-full h-auto object-cover max-h-[380px]"
                       />
                     </div>
@@ -1704,7 +1699,7 @@ export default function PlatformPage() {
                   <p className="text-sm sm:text-base text-[#524b6b] leading-relaxed mb-6 font-normal">
                     Managing value-based care contracts requires transparency across clinical quality, financial expenditure, and operational throughput. Guardian delivers real-time KPI surveillance, PMPM expenditure trend analysis, and executive cockpits across multiple health plan contracts.
                   </p>
-                  
+
                   <div className="p-4 rounded-xl bg-white border border-[#e9e4f0] shadow-2xs">
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1c1636] mb-1.5 flex items-center gap-2">
                       <DollarSign className="w-4 h-4 text-[#7b3fc7]" />
@@ -1779,9 +1774,9 @@ export default function PlatformPage() {
           ───────────────────────────────────────────────────────────── */}
       <section id="contact" className="py-16 sm:py-24 bg-gradient-to-b from-white to-[#faf8fd] scroll-mt-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          
+
           <div className="p-10 sm:p-16 rounded-3xl bg-gradient-to-br from-[#1c1636] via-[#2d1b54] to-[#0d1527] text-white shadow-2xl relative overflow-hidden border border-white/10">
-            
+
             {/* Ambient Lighting */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-[#7b3fc7]/30 blur-[120px] rounded-full pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#4f46e5]/25 blur-[120px] rounded-full pointer-events-none" />
@@ -1808,7 +1803,7 @@ export default function PlatformPage() {
                   <span>Request a Custom Demo</span>
                   <ArrowRight className="w-4 h-4 text-[#ff7a57]" />
                 </Link>
-                
+
                 <Link
                   to="/solutions"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/10 text-white font-semibold text-xs sm:text-sm hover:bg-white/20 border border-white/25 backdrop-blur-md transition-all duration-300"

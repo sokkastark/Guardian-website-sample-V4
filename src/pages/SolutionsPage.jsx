@@ -374,7 +374,7 @@ export default function SolutionsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Carousel Stage Header & Controller */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7b3fc7]/10 text-[#7b3fc7] font-mono text-xs font-bold uppercase tracking-wider mb-2">
                 <Sparkles className="w-3.5 h-3.5 text-[#7b3fc7]" />
@@ -386,13 +386,13 @@ export default function SolutionsPage() {
             </div>
 
             {/* Stage Tabs & Slide Navigation */}
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2 sm:gap-3 flex-nowrap shrink-0 overflow-x-auto scrollbar-none max-w-full py-1">
               {/* 15-second Auto-Change Visual Indicator */}
               <div 
-                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#faf8fd] border border-[#e5deee] text-[11px] font-mono text-[#716b89] shrink-0 whitespace-nowrap"
                 title={solStage1Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
               >
-                <Clock className="w-3 h-3 text-[#7b3fc7]" />
+                <Clock className="w-3.5 h-3.5 text-[#7b3fc7]" />
                 <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
                   <motion.div
                     key={`sol1-${solStage1Tab}-${solStage1Paused}`}
@@ -405,12 +405,12 @@ export default function SolutionsPage() {
                 <span>15s</span>
               </div>
 
-              <div className="inline-flex items-center p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1 shadow-2xs">
+              <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-[#faf8fd] border border-[#e5deee] gap-1 shadow-2xs shrink-0 whitespace-nowrap">
                 {solStage1Tabs.map((tab, idx) => (
                   <button
                     key={tab.id}
                     onClick={() => setSolStage1Tab(idx)}
-                    className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                    className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap ${
                       solStage1Tab === idx
                         ? 'bg-[#7b3fc7] text-white shadow-xs'
                         : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-white'
@@ -422,21 +422,21 @@ export default function SolutionsPage() {
               </div>
 
               {/* Prev / Next Chevrons */}
-              <div className="inline-flex items-center gap-1.5">
+              <div className="inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
                 <button
                   onClick={() => setSolStage1Tab((prev) => (prev > 0 ? prev - 1 : solStage1Tabs.length - 1))}
                   aria-label="Previous solution"
-                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
-                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1 shrink-0">
                   {solStage1Tab + 1}/{solStage1Tabs.length}
                 </span>
                 <button
                   onClick={() => setSolStage1Tab((prev) => (prev < solStage1Tabs.length - 1 ? prev + 1 : 0))}
                   aria-label="Next solution"
-                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-[#faf8fd] border border-[#e5deee] hover:border-[#7b3fc7] text-[#524b6b] hover:text-[#7b3fc7] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -649,7 +649,7 @@ export default function SolutionsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Carousel Stage Header & Controller */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
+          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5 mb-10 pb-6 border-b border-[#e9e4f0]">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9333ea]/10 text-[#9333ea] font-mono text-xs font-bold uppercase tracking-wider mb-2">
                 <Sparkles className="w-3.5 h-3.5 text-[#9333ea]" />
@@ -661,13 +661,13 @@ export default function SolutionsPage() {
             </div>
 
             {/* Stage Tabs & Slide Navigation */}
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2 sm:gap-3 flex-nowrap shrink-0 overflow-x-auto scrollbar-none max-w-full py-1">
               {/* 15-second Auto-Change Visual Indicator */}
               <div 
-                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89]"
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white border border-[#e5deee] text-[11px] font-mono text-[#716b89] shrink-0 whitespace-nowrap"
                 title={solStage2Paused ? "Auto-play paused on hover" : "Auto-advancing every 15s"}
               >
-                <Clock className="w-3 h-3 text-[#9333ea]" />
+                <Clock className="w-3.5 h-3.5 text-[#9333ea]" />
                 <div className="w-12 h-1 bg-[#e5deee] rounded-full overflow-hidden">
                   <motion.div
                     key={`sol2-${solStage2Tab}-${solStage2Paused}`}
@@ -680,12 +680,12 @@ export default function SolutionsPage() {
                 <span>15s</span>
               </div>
 
-              <div className="inline-flex items-center p-1.5 rounded-2xl bg-white border border-[#e5deee] gap-1 shadow-2xs">
+              <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-white border border-[#e5deee] gap-1 shadow-2xs shrink-0 whitespace-nowrap">
                 {solStage2Tabs.map((tab, idx) => (
                   <button
                     key={tab.id}
                     onClick={() => setSolStage2Tab(idx)}
-                    className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                    className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap ${
                       solStage2Tab === idx
                         ? 'bg-[#9333ea] text-white shadow-xs'
                         : 'text-[#524b6b] hover:text-[#1c1636] hover:bg-[#faf8fd]'
@@ -697,21 +697,21 @@ export default function SolutionsPage() {
               </div>
 
               {/* Prev / Next Chevrons */}
-              <div className="inline-flex items-center gap-1.5">
+              <div className="inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
                 <button
                   onClick={() => setSolStage2Tab((prev) => (prev > 0 ? prev - 1 : solStage2Tabs.length - 1))}
                   aria-label="Previous solution"
-                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#9333ea] text-[#524b6b] hover:text-[#9333ea] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#9333ea] text-[#524b6b] hover:text-[#9333ea] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
-                <span className="text-xs font-mono font-bold text-[#716b89] px-1">
+                <span className="text-xs font-mono font-bold text-[#716b89] px-1 shrink-0">
                   {solStage2Tab + 1}/{solStage2Tabs.length}
                 </span>
                 <button
                   onClick={() => setSolStage2Tab((prev) => (prev < solStage2Tabs.length - 1 ? prev + 1 : 0))}
                   aria-label="Next solution"
-                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#9333ea] text-[#524b6b] hover:text-[#9333ea] flex items-center justify-center transition-all shadow-2xs cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-white border border-[#e5deee] hover:border-[#9333ea] text-[#524b6b] hover:text-[#9333ea] flex items-center justify-center transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
