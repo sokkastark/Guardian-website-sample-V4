@@ -83,7 +83,8 @@ export default function Footer() {
   };
 
   const handleSolutionsClick = (e, sectionId) => {
-    if (window.location.pathname === '/solutions') {
+    const isSolutionsPage = location.pathname === '/solutions' || location.pathname === '/solutions/';
+    if (isSolutionsPage) {
       e.preventDefault();
       const el = document.getElementById(sectionId);
       if (el) {
@@ -100,7 +101,8 @@ export default function Footer() {
   };
 
   const handlePlatformClick = (e, sectionId) => {
-    if (window.location.pathname === '/platform') {
+    const isPlatformPage = location.pathname === '/platform' || location.pathname === '/platform/';
+    if (isPlatformPage) {
       e.preventDefault();
       const el = document.getElementById(sectionId);
       if (el) {
@@ -176,8 +178,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* 5 Balanced Secondary Navigation Columns */}
-          <nav aria-label="Footer Secondary Navigation" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 pb-14">
+          {/* 6 Balanced Secondary Navigation Columns */}
+          <nav aria-label="Footer Secondary Navigation" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 pb-14">
 
             {/* 01 — PLATFORM */}
             <div className="space-y-3.5">
@@ -211,6 +213,12 @@ export default function Footer() {
                     Analytics
                   </Link>
                 </li>
+                <li className="pt-1">
+                  <Link to="/platform" className="text-[#7b3fc7] hover:text-[#9565d2] transition-colors font-semibold text-xs inline-flex items-center gap-1">
+                    <span>Explore all 11 modules</span>
+                    <span className="text-[11px]">→</span>
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -233,7 +241,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link to="/solutions#health-plans" onClick={(e) => handleSolutionsClick(e, 'health-plans')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    Health Plans
+                    Health Plans &amp; Payers
                   </Link>
                 </li>
                 <li>
@@ -243,17 +251,17 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link to="/solutions#care-teams" onClick={(e) => handleSolutionsClick(e, 'care-teams')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    Care Teams
+                    Care Management Teams
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* 03 — DATA & INTELLIGENCE */}
+            {/* 03 — INTELLIGENCE */}
             <div className="space-y-3.5">
               <h3 className="text-[#adabb7] font-semibold uppercase tracking-wider text-xs flex items-center gap-1.5">
                 <span className="text-[#7b3fc7] font-mono text-xs">03 —</span>
-                <span>DATA & AI</span>
+                <span>INTELLIGENCE</span>
               </h3>
               <ul className="space-y-2 text-xs sm:text-[13px]">
                 <li>
@@ -262,18 +270,63 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/intelligence#knowledge-graph" onClick={(e) => handleIntelligenceClick(e, 'knowledge-graph')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Clinical Knowledge Graph
+                  </Link>
+                </li>
+                <li>
                   <Link to="/intelligence#ai-nlp" onClick={(e) => handleIntelligenceClick(e, 'ai-nlp')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     AI &amp; NLP Engine
                   </Link>
                 </li>
                 <li>
+                  <Link to="/intelligence#predictive-intelligence" onClick={(e) => handleIntelligenceClick(e, 'predictive-intelligence')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Predictive Intelligence
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/intelligence#intelligent-workflows" onClick={(e) => handleIntelligenceClick(e, 'intelligent-workflows')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Intelligent Workflows
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/intelligence#human-in-the-loop" onClick={(e) => handleIntelligenceClick(e, 'human-in-the-loop')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Human-in-the-Loop
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* 04 — DATA & INTEGRATION */}
+            <div className="space-y-3.5">
+              <h3 className="text-[#adabb7] font-semibold uppercase tracking-wider text-xs flex items-center gap-1.5">
+                <span className="text-[#7b3fc7] font-mono text-xs">04 —</span>
+                <span>DATA &amp; INTEGRATION</span>
+              </h3>
+              <ul className="space-y-2 text-xs sm:text-[13px]">
+                <li>
                   <Link to="/data-integration" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    Data &amp; Integration Hub
+                    Integration Overview
                   </Link>
                 </li>
                 <li>
                   <Link to="/data-integration#clinical" onClick={(e) => handleDataIntegrationClick(e, 'clinical')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Clinical Integration
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/data-integration#claims" onClick={(e) => handleDataIntegrationClick(e, 'claims')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Claims Integration
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/data-integration#hie-adt" onClick={(e) => handleDataIntegrationClick(e, 'hie-adt')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    HIE &amp; ADT Feeds
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/data-integration#labs-pharmacy" onClick={(e) => handleDataIntegrationClick(e, 'labs-pharmacy')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Labs &amp; Pharmacy
                   </Link>
                 </li>
                 <li>
@@ -284,13 +337,18 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* 04 — RESOURCES */}
+            {/* 05 — RESOURCES */}
             <div className="space-y-3.5">
               <h3 className="text-[#adabb7] font-semibold uppercase tracking-wider text-xs flex items-center gap-1.5">
-                <span className="text-[#7b3fc7] font-mono text-xs">04 —</span>
+                <span className="text-[#7b3fc7] font-mono text-xs">05 —</span>
                 <span>RESOURCES</span>
               </h3>
               <ul className="space-y-2 text-xs sm:text-[13px]">
+                <li>
+                  <Link to="/resources" className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
+                    Resources Overview
+                  </Link>
+                </li>
                 <li>
                   <Link to="/resources#insights" onClick={(e) => handleResourcesClick(e, 'insights')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
                     Insights
@@ -309,10 +367,10 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* 05 — COMPANY */}
+            {/* 06 — COMPANY */}
             <div className="space-y-3.5">
               <h3 className="text-[#adabb7] font-semibold uppercase tracking-wider text-xs flex items-center gap-1.5">
-                <span className="text-[#7b3fc7] font-mono text-xs">05 —</span>
+                <span className="text-[#7b3fc7] font-mono text-xs">06 —</span>
                 <span>COMPANY</span>
               </h3>
               <ul className="space-y-2 text-xs sm:text-[13px]">
@@ -328,7 +386,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link to="/company#security" onClick={(e) => handleCompanyClick(e, 'security')} className="text-[#1c1636] hover:text-[#7b3fc7] transition-colors font-medium block py-0.5">
-                    Security & Trust
+                    Security &amp; Trust
                   </Link>
                 </li>
                 <li>
@@ -461,8 +519,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* 5 Secondary Navigation Columns (Clean & Open Layout) */}
-        <nav aria-label="Footer Secondary Navigation" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 pb-14">
+        {/* 6 Balanced Secondary Navigation Columns */}
+        <nav aria-label="Footer Secondary Navigation" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 pb-14">
 
           {/* 01 — PLATFORM */}
           <div className="space-y-3.5">
@@ -496,6 +554,12 @@ export default function Footer() {
                   Analytics
                 </Link>
               </li>
+              <li className="pt-1">
+                <Link to="/platform" className="text-[#ff7a57] hover:text-white transition-colors font-semibold text-xs inline-flex items-center gap-1">
+                  <span>Explore all 11 modules</span>
+                  <span className="text-[11px]">→</span>
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -518,7 +582,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link to="/solutions#health-plans" onClick={(e) => handleSolutionsClick(e, 'health-plans')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  Health Plans
+                  Health Plans &amp; Payers
                 </Link>
               </li>
               <li>
@@ -528,17 +592,17 @@ export default function Footer() {
               </li>
               <li>
                 <Link to="/solutions#care-teams" onClick={(e) => handleSolutionsClick(e, 'care-teams')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  Care Teams
+                  Care Management Teams
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* 03 — DATA & INTELLIGENCE */}
+          {/* 03 — INTELLIGENCE */}
           <div className="space-y-3.5">
             <h3 className="text-purple-300 font-semibold uppercase tracking-wider text-xs flex items-center gap-1.5">
               <span className="text-[#ff7a57] font-mono text-xs">03 —</span>
-              <span>DATA & AI</span>
+              <span>INTELLIGENCE</span>
             </h3>
             <ul className="space-y-2 text-xs sm:text-[13px]">
               <li>
@@ -547,18 +611,63 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/intelligence#knowledge-graph" onClick={(e) => handleIntelligenceClick(e, 'knowledge-graph')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Clinical Knowledge Graph
+                </Link>
+              </li>
+              <li>
                 <Link to="/intelligence#ai-nlp" onClick={(e) => handleIntelligenceClick(e, 'ai-nlp')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   AI &amp; NLP Engine
                 </Link>
               </li>
               <li>
+                <Link to="/intelligence#predictive-intelligence" onClick={(e) => handleIntelligenceClick(e, 'predictive-intelligence')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Predictive Intelligence
+                </Link>
+              </li>
+              <li>
+                <Link to="/intelligence#intelligent-workflows" onClick={(e) => handleIntelligenceClick(e, 'intelligent-workflows')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Intelligent Workflows
+                </Link>
+              </li>
+              <li>
+                <Link to="/intelligence#human-in-the-loop" onClick={(e) => handleIntelligenceClick(e, 'human-in-the-loop')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Human-in-the-Loop
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* 04 — DATA & INTEGRATION */}
+          <div className="space-y-3.5">
+            <h3 className="text-purple-300 font-semibold uppercase tracking-wider text-xs flex items-center gap-1.5">
+              <span className="text-[#ff7a57] font-mono text-xs">04 —</span>
+              <span>DATA &amp; INTEGRATION</span>
+            </h3>
+            <ul className="space-y-2 text-xs sm:text-[13px]">
+              <li>
                 <Link to="/data-integration" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  Data &amp; Integration Hub
+                  Integration Overview
                 </Link>
               </li>
               <li>
                 <Link to="/data-integration#clinical" onClick={(e) => handleDataIntegrationClick(e, 'clinical')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Clinical Integration
+                </Link>
+              </li>
+              <li>
+                <Link to="/data-integration#claims" onClick={(e) => handleDataIntegrationClick(e, 'claims')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Claims Integration
+                </Link>
+              </li>
+              <li>
+                <Link to="/data-integration#hie-adt" onClick={(e) => handleDataIntegrationClick(e, 'hie-adt')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  HIE &amp; ADT Feeds
+                </Link>
+              </li>
+              <li>
+                <Link to="/data-integration#labs-pharmacy" onClick={(e) => handleDataIntegrationClick(e, 'labs-pharmacy')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Labs &amp; Pharmacy
                 </Link>
               </li>
               <li>
@@ -569,13 +678,18 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* 04 — RESOURCES */}
+          {/* 05 — RESOURCES */}
           <div className="space-y-3.5">
             <h3 className="text-purple-300 font-semibold uppercase tracking-wider text-xs flex items-center gap-1.5">
-              <span className="text-[#ff7a57] font-mono text-xs">04 —</span>
+              <span className="text-[#ff7a57] font-mono text-xs">05 —</span>
               <span>RESOURCES</span>
             </h3>
             <ul className="space-y-2 text-xs sm:text-[13px]">
+              <li>
+                <Link to="/resources" className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
+                  Resources Overview
+                </Link>
+              </li>
               <li>
                 <Link to="/resources#insights" onClick={(e) => handleResourcesClick(e, 'insights')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
                   Insights
@@ -594,10 +708,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* 05 — COMPANY */}
+          {/* 06 — COMPANY */}
           <div className="space-y-3.5">
             <h3 className="text-purple-300 font-semibold uppercase tracking-wider text-xs flex items-center gap-1.5">
-              <span className="text-[#ff7a57] font-mono text-xs">05 —</span>
+              <span className="text-[#ff7a57] font-mono text-xs">06 —</span>
               <span>COMPANY</span>
             </h3>
             <ul className="space-y-2 text-xs sm:text-[13px]">
@@ -613,7 +727,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link to="/company#security" onClick={(e) => handleCompanyClick(e, 'security')} className="text-purple-100/90 hover:text-white transition-colors font-medium block py-0.5">
-                  Security & Trust
+                  Security &amp; Trust
                 </Link>
               </li>
               <li>
