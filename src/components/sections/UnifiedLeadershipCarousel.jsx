@@ -298,7 +298,7 @@ export const offshoreTeam = [
     name: 'Nalamati Vara Lakshmi',
     role: 'Senior Tester Engineer',
     domain: 'Quality Assurance & Testing',
-    image: '/images/team/offshore/Nalamati Vara Lakshmi.jpeg',
+    image: '/images/team/offshore/Nalamati Vara Lakshmi.png',
     initials: 'NL',
     tagline: 'Quality Assurance & Automated Testing',
     bio: 'Tests application functionality and verifies that software behaves as expected. Identifies defects and supports the delivery of dependable software releases.'
