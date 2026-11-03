@@ -130,7 +130,7 @@ export default function ImpactSection() {
 
             {/* CTA Button */}
             <Link
-              to="/company/contact"
+              to="/company#about"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-[#7b3fc7] via-[#8b5cf6] to-[#a855f7] hover:from-[#8b5cf6] hover:to-[#c084fc] shadow-[0_6px_28px_rgba(147,51,234,0.55)] hover:shadow-[0_8px_36px_rgba(147,51,234,0.75)] hover:scale-[1.02] active:scale-95 transition-all duration-300 group"
             >
               <span>Explore our approach</span>

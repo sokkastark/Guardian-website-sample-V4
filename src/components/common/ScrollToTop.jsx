@@ -9,6 +9,85 @@ export default function ScrollToTop() {
   const { pathname, hash } = useLocation();
   const [showFloater, setShowFloater] = useState(false);
 
+  // Title mapping for routes and sections (Resolves F14 audit requirement)
+  useEffect(() => {
+    const titles = {
+      '/': 'Guardian Health Service | Healthcare Intelligence',
+      '/platform': {
+        'population-health': 'Population Health | Guardian Health Service',
+        'patient-360': 'Patient 360 & PMC | Guardian Health Service',
+        'risk-stratification': 'Risk Stratification | Guardian Health Service',
+        'risk-adjustment': 'Risk Adjustment & MRA | Guardian Health Service',
+        'quality-care-gaps': 'Quality & Care Gaps | Guardian Health Service',
+        'care-management': 'Care Management | Guardian Health Service',
+        'transitions-of-care': 'Transitions of Care & ADT | Guardian Health Service',
+        'referral-management': 'Referral Management | Guardian Health Service',
+        'patient-engagement': 'Patient Engagement | Guardian Health Service',
+        'telemedicine': 'Telemedicine Platform | Guardian Health Service',
+        'analytics': 'Healthcare Analytics | Guardian Health Service',
+        default: 'Platform Modules | Guardian Health Service',
+      },
+      '/solutions': {
+        'aco-vbc': 'ACO & Value-Based Care Solutions | Guardian Health Service',
+        'health-plans': 'Health Plan Solutions | Guardian Health Service',
+        'cin-providers': 'CIN & Provider Solutions | Guardian Health Service',
+        'care-teams': 'Care Management Teams | Guardian Health Service',
+        default: 'Solutions for Value-Based Care | Guardian Health Service',
+      },
+      '/intelligence': {
+        'knowledge-graph': 'Clinical Knowledge Graph | Guardian Health Service',
+        'ai-nlp': 'Healthcare AI & NLP | Guardian Health Service',
+        'predictive-intelligence': 'Predictive Intelligence | Guardian Health Service',
+        'intelligent-workflows': 'Intelligent Workflows | Guardian Health Service',
+        'human-in-the-loop': 'Human-in-the-Loop Governance | Guardian Health Service',
+        default: 'Healthcare Intelligence Engine | Guardian Health Service',
+      },
+      '/data-integration': {
+        'clinical': 'Clinical EHR Integration | Guardian Health Service',
+        'claims': 'Claims & Financial Data Integration | Guardian Health Service',
+        'hie-adt': 'Real-Time HIE & ADT Streams | Guardian Health Service',
+        'labs-pharmacy': 'Diagnostic Labs & Pharmacy Feeds | Guardian Health Service',
+        'data-foundation': 'Data Foundation & MPI | Guardian Health Service',
+        'apis-mobile': 'Developer APIs & Mobile Interoperability | Guardian Health Service',
+        default: 'Healthcare Data & Integration | Guardian Health Service',
+      },
+      '/company': {
+        'about': 'About Guardian | Guardian Health Service',
+        'history': 'Our History & Milestones | Guardian Health Service',
+        'leadership': 'Executive & Clinical Leadership | Guardian Health Service',
+        'security': 'Security, HIPAA & Trust Safeguards | Guardian Health Service',
+        'careers': 'Careers & Opportunities | Guardian Health Service',
+        'contact': 'Contact Us & Request Demo | Guardian Health Service',
+        default: 'Company & Leadership | Guardian Health Service',
+      },
+      '/resources': {
+        'insights': 'Executive Perspectives & Insights | Guardian Health Service',
+        'guides': 'Operational Playbooks & Guides | Guardian Health Service',
+        'expertise': 'Demonstrated Platform Capabilities | Guardian Health Service',
+        default: 'Knowledge & Resource Hub | Guardian Health Service',
+      },
+      '/why-guardian': 'Why Guardian | Healthcare Intelligence Platform',
+    };
+
+    const cleanPath = pathname.replace(/\/$/, '') || '/';
+    const cleanHash = hash ? hash.replace('#', '') : null;
+
+    let targetTitle = 'Guardian Health Service | Healthcare Intelligence';
+    const routeConfig = titles[cleanPath];
+
+    if (typeof routeConfig === 'string') {
+      targetTitle = routeConfig;
+    } else if (routeConfig && typeof routeConfig === 'object') {
+      if (cleanHash && routeConfig[cleanHash]) {
+        targetTitle = routeConfig[cleanHash];
+      } else {
+        targetTitle = routeConfig.default || targetTitle;
+      }
+    }
+
+    document.title = targetTitle;
+  }, [pathname, hash]);
+
   // 1. Handle route and hash changes with sticky-header offset
   useEffect(() => {
     if (hash) {

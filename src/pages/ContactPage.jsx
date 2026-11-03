@@ -224,13 +224,21 @@ export default function ContactPage() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4" aria-label="Contact Guardian Health Service Form">
+                  {/* PHI Warning & Privacy Safeguards Notice (F08 Compliance) */}
+                  <div className="p-3 rounded-lg bg-[#f3edf9] border border-[#7b3fc7]/20 text-[11px] text-[#524b6b] leading-relaxed">
+                    <span className="font-semibold text-[#7b3fc7]">Privacy Notice: </span>
+                    Please do not submit Protected Health Information (PHI) or patient records through this form. Inquiries are governed by Guardian's administrative and technical safeguards.
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-[#1c1636] mb-1.5">First Name *</label>
+                      <label htmlFor="direct-contact-first-name" className="block text-xs font-semibold text-[#1c1636] mb-1.5">First Name *</label>
                       <input
+                        id="direct-contact-first-name"
                         type="text"
                         required
+                        aria-required="true"
                         value={formData.firstName}
                         onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                         placeholder="Jane"
@@ -238,10 +246,12 @@ export default function ContactPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-[#1c1636] mb-1.5">Last Name *</label>
+                      <label htmlFor="direct-contact-last-name" className="block text-xs font-semibold text-[#1c1636] mb-1.5">Last Name *</label>
                       <input
+                        id="direct-contact-last-name"
                         type="text"
                         required
+                        aria-required="true"
                         value={formData.lastName}
                         onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                         placeholder="Doe"
@@ -252,10 +262,12 @@ export default function ContactPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-[#1c1636] mb-1.5">Work Email *</label>
+                      <label htmlFor="direct-contact-email" className="block text-xs font-semibold text-[#1c1636] mb-1.5">Work Email *</label>
                       <input
+                        id="direct-contact-email"
                         type="email"
                         required
+                        aria-required="true"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="jane.doe@organization.com"
@@ -263,10 +275,12 @@ export default function ContactPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-[#1c1636] mb-1.5">Organization *</label>
+                      <label htmlFor="direct-contact-org" className="block text-xs font-semibold text-[#1c1636] mb-1.5">Organization *</label>
                       <input
+                        id="direct-contact-org"
                         type="text"
                         required
+                        aria-required="true"
                         value={formData.organization}
                         onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
                         placeholder="Health System / Plan"
@@ -277,10 +291,12 @@ export default function ContactPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-[#1c1636] mb-1.5">Job Title *</label>
+                      <label htmlFor="direct-contact-job-title" className="block text-xs font-semibold text-[#1c1636] mb-1.5">Job Title *</label>
                       <input
+                        id="direct-contact-job-title"
                         type="text"
                         required
+                        aria-required="true"
                         value={formData.jobTitle}
                         onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
                         placeholder="Chief Medical Officer / Director"
@@ -288,8 +304,9 @@ export default function ContactPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-[#1c1636] mb-1.5">I am interested in</label>
+                      <label htmlFor="direct-contact-interest" className="block text-xs font-semibold text-[#1c1636] mb-1.5">I am interested in</label>
                       <select
+                        id="direct-contact-interest"
                         value={formData.interest}
                         onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
                         className="w-full px-4 py-2.5 rounded-xl border border-[#e1e1e5] bg-[#f8f6fc] text-sm focus:outline-none focus:ring-2 focus:ring-[#7b3fc7]"
@@ -306,8 +323,9 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#1c1636] mb-1.5">Message</label>
+                    <label htmlFor="direct-contact-message" className="block text-xs font-semibold text-[#1c1636] mb-1.5">Message</label>
                     <textarea
+                      id="direct-contact-message"
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -325,7 +343,7 @@ export default function ContactPage() {
                   </button>
 
                   <p className="text-[11px] text-[#adabb7] text-center pt-2">
-                    Your information matters. We handle healthcare partner inquiries with strict confidentiality.
+                    Your information matters. We handle healthcare partner inquiries in accordance with our <Link to="/company#security" className="text-[#7b3fc7] underline hover:text-[#5b21b6]">Security &amp; Privacy Safeguards</Link>.
                   </p>
                 </form>
               )}

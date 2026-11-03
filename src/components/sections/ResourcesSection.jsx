@@ -12,15 +12,15 @@ import {
 export default function ResourcesSection() {
   const resources = [
     {
-      type: 'CASE STUDY',
+      type: 'EVALUATION FRAMEWORK',
       typeColor: '#7b3fc7',
       typeBg: '#f3edf9',
       readTime: '5 min read',
       image: '/images/challenge/doctor-coat.jpg',
       title: 'Improving HCC Gap Closure Through Targeted Outreach',
-      desc: 'How a regional health plan improved RAF accuracy and closed care gaps with Guardian.',
-      linkText: 'Read case study',
-      linkHref: '/resources/case-studies',
+      desc: 'Operational framework for improving RAF accuracy and closing care gaps through targeted clinical workflows.',
+      linkText: 'Explore evaluation framework',
+      linkHref: '/resources#expertise',
     },
     {
       type: 'INSIGHT',
@@ -30,19 +30,19 @@ export default function ResourcesSection() {
       image: '/images/case-study-ed.webp',
       title: 'Turning Fragmented Data Into Actionable Intelligence',
       desc: 'Key strategies for unifying clinical, claims, and patient data to drive value-based care.',
-      linkText: 'Read Insight',
-      linkHref: '/resources/insights',
+      linkText: 'Read insight',
+      linkHref: '/resources#insights',
     },
     {
-      type: 'GUIDE',
+      type: 'OPERATIONAL GUIDE',
       typeColor: '#38bdf8',
       typeBg: '#f0f9ff',
       readTime: '5 min read',
       image: '/images/care-team-collaboration.jpg',
       title: 'A Practical Guide to Value-Based Care Readiness',
       desc: 'Steps healthcare organizations can take to prepare for success in value-based programs.',
-      linkText: 'Download guide',
-      linkHref: '/resources/guides',
+      linkText: 'Explore readiness guide',
+      linkHref: '/resources#guides',
     },
   ];
 

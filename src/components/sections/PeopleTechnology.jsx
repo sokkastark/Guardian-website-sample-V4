@@ -139,7 +139,7 @@ export default function PeopleTechnology() {
             {/* CTA Button */}
             <div className="flex flex-wrap items-center gap-3.5">
               <Link
-                to="/company/contact"
+                to="/company#leadership"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-[#7b3fc7] via-[#8b5cf6] to-[#a855f7] hover:from-[#8b5cf6] hover:to-[#c084fc] shadow-[0_6px_28px_rgba(147,51,234,0.55)] hover:shadow-[0_8px_36px_rgba(147,51,234,0.75)] hover:scale-[1.02] active:scale-95 transition-all duration-300 group"
               >
                 <span>Meet our experts</span>
@@ -147,7 +147,7 @@ export default function PeopleTechnology() {
               </Link>
 
               <Link
-                to="/solutions/care-management-teams"
+                to="/solutions#care-teams"
                 className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full text-xs sm:text-sm font-semibold text-purple-200 hover:text-white bg-white/5 hover:bg-white/10 border border-white/15 backdrop-blur-md transition-all duration-200"
               >
                 <span>View Service Model</span>
@@ -249,6 +249,11 @@ export default function PeopleTechnology() {
                 </motion.div>
               );
             })}
+
+            {/* Illustrative Benchmark Disclaimer */}
+            <p className="text-xs text-purple-200/70 leading-relaxed italic text-right pt-1">
+              * Operational targets and illustrative partner benchmarks. Individual results depend on cohort baseline and implementation scope.
+            </p>
 
             {/* ─────────────────────────────────────────────────────────
                 HANDWRITTEN ANNOTATION (Matching Master Reference Mockup)

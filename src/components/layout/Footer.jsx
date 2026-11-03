@@ -415,7 +415,7 @@ export default function Footer() {
                 onClick={(e) => handleCompanyClick(e, 'security')}
                 className="hover:text-[#7b3fc7] transition-colors"
               >
-                Security & Trust
+                Security &amp; Privacy
               </Link>
               <span className="text-[#d6cde2]">|</span>
               <Link
@@ -756,7 +756,7 @@ export default function Footer() {
               onClick={(e) => handleCompanyClick(e, 'security')}
               className="hover:text-[#ff7a57] transition-colors"
             >
-              Security & Trust
+              Security &amp; Privacy
             </Link>
             <span className="text-purple-400/40">|</span>
             <Link
