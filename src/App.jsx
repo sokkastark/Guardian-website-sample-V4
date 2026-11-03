@@ -80,6 +80,7 @@ export default function App() {
             <Route path="/platform/analytics" element={<RedirectToPlatformSection sectionId="analytics" />} />
             <Route path="/platform/patient-intelligence" element={<RedirectToPlatformSection sectionId="patient-360" />} />
             <Route path="/platform/patient-intelligence/patient-360" element={<RedirectToPlatformSection sectionId="patient-360" />} />
+            <Route path="/platform/patient-360" element={<RedirectToPlatformSection sectionId="patient-360" />} />
             <Route path="/platform/risk-stratification" element={<RedirectToPlatformSection sectionId="risk-stratification" />} />
             <Route path="/platform/risk-adjustment" element={<RedirectToPlatformSection sectionId="risk-adjustment" />} />
             <Route path="/platform/quality-care-gaps" element={<RedirectToPlatformSection sectionId="quality-care-gaps" />} />

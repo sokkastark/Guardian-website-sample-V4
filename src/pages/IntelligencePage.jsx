@@ -484,7 +484,7 @@ export default function IntelligencePage() {
                   </div>
 
                   <Link
-                    to="/platform/patient-360"
+                    to="/platform#patient-360"
                     className="inline-flex items-center gap-2 text-xs font-bold text-[#7b3fc7] hover:text-[#5b21b6] transition-colors group"
                   >
                     <span>View Patient 360 Knowledge Mesh in Platform</span>
