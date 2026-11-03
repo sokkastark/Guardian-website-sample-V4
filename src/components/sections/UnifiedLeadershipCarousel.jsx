@@ -385,6 +385,70 @@ export default function UnifiedLeadershipCarousel() {
     setActiveSlide(1);
   };
 
+  // ─── MODAL NAVIGATION HELPERS (Executive, Onsite, Offshore) ───
+  const getMemberListForGroup = (group) => {
+    if (group === 'onsite') {
+      return onsiteTeam.map((m) => ({
+        ...m,
+        discipline: m.domain,
+        experience: 'Onsite Team',
+        credentials: m.domain,
+        _group: 'onsite',
+      }));
+    }
+    if (group === 'offshore') {
+      return offshoreTeam.map((m) => ({
+        ...m,
+        discipline: m.domain,
+        experience: 'Offshore Engineering',
+        credentials: m.domain,
+        _group: 'offshore',
+      }));
+    }
+    return executiveConstellation.map((m) => ({
+      ...m,
+      _group: 'executive',
+    }));
+  };
+
+  const currentGroup = focusedMember?._group || (
+    executiveConstellation.some((m) => m.id === focusedMember?.id) ? 'executive' :
+    onsiteTeam.some((m) => m.id === focusedMember?.id) ? 'onsite' : 'offshore'
+  );
+
+  const currentGroupList = focusedMember ? getMemberListForGroup(currentGroup) : [];
+  const currentMemberIndex = focusedMember ? currentGroupList.findIndex((m) => m.id === focusedMember.id) : -1;
+
+  const handlePrevMember = (e) => {
+    if (e) e.stopPropagation();
+    if (currentMemberIndex === -1 || currentGroupList.length === 0) return;
+    const newIndex = (currentMemberIndex - 1 + currentGroupList.length) % currentGroupList.length;
+    setFocusedMember(currentGroupList[newIndex]);
+  };
+
+  const handleNextMember = (e) => {
+    if (e) e.stopPropagation();
+    if (currentMemberIndex === -1 || currentGroupList.length === 0) return;
+    const newIndex = (currentMemberIndex + 1) % currentGroupList.length;
+    setFocusedMember(currentGroupList[newIndex]);
+  };
+
+  // Keyboard navigation for individual profile modal (ArrowLeft, ArrowRight, Escape)
+  useEffect(() => {
+    if (!focusedMember) return;
+    const handleModalKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        handlePrevMember();
+      } else if (e.key === 'ArrowRight') {
+        handleNextMember();
+      } else if (e.key === 'Escape') {
+        setFocusedMember(null);
+      }
+    };
+    window.addEventListener('keydown', handleModalKeyDown);
+    return () => window.removeEventListener('keydown', handleModalKeyDown);
+  }, [focusedMember, currentMemberIndex, currentGroupList]);
+
   return (
     <section 
       id="leadership" 
@@ -666,7 +730,7 @@ export default function UnifiedLeadershipCarousel() {
                           setHoveredConstellationId(null);
                           setIsCardHovered(false);
                         }}
-                        onClick={() => setFocusedMember(sat)}
+                        onClick={() => setFocusedMember({ ...sat, _group: 'executive' })}
                         className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-30"
                         style={{
                           left: `${(sat.cx / 1100) * 100}%`,
@@ -680,7 +744,7 @@ export default function UnifiedLeadershipCarousel() {
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            setFocusedMember(sat);
+                            setFocusedMember({ ...sat, _group: 'executive' });
                           }
                         }}
                       >
@@ -740,7 +804,7 @@ export default function UnifiedLeadershipCarousel() {
                       return (
                         <button
                           key={`mobile-${sat.id}`}
-                          onClick={() => setFocusedMember(sat)}
+                          onClick={() => setFocusedMember({ ...sat, _group: 'executive' })}
                           className="w-full text-left rounded-2xl bg-white/[0.04] border border-white/10 p-3 hover:bg-white/[0.08] transition-all flex items-center gap-3 cursor-pointer"
                         >
                           <div className="relative shrink-0">
@@ -799,7 +863,8 @@ export default function UnifiedLeadershipCarousel() {
                         ...member,
                         discipline: member.domain,
                         experience: 'Onsite Team',
-                        credentials: member.domain
+                        credentials: member.domain,
+                        _group: 'onsite'
                       })}
                       className="group cursor-pointer rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-xs hover:shadow-[0_8px_22px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 p-2.5 sm:p-3 flex items-center justify-between gap-3 sm:gap-3.5"
                     >
@@ -917,7 +982,8 @@ export default function UnifiedLeadershipCarousel() {
                         ...member,
                         discipline: member.domain,
                         experience: 'Offshore Engineering',
-                        credentials: member.domain
+                        credentials: member.domain,
+                        _group: 'offshore'
                       })}
                       className="group cursor-pointer rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl shadow-xs hover:shadow-[0_12px_28px_rgba(123,63,199,0.2)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden flex flex-col justify-between"
                     >
@@ -997,7 +1063,7 @@ export default function UnifiedLeadershipCarousel() {
 
       </div>
 
-      {/* ── FOCUS STATE SPOTLIGHT MODAL (When clicking any leader in constellation) ── */}
+      {/* ── FOCUS STATE SPOTLIGHT MODAL (With Next / Previous buttons for Executive, Onsite, & Offshore) ── */}
       <AnimatePresence>
         {focusedMember && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
@@ -1007,75 +1073,180 @@ export default function UnifiedLeadershipCarousel() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setFocusedMember(null)}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              className="absolute inset-0 bg-black/85 backdrop-blur-md"
             />
 
-            {/* Spotlight Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.94, y: 20 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative w-full max-w-2xl bg-gradient-to-br from-[#1b1435] to-[#100b24] border border-white/20 rounded-3xl p-6 sm:p-10 shadow-2xl z-10 text-white"
-            >
-              {/* Close Button */}
+            {/* Modal Wrapper with Floating Side Controls */}
+            <div className="relative w-full max-w-2xl z-10">
+
+              {/* Desktop Floating Left Chevron */}
               <button
-                onClick={() => setFocusedMember(null)}
-                aria-label="Close profile"
-                className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                onClick={handlePrevMember}
+                aria-label="Previous team member"
+                title="Previous person (Left Arrow ←)"
+                className="hidden md:flex absolute -left-14 lg:-left-16 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[#1b1435]/90 hover:bg-[#2b1f52] border border-white/20 hover:border-purple-400/50 text-purple-200 hover:text-white items-center justify-center backdrop-blur-xl shadow-2xl hover:scale-110 active:scale-95 transition-all cursor-pointer z-30"
               >
-                <X className="w-5 h-5" />
+                <ChevronLeft className="w-5 h-5" />
               </button>
 
-              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
-                {/* Large Portrait */}
-                <div className="w-36 h-48 sm:w-44 sm:h-56 rounded-2xl overflow-hidden bg-gradient-to-t from-[#0c081a] to-white/10 border border-white/20 shrink-0 shadow-xl flex items-center justify-center">
-                  {focusedMember.image ? (
-                    <img
-                      src={focusedMember.image}
-                      alt={focusedMember.name}
-                      className="w-full h-full object-cover object-top"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-[#150c2e] font-extrabold text-4xl text-purple-200">
-                      {focusedMember.initials}
-                    </div>
-                  )}
-                </div>
+              {/* Desktop Floating Right Chevron */}
+              <button
+                onClick={handleNextMember}
+                aria-label="Next team member"
+                title="Next person (Right Arrow →)"
+                className="hidden md:flex absolute -right-14 lg:-right-16 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[#1b1435]/90 hover:bg-[#2b1f52] border border-white/20 hover:border-purple-400/50 text-purple-200 hover:text-white items-center justify-center backdrop-blur-xl shadow-2xl hover:scale-110 active:scale-95 transition-all cursor-pointer z-30"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
 
-                {/* Profile Details */}
-                <div className="space-y-4 text-left">
-                  <div>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-[#ff7a57]">
-                      {focusedMember.discipline}
+              {/* Spotlight Card */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.94, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.94, y: 20 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="relative w-full bg-gradient-to-br from-[#1b1435] to-[#100b24] border border-white/20 rounded-3xl p-6 sm:p-10 shadow-2xl text-white overflow-hidden"
+              >
+                {/* Header Actions: Prev/Next Pill + Close Button */}
+                <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-2 z-20">
+                  {/* Prev / Next & Counter Pill */}
+                  <div className="flex items-center gap-1 bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/15 rounded-full px-2 py-1 shadow-xs transition-all">
+                    <button
+                      onClick={handlePrevMember}
+                      aria-label="Previous person"
+                      title="Previous person (←)"
+                      className="w-7 h-7 rounded-full hover:bg-white/20 text-purple-200 hover:text-white flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <span className="text-xs font-mono font-bold text-white px-1.5 select-none min-w-[36px] text-center">
+                      {currentMemberIndex + 1}/{currentGroupList.length}
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">
-                      {focusedMember.name}
-                    </h3>
-                    <p className="text-sm font-medium text-purple-200 mt-0.5">
-                      {focusedMember.role}
-                    </p>
-                    <p className="text-xs text-white/60 font-mono mt-1">
-                      {focusedMember.credentials} • {focusedMember.experience}
-                    </p>
+                    <button
+                      onClick={handleNextMember}
+                      aria-label="Next person"
+                      title="Next person (→)"
+                      className="w-7 h-7 rounded-full hover:bg-white/20 text-purple-200 hover:text-white flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
                   </div>
 
-                  {/* Bio */}
-                  <p className="text-sm text-purple-100/90 leading-relaxed font-normal">
-                    {focusedMember.bio}
-                  </p>
-
-                  {/* Quote */}
-                  {focusedMember.quote && (
-                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                      <p className="text-xs sm:text-sm italic text-purple-100/85 font-serif leading-relaxed">
-                        “{focusedMember.quote}”
-                      </p>
-                    </div>
-                  )}
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setFocusedMember(null)}
+                    aria-label="Close profile"
+                    title="Close (Esc)"
+                    className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white flex items-center justify-center transition-all cursor-pointer hover:rotate-90 duration-200"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
-              </div>
-            </motion.div>
+
+                {/* Animated Member Content */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={focusedMember.id}
+                    initial={{ opacity: 0, x: 12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -12 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {/* Eyebrow with Group Tag */}
+                    <div className="flex items-center gap-2 mb-4 pr-32 sm:pr-40">
+                      <span className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-[#ff7a57] px-2.5 py-0.5 rounded-full bg-[#ff7a57]/10 border border-[#ff7a57]/20">
+                        {currentGroup === 'executive' ? 'Executive Leadership' : currentGroup === 'onsite' ? 'Onsite Team' : 'Offshore Engineering'}
+                      </span>
+                      <span className="text-xs text-purple-300 font-mono hidden sm:inline">
+                        • {currentMemberIndex + 1} of {currentGroupList.length}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+                      {/* Large Portrait */}
+                      <div className="w-36 h-48 sm:w-44 sm:h-56 rounded-2xl overflow-hidden bg-gradient-to-t from-[#0c081a] to-white/10 border border-white/20 shrink-0 shadow-xl flex items-center justify-center">
+                        {focusedMember.image ? (
+                          <img
+                            src={focusedMember.image}
+                            alt={focusedMember.name}
+                            className="w-full h-full object-cover object-top"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-[#150c2e] font-extrabold text-4xl text-purple-200">
+                            {focusedMember.initials}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Profile Details */}
+                      <div className="space-y-4 text-left flex-1 min-w-0">
+                        <div>
+                          <span className="text-xs font-semibold uppercase tracking-wider text-purple-200/80 block">
+                            {focusedMember.discipline}
+                          </span>
+                          <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">
+                            {focusedMember.name}
+                          </h3>
+                          <p className="text-sm font-medium text-purple-200 mt-0.5">
+                            {focusedMember.role}
+                          </p>
+                          {(focusedMember.credentials || focusedMember.experience) && (
+                            <p className="text-xs text-white/60 font-mono mt-1">
+                              {focusedMember.credentials}
+                              {focusedMember.credentials && focusedMember.experience && ' • '}
+                              {focusedMember.experience}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* Bio */}
+                        <p className="text-sm text-purple-100/90 leading-relaxed font-normal">
+                          {focusedMember.bio}
+                        </p>
+
+                        {/* Quote (Executive slide) or Tagline */}
+                        {focusedMember.quote ? (
+                          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+                            <p className="text-xs sm:text-sm italic text-purple-100/85 font-serif leading-relaxed">
+                              “{focusedMember.quote}”
+                            </p>
+                          </div>
+                        ) : focusedMember.tagline ? (
+                          <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                            <p className="text-xs text-purple-200 font-mono">
+                              {focusedMember.tagline}
+                            </p>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    {/* Mobile Bottom Navigation Strip */}
+                    <div className="flex sm:hidden items-center justify-between pt-4 mt-6 border-t border-white/10">
+                      <button
+                        onClick={handlePrevMember}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold cursor-pointer active:scale-95 transition-all"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                        <span>Previous</span>
+                      </button>
+                      <span className="text-xs font-mono font-bold text-purple-200">
+                        {currentMemberIndex + 1} of {currentGroupList.length}
+                      </span>
+                      <button
+                        onClick={handleNextMember}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold cursor-pointer active:scale-95 transition-all"
+                      >
+                        <span>Next</span>
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                  </motion.div>
+                </AnimatePresence>
+
+              </motion.div>
+            </div>
           </div>
         )}
       </AnimatePresence>
