@@ -234,6 +234,16 @@ export const onsiteTeam = [
    ───────────────────────────────────────────────────────────── */
 export const offshoreTeam = [
   {
+    id: 'yashwanth-kumar',
+    name: 'Yashwanth Vittal Kumar',
+    role: 'Software Developer',
+    domain: 'Feature Engineering',
+    image: '/images/team/offshore/Yashwanth V.png',
+    initials: 'YK',
+    tagline: 'Component & Systems Development',
+    bio: 'Builds and maintains application features and software components. Contributes to implementing product requirements and improving existing functionality.'
+  },
+  {
     id: 'raghavendra-tg',
     name: 'Raghavendra TG',
     role: 'Engineering Manager',
@@ -272,16 +282,6 @@ export const offshoreTeam = [
     initials: 'BD',
     tagline: 'Query & Schema Optimization',
     bio: 'Develops and optimizes database queries, stored procedures, and data operations. Helps ensure efficient data access and reliable database performance.'
-  },
-  {
-    id: 'yashwanth-kumar',
-    name: 'Yashwanth Vittal Kumar',
-    role: 'Software Developer',
-    domain: 'Feature Engineering',
-    image: '/images/team/offshore/Yashwanth V.png',
-    initials: 'YK',
-    tagline: 'Component & Systems Development',
-    bio: 'Builds and maintains application features and software components. Contributes to implementing product requirements and improving existing functionality.'
   },
   {
     id: 'suhil-mushtaq',
