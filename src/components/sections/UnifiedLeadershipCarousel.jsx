@@ -234,16 +234,6 @@ export const onsiteTeam = [
    ───────────────────────────────────────────────────────────── */
 export const offshoreTeam = [
   {
-    id: 'yashwanth-kumar',
-    name: 'Yashwanth Vittal Kumar',
-    role: 'Software Developer',
-    domain: 'Feature Engineering',
-    image: '/images/team/offshore/Yashwanth V.png',
-    initials: 'YK',
-    tagline: 'Component & Systems Development',
-    bio: 'Builds and maintains application features and software components. Contributes to implementing product requirements and improving existing functionality.'
-  },
-  {
     id: 'raghavendra-tg',
     name: 'Raghavendra TG',
     role: 'Engineering Manager',
@@ -264,26 +254,6 @@ export const offshoreTeam = [
     bio: 'Guides technical implementation and supports engineering decisions across development projects. Helps maintain code quality, consistency, and reliable delivery.'
   },
   {
-    id: 'abinash-mishra',
-    name: 'Abinash Mishra',
-    role: 'Senior Software Engineer',
-    domain: 'Application Engineering',
-    image: '/images/team/offshore/Abinash Mishra.png',
-    initials: 'AM',
-    tagline: 'Platform & Feature Development',
-    bio: 'Develops and enhances Guardian’s software applications and platform capabilities. Contributes to implementing features, resolving technical issues, and improving application reliability.'
-  },
-  {
-    id: 'balaji-devendiran',
-    name: 'Balaji Devendiran',
-    role: 'Senior SQL Developer',
-    domain: 'Database & Data Operations',
-    image: '/images/team/offshore/Balaji D.png',
-    initials: 'BD',
-    tagline: 'Query & Schema Optimization',
-    bio: 'Develops and optimizes database queries, stored procedures, and data operations. Helps ensure efficient data access and reliable database performance.'
-  },
-  {
     id: 'suhil-mushtaq',
     name: 'Suhil Mushtaq',
     role: 'Technical Lead',
@@ -292,6 +262,16 @@ export const offshoreTeam = [
     initials: 'SM',
     tagline: 'Full-Stack Architecture & Standards',
     bio: 'Coordinates technical implementation and guides development activities within the team. Helps resolve complex technical challenges and maintain consistent engineering standards.'
+  },
+  {
+    id: 'abinash-mishra',
+    name: 'Abinash Mishra',
+    role: 'Senior Software Engineer',
+    domain: 'Application Engineering',
+    image: '/images/team/offshore/Abinash Mishra.png',
+    initials: 'AM',
+    tagline: 'Platform & Feature Development',
+    bio: 'Develops and enhances Guardian’s software applications and platform capabilities. Contributes to implementing features, resolving technical issues, and improving application reliability.'
   },
   {
     id: 'nalamati-lakshmi',
@@ -312,6 +292,26 @@ export const offshoreTeam = [
     initials: 'AS',
     tagline: 'Operational Execution & Tracking',
     bio: 'Coordinates engineering activities and supports the smooth execution of development operations. Helps maintain alignment across tasks, teams, and delivery processes.'
+  },
+  {
+    id: 'balaji-devendiran',
+    name: 'Balaji Devendiran',
+    role: 'Senior SQL Developer',
+    domain: 'Database & Data Operations',
+    image: '/images/team/offshore/Balaji D.png',
+    initials: 'BD',
+    tagline: 'Query & Schema Optimization',
+    bio: 'Develops and optimizes database queries, stored procedures, and data operations. Helps ensure efficient data access and reliable database performance.'
+  },
+  {
+    id: 'yashwanth-kumar',
+    name: 'Yashwanth Vittal Kumar',
+    role: 'Software Developer',
+    domain: 'Feature Engineering',
+    image: '/images/team/offshore/Yashwanth V.png',
+    initials: 'YK',
+    tagline: 'Component & Systems Development',
+    bio: 'Builds and maintains application features and software components. Contributes to implementing product requirements and improving existing functionality.'
   },
   {
     id: 'darshan-umesha',
