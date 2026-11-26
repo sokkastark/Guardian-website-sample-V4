@@ -80,18 +80,6 @@ export const executiveMembers = [
     experience: '30+ Years Healthcare Leadership',
     bio: 'Senior healthcare advisor guiding commercial market expansion, diagnostic innovation integration, and strategic partnerships between laboratory networks and health systems.',
     quote: 'True innovation bridges the gap between laboratory insight and clinical reality.'
-  },
-  {
-    id: 'satya-thottappillil',
-    name: 'Satya Thottappillil',
-    role: 'Technology Systems Architect',
-    discipline: 'Platform & Technology Infrastructure',
-    image: null,
-    initials: 'ST',
-    credentials: 'Enterprise Healthtech Systems Architect',
-    experience: '20+ Years Distributed Systems',
-    bio: 'Directs platform architecture, cloud infrastructure, and clinical interoperability pipelines. Leads engineering initiatives to make complex healthcare data actionable at the point of care.',
-    quote: 'Architecture should make complex health data instantly intuitive at the bedside.'
   }
 ];
 

@@ -54,26 +54,6 @@ export const executiveConstellation = [
     spokeControl: { x: 550, y: 175 }
   },
   {
-    id: 'satya-thottappillil',
-    name: 'Satya Thottappillil',
-    role: 'Technology',
-    discipline: 'Platform & Technology',
-    tagline: 'Building the infrastructure for connected care.',
-    icon: Monitor,
-    image: null,
-    initials: 'ST',
-    credentials: 'Enterprise Healthtech Systems Architect',
-    experience: '20+ Years Distributed Systems',
-    bio: 'Specializes in distributed managed care systems and secure cloud pipelines. Directs technology architecture to make complex healthcare data intuitive at point-of-care.',
-    quote: 'Architecture should make complex health data instantly intuitive at the bedside.',
-    // Top-Left
-    cx: 280,
-    cy: 155,
-    textSide: 'left',
-    badgePos: 'bottom-right',
-    spokeControl: { x: 390, y: 220 }
-  },
-  {
     id: 'richard-cairl',
     name: 'Richard Cairl, PhD',
     role: 'Quality & Analytics',
