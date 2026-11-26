@@ -72,20 +72,21 @@ export const navigationConfig = [
       { label: 'Security & Trust', path: '/company#security' },
       { label: 'Careers', path: '/company#careers' },
       { label: 'Contact', path: '/company#contact' },
+      { label: 'Request a Demo', path: '/company?intent=demo#contact' },
     ]
   }
 ];
 
 export function isParentActive(currentPath, item) {
   if (!item || !item.path) return false;
-  const baseCurrent = currentPath.split('#')[0];
+  const baseCurrent = currentPath.split('#')[0].split('?')[0];
   if (baseCurrent === item.path) return true;
   if (item.children) {
     return item.children.some(child => {
-      const childBase = child.path.split('#')[0];
+      const childBase = child.path.split('#')[0].split('?')[0];
       if (childBase === baseCurrent) return true;
       if (child.subchildren) {
-        return child.subchildren.some(sub => sub.path.split('#')[0] === baseCurrent);
+        return child.subchildren.some(sub => sub.path.split('#')[0].split('?')[0] === baseCurrent);
       }
       return false;
     });

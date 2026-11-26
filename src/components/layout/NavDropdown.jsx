@@ -95,7 +95,7 @@ export default function NavDropdown({ item, isScrolled, currentPath }) {
                         if (child.path.includes('#')) {
                           const [targetPath, targetHash] = child.path.split('#');
                           const currentNorm = window.location.pathname.replace(/\/$/, '') || '/';
-                          const targetNorm = targetPath.replace(/\/$/, '') || '/';
+                          const targetNorm = targetPath.split('?')[0].replace(/\/$/, '') || '/';
                           if (currentNorm === targetNorm && targetHash) {
                             setTimeout(() => {
                               const el = document.getElementById(targetHash);

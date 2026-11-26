@@ -39,7 +39,7 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
           {/* Official Guardian Brand Logo -> Links to / */}
           <Link
             to="/"
@@ -49,14 +49,14 @@ export default function Header() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }
             }}
-            className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7b3fc7] rounded-lg p-1"
+            className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7b3fc7] rounded-lg p-1 shrink-0"
             aria-label="Guardian Health Service Homepage"
           >
-            <div className="relative h-9 sm:h-10 w-auto flex items-center">
+            <div className="relative h-9 sm:h-10 w-auto flex items-center shrink-0">
               <img
                 src={isScrolled ? '/logos/Logo.webp' : '/logos/logo-white.png'}
                 alt="Guardian Health Service"
-                className="h-8 sm:h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+                className="h-8 sm:h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105 shrink-0"
                 onError={(e) => {
                   e.currentTarget.src = '/logos/Logo.webp';
                 }}
@@ -66,7 +66,7 @@ export default function Header() {
 
           {/* Desktop Navigation with Dropdowns */}
           <nav
-            className={`hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full transition-all duration-300 ${
+            className={`hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full transition-all duration-300 shrink-0 ${
               isScrolled
                 ? 'bg-[#f2ecf9]/80 border border-[#e1e1e5] backdrop-blur-md'
                 : 'bg-white/15 border border-white/25 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
@@ -83,21 +83,8 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Action CTAs: Request a Demo + Guardian AI Solutions + Login ↗ */}
-          <div className="hidden sm:flex items-center gap-2 lg:gap-2.5">
-            <Link
-              to="/company?intent=demo#contact"
-              className={`px-3.5 py-2 text-xs lg:text-sm font-medium transition-colors rounded-full whitespace-nowrap ${
-                location.pathname === '/company' && location.hash === '#contact'
-                  ? 'text-[#7b3fc7] font-semibold bg-white/10'
-                  : isScrolled
-                  ? 'text-[#35304c] hover:text-[#7b3fc7]'
-                  : 'text-white hover:text-purple-200'
-              }`}
-            >
-              Request a Demo
-            </Link>
-
+          {/* Action CTAs: Guardian AI Solutions + Login ↗ */}
+          <div className="hidden sm:flex items-center gap-2 lg:gap-2.5 shrink-0">
             <a
               href="https://www.itsguardian.ai/"
               target="_blank"
