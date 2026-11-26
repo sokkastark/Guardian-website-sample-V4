@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 
 import InfographicMilestoneTimeline from '../components/common/InfographicMilestoneTimeline';
+import EditorialLeadershipDirectory from '../components/sections/EditorialLeadershipDirectory';
+// Preserved for future reuse per feedback:
 import UnifiedLeadershipCarousel from '../components/sections/UnifiedLeadershipCarousel';
 import SecurityTrustCarousel from '../components/sections/SecurityTrustCarousel';
 import { RibbonStepGrid } from '../components/common/RibbonStepCard';
@@ -301,13 +303,10 @@ export default function CompanyOverviewPage() {
 
       {/* ─────────────────────────────────────────────────────────────
           SECTION 4: LEADERSHIP & TEAM (#leadership)
-          Executive Leadership Prominence + Wider Team Constellation
+          Editorial Leadership Directory (Florida ACO Style Layout)
+          Note: UnifiedLeadershipCarousel is preserved for future reuse.
           ───────────────────────────────────────────────────────────── */}
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 4: LEADERSHIP & TEAM (#leadership)
-          Unified Dark Carousel: Executive, Onsite & Offshore Engineering
-          ───────────────────────────────────────────────────────────── */}
-      <UnifiedLeadershipCarousel />
+      <EditorialLeadershipDirectory />
 
       {/* ─────────────────────────────────────────────────────────────
           SECTION 3: SECURITY & TRUST (#security)
