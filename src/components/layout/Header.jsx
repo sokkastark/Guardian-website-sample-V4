@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Sparkles } from 'lucide-react';
 import { navigationConfig, isParentActive, isChildActive } from '../../config/navigation';
 import NavDropdown from './NavDropdown';
 
@@ -83,11 +83,11 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Action CTAs: Request a Demo + Login ↗ */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Action CTAs: Request a Demo + Guardian AI Solutions + Login ↗ */}
+          <div className="hidden sm:flex items-center gap-2 lg:gap-2.5">
             <Link
               to="/company?intent=demo#contact"
-              className={`px-4 py-2 text-xs lg:text-sm font-medium transition-colors rounded-full ${
+              className={`px-3.5 py-2 text-xs lg:text-sm font-medium transition-colors rounded-full whitespace-nowrap ${
                 location.pathname === '/company' && location.hash === '#contact'
                   ? 'text-[#7b3fc7] font-semibold bg-white/10'
                   : isScrolled
@@ -99,10 +99,25 @@ export default function Header() {
             </Link>
 
             <a
+              href="https://www.itsguardian.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-center gap-1.5 px-3.5 lg:px-4 py-2 rounded-full text-xs lg:text-sm font-semibold transition-all duration-300 active:scale-95 whitespace-nowrap ${
+                isScrolled
+                  ? 'text-[#7b3fc7] bg-purple-50 hover:bg-purple-100 border border-[#7b3fc7]/30 shadow-2xs'
+                  : 'text-white bg-white/15 hover:bg-white/25 border border-white/30 backdrop-blur-md shadow-2xs'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#ff7a57]" />
+              <span>Guardian AI Solutions</span>
+              <span className="text-xs font-light">↗</span>
+            </a>
+
+            <a
               href="https://live.itsguardian.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full text-xs lg:text-sm font-medium text-white bg-[#7b3fc7] hover:bg-[#9565d2] shadow-[0_4px_14px_rgba(123,63,199,0.3)] hover:shadow-[0_6px_20px_rgba(123,63,199,0.4)] transition-all duration-300 active:scale-95"
+              className="inline-flex items-center gap-1.5 px-4 lg:px-5 py-2 rounded-full text-xs lg:text-sm font-medium text-white bg-[#7b3fc7] hover:bg-[#9565d2] shadow-[0_4px_14px_rgba(123,63,199,0.3)] hover:shadow-[0_6px_20px_rgba(123,63,199,0.4)] transition-all duration-300 active:scale-95 whitespace-nowrap"
             >
               <span>Login</span>
               <span className="text-xs font-light">↗</span>
@@ -260,6 +275,17 @@ export default function Header() {
                 >
                   Request a Demo
                 </Link>
+                <a
+                  href="https://www.itsguardian.ai/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={closeMobileMenu}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-full font-semibold text-sm text-[#7b3fc7] bg-purple-50 hover:bg-purple-100 border border-[#7b3fc7]/30 transition-colors"
+                >
+                  <Sparkles className="w-4 h-4 text-[#ff7a57]" />
+                  <span>Guardian AI Solutions</span>
+                  <span className="text-xs">↗</span>
+                </a>
                 <a
                   href="https://live.itsguardian.com/"
                   target="_blank"
