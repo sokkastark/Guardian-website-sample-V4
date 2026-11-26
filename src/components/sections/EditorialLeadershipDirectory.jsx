@@ -4,6 +4,7 @@ import {
   Users, 
   ChevronLeft, 
   ChevronRight, 
+  ChevronDown,
   X,
   Stethoscope,
   BarChart3,
@@ -97,6 +98,7 @@ export const executiveMembers = [
 export default function EditorialLeadershipDirectory() {
   const [selectedMember, setSelectedMember] = useState(null);
   const [activeGroup, setActiveGroup] = useState('executive');
+  const [showOffshoreTeam, setShowOffshoreTeam] = useState(false);
 
   const getMemberList = (group) => {
     if (group === 'executive') return executiveMembers;
@@ -243,54 +245,84 @@ export default function EditorialLeadershipDirectory() {
           </div>
         </div>
 
-        {/* ── 3. OFFSHORE ENGINEERING TEAM (GRID CARDS) ── */}
-        <div>
-          <div className="flex items-center gap-3 mb-8">
-            <span className="w-1.5 h-6 rounded-full bg-[#ff7a57]" />
-            <h3 className="text-xl sm:text-2xl font-bold text-[#1c1636]">
-              Offshore Engineering &amp; Development Team
-            </h3>
+        {/* ── 3. OFFSHORE ENGINEERING TEAM (ON-DEMAND BUTTON / EXPANDABLE) ── */}
+        <div className="pt-6 border-t border-[#e9e4f0]">
+          {/* Collapsible Action Banner / Button */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 sm:p-7 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md transition-all">
+            <div className="flex items-center gap-3">
+              <span className="w-1.5 h-6 rounded-full bg-[#ff7a57]" />
+              <div>
+                <h3 className="text-lg sm:text-xl font-bold text-[#1c1636]">
+                  Offshore Engineering &amp; Development Team
+                </h3>
+                <p className="text-xs text-[#6b6480] mt-0.5">
+                  10 specialized developers, architects, and quality assurance engineers.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowOffshoreTeam(!showOffshoreTeam)}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-[#7b3fc7] to-[#9333ea] hover:from-[#9333ea] hover:to-[#a855f7] shadow-[0_4px_16px_rgba(123,63,199,0.3)] transition-all cursor-pointer active:scale-95 shrink-0"
+              aria-expanded={showOffshoreTeam}
+            >
+              <span>{showOffshoreTeam ? 'Hide Offshore Team' : 'View Offshore Team (10 Members)'}</span>
+              <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showOffshoreTeam ? 'rotate-180' : ''}`} />
+            </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {offshoreTeam.map((member) => (
-              <div
-                key={member.id}
-                onClick={() => {
-                  setActiveGroup('offshore');
-                  setSelectedMember(member);
-                }}
-                className="p-5 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md hover:border-[#7b3fc7]/40 transition-all cursor-pointer flex flex-col items-center text-center group"
+          {/* Expandable Grid */}
+          <AnimatePresence>
+            {showOffshoreTeam && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginTop: 24 }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
+                className="overflow-hidden"
               >
-                <div className="w-28 h-32 sm:w-32 sm:h-36 rounded-xl overflow-hidden bg-[#f4f1f9] border border-[#eee8f6] shadow-2xs mb-4">
-                  {member.image ? (
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center font-bold text-xl text-[#7b3fc7]">
-                      {member.initials}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-2 pb-6">
+                  {offshoreTeam.map((member) => (
+                    <div
+                      key={member.id}
+                      onClick={() => {
+                        setActiveGroup('offshore');
+                        setSelectedMember(member);
+                      }}
+                      className="p-5 rounded-2xl bg-white border border-[#e9e4f0] shadow-xs hover:shadow-md hover:border-[#7b3fc7]/40 transition-all cursor-pointer flex flex-col items-center text-center group"
+                    >
+                      <div className="w-28 h-32 sm:w-32 sm:h-36 rounded-xl overflow-hidden bg-[#f4f1f9] border border-[#eee8f6] shadow-2xs mb-4">
+                        {member.image ? (
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center font-bold text-xl text-[#7b3fc7]">
+                            {member.initials}
+                          </div>
+                        )}
+                      </div>
+                      <h4 className="font-bold text-[#1c1636] text-sm sm:text-base group-hover:text-[#7b3fc7] transition-colors leading-tight">
+                        {member.name}
+                      </h4>
+                      <div className="text-xs text-[#7b3fc7] font-semibold mt-1">
+                        {member.role}
+                      </div>
+                      <p className="text-xs text-[#6b6480] mt-2 line-clamp-2 leading-relaxed">
+                        {member.tagline || member.domain}
+                      </p>
+                      <span className="text-[11px] font-bold text-[#7b3fc7] mt-3 group-hover:underline">
+                        View Profile →
+                      </span>
                     </div>
-                  )}
+                  ))}
                 </div>
-                <h4 className="font-bold text-[#1c1636] text-sm sm:text-base group-hover:text-[#7b3fc7] transition-colors leading-tight">
-                  {member.name}
-                </h4>
-                <div className="text-xs text-[#7b3fc7] font-semibold mt-1">
-                  {member.role}
-                </div>
-                <p className="text-xs text-[#6b6480] mt-2 line-clamp-2 leading-relaxed">
-                  {member.tagline || member.domain}
-                </p>
-                <span className="text-[11px] font-bold text-[#7b3fc7] mt-3 group-hover:underline">
-                  View Profile →
-                </span>
-              </div>
-            ))}
-          </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
       </div>
