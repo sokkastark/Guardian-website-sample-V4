@@ -255,6 +255,16 @@ export const offshoreTeam = [
     bio: 'Develops and enhances Guardian’s software applications and platform capabilities. Contributes to implementing features, resolving technical issues, and improving application reliability.'
   },
   {
+    id: 'sokkanathan-k',
+    name: 'Sokkanathan K',
+    role: 'Senior Designer',
+    domain: 'UI/UX & Product Design',
+    image: '/images/team/offshore/Sokkanathan K.png',
+    initials: 'SK',
+    tagline: 'Healthcare Experience & Interface Systems',
+    bio: 'Designs user experiences and interfaces for Guardian’s healthcare applications. Collaborates with product and engineering teams to turn complex healthcare workflows into clear, usable experiences.'
+  },
+  {
     id: 'nalamati-lakshmi',
     name: 'Nalamati Vara Lakshmi',
     role: 'Senior Tester Engineer',
@@ -303,16 +313,6 @@ export const offshoreTeam = [
     initials: 'DU',
     tagline: 'Application Support & Enhancements',
     bio: 'Contributes to application development, feature implementation, and software maintenance. Works with the engineering team to improve existing functionality and deliver product enhancements.'
-  },
-  {
-    id: 'sokkanathan-k',
-    name: 'Sokkanathan K',
-    role: 'Senior Designer',
-    domain: 'UI/UX & Product Design',
-    image: '/images/team/offshore/Sokkanathan K.png',
-    initials: 'SK',
-    tagline: 'Healthcare Experience & Interface Systems',
-    bio: 'Designs user experiences and interfaces for Guardian’s healthcare applications. Collaborates with product and engineering teams to turn complex healthcare workflows into clear, usable experiences.'
   }
 ];
 
