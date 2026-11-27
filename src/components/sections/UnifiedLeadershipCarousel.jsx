@@ -155,6 +155,15 @@ export const executiveConstellation = [
    ───────────────────────────────────────────────────────────── */
 export const onsiteTeam = [
   {
+    id: 'jessica-lopez',
+    name: 'Jessica Lopez',
+    role: 'Director of Healthcare IT Operations',
+    domain: 'IT Operations & Delivery',
+    image: '/images/team/onsite/Jessica Lopez.png',
+    initials: 'JL',
+    bio: 'Coordinates healthcare IT operations and technology delivery. Bridges operational requirements and technical teams to support effective implementation and ongoing service delivery.'
+  },
+  {
     id: 'jairo-rodriguez',
     name: 'Jairo R. Rodriguez',
     role: 'Senior Software Architect Engineer',
@@ -180,15 +189,6 @@ export const onsiteTeam = [
     image: '/images/team/onsite/Jose Santos.png',
     initials: 'JS',
     bio: 'Shapes data architecture to support reliable, consistent, and accessible information across systems. Helps establish the foundations for effective data integration and analytics.'
-  },
-  {
-    id: 'jessica-lopez',
-    name: 'Jessica Lopez',
-    role: 'Director of Healthcare IT Operations',
-    domain: 'IT Operations & Delivery',
-    image: '/images/team/onsite/Jessica Lopez.png',
-    initials: 'JL',
-    bio: 'Coordinates healthcare IT operations and technology delivery. Bridges operational requirements and technical teams to support effective implementation and ongoing service delivery.'
   },
   {
     id: 'carmen-penna',
